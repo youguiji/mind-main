@@ -26,6 +26,8 @@ import MeAttentionPerPage from '../../screen/Me/MeAttention/MeAttentionPerPage';
 
 import MeDiary from '../../screen/Me/MeDiary/MeDiary';
 
+import MeUserPage from '../../screen/Me/MeUserPage/MeUserPage';
+
 export const MeNavigation = Stack => {
   return (
     <>
@@ -48,6 +50,8 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MEATTENTIONPERPAGE', MeAttentionPerPage)}
 
       {initStackNavigation(Stack, 'MEDIARY', MeDiary)}
+
+      {initStackNavigation(Stack,'MEUSERPAGE',MeUserPage)}
     </>
   );
 };

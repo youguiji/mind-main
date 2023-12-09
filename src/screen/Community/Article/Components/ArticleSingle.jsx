@@ -4,11 +4,12 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-27 21:35:58
+ * @LastEditTime: 2023-12-08 17:35:35
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import Icon from '../../../../components/Icon';
 
 const ArticleSingle = ({
   avatar,
@@ -29,7 +30,7 @@ const ArticleSingle = ({
           flexDirection: 'row',
         }}>
         <Avatar size={32} rounded source={{ uri: avatar }} />
-        <Text style={{ padding: 5 }}>{username}name</Text>
+        <Text style={{ padding: 5 }}>{username}</Text>
       </View>
 
       <View style={{ paddingHorizontal: 10 }}>
@@ -43,16 +44,14 @@ const ArticleSingle = ({
             {content}
           </Text>
           <View style={styles.imgBox}>
-            <Image style={styles.img} source={{ uri: pictures[0] }} />
+            <Image style={styles.img} source={{ uri: pictures }} />
           </View>
         </View>
       </View>
       <View style={styles.commentBox}>
-        <Text style={{ fontFamily: 'iconfont', fontSize: 18 }}>{'\ue64a'}</Text>
-        <Text>12{sun}</Text>
-        <Text style={{ fontFamily: 'iconfont', fontSize: 20, marginLeft: 20 }}>
-          {'\ue74e'}
-        </Text>
+        <Icon icode={'\ue64a'} size={18}></Icon>
+        <Text>12{sun} </Text>
+        <Icon icode={'\ue74e'} size={18}></Icon>
         <Text>12{comment}</Text>
         <Text
           style={{

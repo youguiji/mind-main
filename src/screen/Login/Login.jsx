@@ -1,10 +1,10 @@
 /*
- * @Description:
+ * @Description: login
  * @Version:
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-10-13 17:15:01
+ * @LastEditTime: 2023-12-08 15:15:00
  */
 
 // import Dialog from '../../components/Notification';
@@ -27,13 +27,6 @@ const Login = ({ navigation }) => {
 
   const showNotification = useNotification();
   const phoneRef = useRef(null);
-
-  // const showNotification = () => {
-  //   setVisible(true);
-  //   setTimeout(() => {
-  //     setVisible(false);
-  //   }, 2000);
-  // };
 
   return (
     <Pressable
@@ -58,7 +51,7 @@ const Login = ({ navigation }) => {
         <Text style={{ marginBottom: 10 }}>属于您的心理专属心理管家</Text>
         <Input
           type="text"
-          placeholder="请输入登录邮箱"
+          placeholder="请输入登录邮箱或者手机号"
           style={StyleSheet.flatten([{ width: '100%' }, styles.inputBoxItem])}
           keyboardType="numeric"
           value={[phone, setPhone]}
@@ -79,10 +72,11 @@ const Login = ({ navigation }) => {
           onPress={async () => {
             try {
               if (phone.length != 0) {
-                //const res = await getCode(phone, 'login');
+                const res = await getCode(phone, 'login');
                 navigation.navigate('LOGINGETCODE', {
                   phone: phone,
                 });
+                showNotification("验证码已发送，请注意查收");
               } else {
                 showNotification('请输入邮箱哦！');
               }

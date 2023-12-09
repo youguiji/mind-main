@@ -35,17 +35,17 @@ if (!cacheMap.has(optionsString)) {
 export function request (option) {
     return new Promise((resolve,reject)=>{
         const instances  = axios.create({
-            baseURL:'https://mock.apifox.cn/m1/2971789-0-default',
+            baseURL:'https://mock.apifox.com/m1/2971789-0-default',
             timeout:5000,
         })
 
          instances.interceptors.request.use(
             params=>{
                 if (
-                    Object.prototype.hasOwnProperty.call(params.headers, 'token') ||
-                    params.headers['token']
+                    Object.prototype.hasOwnProperty.call(params.headers, 'MindInsight') ||
+                    params.headers['MindInsight']
                   )
-                    params.headers['token'] = store.getState().user.token;
+                    params.headers['MindInsight'] = store.getState().user.token;
                     return params;
             },
             err =>{

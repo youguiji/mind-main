@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 20:57:00
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-26 11:34:20
+ * @LastEditTime: 2023-12-08 10:39:44
  */
 import {
   Get,
@@ -22,7 +22,7 @@ import {
 export const getCode = (account, action) => {
   return Get({
     url: '/profile/user/code',
-    data: {
+    params: {
       account,
       action,
     }
@@ -65,7 +65,7 @@ export const loginOut = () => {
 }
 
 /**
- * @description: 获取用户信息I
+ * @description: 获取本机用户信息
  * @param {string} id 用户id
  * @return {*}
  * @author: Austral
@@ -73,9 +73,18 @@ export const loginOut = () => {
 export const getUserInfo = (id) => {
   return Get({
     url: '/profile/user/info/detail',
-    // params: {
-    //   id
-    // }
+  })
+}
+
+/**
+ * @description: 获取其他用户信息
+ * @param {string} userId 用户id
+ * @return {*}
+ * @author: Austral
+ */
+export const getUsersInfo = (userId) => {
+  return Get({
+    url: `/profile/user/${userId}`,
   })
 }
 
@@ -134,9 +143,9 @@ export const changeUserInfo = ({
  * @return {*}
  * @author: Austral
  */
-export const changeAvatar = ({
+export const changeAvatar = (
   file
-}) => {
+) => {
   return Post({
     url: '/profile/user/avatar',
     data: {

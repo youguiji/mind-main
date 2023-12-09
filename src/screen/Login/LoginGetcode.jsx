@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-17 20:13:54
+ * @LastEditTime: 2023-12-06 20:51:57
  */
 
 // screens/HomeScreen.js
@@ -32,6 +32,14 @@ const LoginGetcode = ({ route, navigation }) => {
 
   const { phone } = route.params; //手机号
 
+  //请求验证码
+  useEffect(() => {
+    console.log('getcode');
+    console.log(typeof(phone));
+    getCode(phone, 'login').then(res => {
+      console.log(res);
+    });
+  }, []);
   return (
     <Pressable
       style={styles.outContent}
@@ -72,17 +80,19 @@ const LoginGetcode = ({ route, navigation }) => {
           }}
           onPress={() => {
             if (code.length == 6) {
+              console.log(phone, code, typeof(phone), typeof(code));
+              //改变登录状态
               dispatch(LoginIn()); //(待删)
               login(phone, 'null', code)
                 .then(res => {
                   console.log(res);
-                  //dispatch(setUserToken())
+                  dispatch(setUserToken(res.MindInsight))//
                   getUserInfo //获取用户信息
                     .then(res => {
                       console.log(res);
                       dispatch(setUserInfoState(res.data));
-                      storeData('userInfo', res.data); //本地缓存useInfo
-                      getData('userInfo').then(res => console.log(res)); //获取缓存
+                      //storeData('userInfo', res.data); //本地缓存useInfo
+                      //getData('userInfo').then(res => console.log(res)); //获取缓存
                     })
                     .catch(err => {
                       console.log('getUserInfoError:', err);

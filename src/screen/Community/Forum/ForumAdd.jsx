@@ -7,28 +7,47 @@ import {
   Pressable,
   TextInput,
   Image,
+  FlatList,
   Button,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import TitleHeader from '../../../components/TitleHeader';
 import { color } from '../../../assets/color';
 import Icon from '../../../components/Icon';
-// import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
 const ForumAdd = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
+  const screenWidth = Dimensions.get('window').width;
   const titleRef = useRef(null);
   const contentRef = useRef(null);
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
 
-  const pickImage = () => {
-    ImagePicker.launchImageLibrary({}, response => {
-      if (response.uri) {
-        setSelectedImage(response.uri);
+  const openImagePicker = async () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 6 - selectedImages.length, // 限制选择的图片数量
+        includeBase64: true,
+        maxWidth: 1000,
+        maxHeight: 1000,
+      },
+      (response) => {
+        if (!response.didCancel && !response.errorCode) {
+          // 更新选择的图片数组
+          setSelectedImages([...selectedImages, ...response.assets]);
+        }
       }
-    });
+    );
   };
+
+  const renderItem = ({ item }) => (
+    <Image style={styles.image} source={{ uri: item.uri }} />
+  );
 
   return (
     <Pressable
@@ -75,8 +94,13 @@ const ForumAdd = ({ navigation }) => {
         )}
         <Button title="选择图片" onPress={pickImage} />
       </View> */}
+      <ScrollView contentContainerStyle={styles.imageContainer} horizontal>
+        {selectedImages.map((image, index) => (
+          <Image key={index} source={{ uri: image.uri }} style={styles.image} />
+        ))}
+      </ScrollView>
       <Pressable style={styles.bottomBox}>
-        <TouchableOpacity>
+        <TouchableOpacity  onPress={openImagePicker}>
           <Icon icode={'\ue60b'} size={26} />
         </TouchableOpacity>
       </Pressable>
@@ -88,6 +112,23 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     backgroundColor: '#fff',
+  },
+  imageContainer: {
+    flexDirection: 'row',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 8,
+    borderRadius: 8,
+  },
+  addButton: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
   },
   btn: {
     backgroundColor: color.purple.deep,
@@ -108,6 +149,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 10,
+    color: color.gray.deep,
   },
   bottomBox: {
     width: '100%',

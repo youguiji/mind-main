@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-09 15:34:24
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-17 20:15:06
+ * @LastEditTime: 2023-12-06 21:49:51
  */
 /**
  * @format
@@ -32,7 +32,7 @@ const Tab = createBottomTabNavigator();
 const App= ()=> {
   const isLogin = useSelector(state=>state.login.isLogin);
   const [isConnect, setIsConnect] = useState(true);
-  const notification = useNotification();
+  const showNotification = useNotification();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,17 +45,20 @@ const App= ()=> {
       if (isConnect) {
         const checkToken = async () => {
           try {
-            const token = AsyncStorage.getItem('token');
-            if (token) {
+            //从本地仓库拿token
+            const MindInsight = AsyncStorage.getItem('MindInsight');
+
+            if (MindInsight) {
               dispatch(setUserToken(token));
             }
           } catch (error) {
-            console.error('Error reading token feom AsyncStorage:',error);
+            //未连接操作
+            //console.error('Error reading token feom AsyncStorage:',error);
           }
         }
         checkToken()
       } else {
-        notification('请检查网络状态！');
+        showNotification('请检查网络状态！');
       }
     })
 

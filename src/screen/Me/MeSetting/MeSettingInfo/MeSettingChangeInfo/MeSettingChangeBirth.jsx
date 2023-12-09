@@ -28,10 +28,8 @@ const MeSettingChangeBirth = ({ navigation }) => {
     getUserInfo().then(res => {
       console.log(res);
     });
-    return () => {
-      cleanup;
-    };
-  }, [input]);
+
+  }, []);
 
   const onDateChange = (event, selected) => {
     if (event.type === 'dismissed') {

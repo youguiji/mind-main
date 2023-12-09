@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-17 20:01:29
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-26 10:48:40
+ * @LastEditTime: 2023-12-09 18:59:43
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -19,7 +19,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import TitleHeader from '../../../../../components/TitleHeader';
 import Navigation from '../../../../../navigations';
 import { commonStyles } from '../../../../../assets/commonStyle';
-import { getUserInfo } from '../../../../../network/modules/user';
+import { changeAvatar, getUserInfo } from '../../../../../network/modules/user';
 import { changeUserInfo } from '../../../../../network/modules/user';
 import { Avatar } from '@rneui/base/dist/Avatar/Avatar';
 import Button from '../../../../../components/Button';
@@ -49,6 +49,9 @@ const MeSettingChangeAvatar = ({ navigation }) => {
         console.log(res.uri);
         const base64Image = `data:${curFiles.type};base64,${curFiles.base64}`;
         setImgList(base64Image);
+        changeAvatar(imgList).then(res => {
+          console.log(res);
+        });
         console.log('imglist:  ' + imgList);
       },
     );

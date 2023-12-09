@@ -1,30 +1,20 @@
 // screens/HomeScreen.js
 
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,Dimensions,
-} from 'react-native';
-import Button from '../../components/Button';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { LoginOut } from '../../store/modules/login';
 import { Avatar } from '@rneui/base';
-import Icon from '../../components/Icon';
+import Icon from '../../../components/Icon';
+import { TouchableOpacity } from 'react-native';
 import { Image } from 'react-native-svg';
-import { getUserInfo } from '../../network/modules/user';
-import { getUserArticle } from '../../network/modules/community';
-import { transforTime } from '../../util';
-import { color } from '../../assets/color';
+import { getUserArticle } from '../../../network/modules/community';
+import { getUsersInfo } from '../../../network/modules/user';
+import { transforTime } from '../../../util';
+import { color } from '../../../assets/color';
+const MeUserPage = ({ navigation, route }) => {
+  //用户id
+  const { userId } = route.params;
 
-const screenWidth = Dimensions.get('window').width;
-const numColumns = 2; // 定义列数
-
-const Me = ({ navigation }) => {
   const [trends, setTrends] = useState([]);
   const dispatch = useDispatch();
 
@@ -40,16 +30,17 @@ const Me = ({ navigation }) => {
   });
   useEffect(() => {
     //获取用户信息
-    getUserInfo().then(res => {
-      console.log(res);
-      setUserInfo(res.data);
+    getUsersInfo(userId).then(res => {
+      console.log('获取其他用户信息' + res);
       //获取用户动态
-      getUserArticle(userInfo.userId, 2, 1, 10, true).then(res => {
-        console.log(res.data.list);
+      setUserInfo(res.data);
+      getUserArticle(userId, 2, 1, 10, true).then(res => {
+        console.log('获取用户动态' + res.data.List);
         setTrends(res.data.list);
       });
     });
     //获取用户
+    getUserArticle();
   }, []);
 
   return (
@@ -63,16 +54,16 @@ const Me = ({ navigation }) => {
         }}>
         <Text
           onPress={() => {
-            navigation.navigate('MESETTING');
+            navigation.goBack();
           }}
           style={{
             position: 'relative',
-            right: '-45%',
+            left: '-45%',
             top: '-1%',
             fontSize: 20,
             fontFamily: 'iconfont',
           }}>
-          {'\ue68f'}
+          {'\ueb05'}
         </Text>
         <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
         <Text style={styles.name}>{userInfo.username}</Text>
@@ -94,12 +85,6 @@ const Me = ({ navigation }) => {
             }}>
             <Text style={{ marginHorizontal: 20 }}>粉丝 {userInfo.fans}</Text>
           </Pressable>
-          <Pressable
-            onPress={() => {
-              navigation.navigate('MEDIARY');
-            }}>
-            <Text style={{ marginRight: 20 }}>日记 {userInfo.fans}</Text>
-          </Pressable>
           <Text>动态 {trends.length}</Text>
         </View>
         {trends.map(item => {
@@ -108,7 +93,7 @@ const Me = ({ navigation }) => {
               key={item.id}
               style={styles.item}
               onPress={() => {
-                navigation.navigate('FORUMDETAIL', { id: item.id });
+                navigation.navigate('FORUMDETAIL',{id: item.id});
               }}>
               <View style={styles.left}>
                 <Text style={styles.day}>
@@ -123,55 +108,35 @@ const Me = ({ navigation }) => {
                 <Text style={styles.content} numberOfLines={2}>
                   {item.content}
                 </Text>
-                <View style={styles.imgBox}>
-                  <FlatList
-                    data={item.pictures}
-                    renderItem={({ item }) => (
-                      <View style={styles.imgBox}>
-                        <Image
-                          key={item.id}
-                          style={styles.img}
-                          source={{ uri: item.url }}
-                        />
-                      </View>
-                    )}
-                    keyExtractor={(item, index) => item.id}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    pagingEnabled={true}
-                    ></FlatList>
-                </View>
+                {/* <View style={styles.imgBox}>
+                  <Image
+                    style={styles.img}
+                    source={{
+                      uri: item.pictures && item.pictures[0] && item.pictures[0].url,
+                    }}
+                  />
+                </View> */}
                 {/* <View style={styles.comment}>
                   <Icon size={18} icode={'\ue64a'} />
                   <Text style={{ marginRight: 20 }}>{item.likeCount}</Text>
+
                 </View> */}
+                
               </View>
             </Pressable>
           );
         })}
-
-        <Button
-          title="退出"
-          style={{ padding: 10 }}
-          onPress={() => {
-            console.log('out');
-            dispatch(LoginOut());
-          }}></Button>
       </ScrollView>
-      <TouchableOpacity
-        style={styles.floatingIconContainer}
-        onPress={() => {
-          navigation.navigate('FORUMADD');
-        }}>
-        <Text
-          style={{
-            fontFamily: 'iconfont',
-            fontSize: 32,
-            color: '#9471E3',
-          }}>
-          {'\ue762'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.bottomBox}>
+                  <Pressable style={styles.botn}>
+                    <Text style={styles.boText}>关注</Text>
+                  </Pressable>
+                  <Pressable onPress={()=>{
+                    navigation.navigate('MESSAGEDETAIL',{userId: userInfo.userId})
+                  }}  style={styles.botn}>
+                    <Text style={styles.boText}>私信</Text>
+                  </Pressable>
+                </View>
     </View>
   );
 };
@@ -205,29 +170,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 16,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     marginBottom: 20,
     alignItems: 'center',
     marginHorizontal: 15,
   },
   left: {
-    flex: 1.5,
-    alignItems: 'center',
+    flex: 1,
   },
   right: {
-    flex: 8,
+    flex: 7,
     paddingVertical: 15,
-  },
-  user: {
-    width: 100,
-    paddingVertical: 15,
-    marginLeft: screenWidth / 30,
-    borderRadius: 16,
-    alignItems: 'center',
-    marginVertical: 5,
-    height: 100,
-    borderWidth: 1, 
-    borderColor: color.purple.deep, // 边框颜色
   },
   day: {
     fontSize: 26,
@@ -241,24 +194,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   imgBox: {
-    flex: 1,
-  },
-  img: {
-    flex: 1,
-    width: null,
-    height: null,
-    borderRadius: 20,
-  },
-
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 10,
-  },
-  image: {
-    width: 100,
     height: 100,
-    resizeMode: 'cover',
+    flex: 1,
   },
   img: {
     flex: 1,
@@ -270,5 +207,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItem: 'center',
   },
+  bottomBox: {
+    width: '100%',
+    position: 'absolute',
+    height: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopColor: '#ccc',
+    bottom: 10,
+  },
+  botn: {
+    width: 100,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: color.purple.deep,
+    borderRadius: 16,
+    
+  },
+  boText: {
+    color: '#fff',
+  }
 });
-export default Me;
+export default MeUserPage;

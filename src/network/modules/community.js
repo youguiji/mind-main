@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-24 15:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-29 10:44:39
+ * @LastEditTime: 2023-12-08 23:52:51
  */
 
 import {
@@ -31,49 +31,33 @@ export const getArticle = (type, pageNum, pageSize) => {
 }
 
 /**
- * @description: 编辑文章
- * @param {string} id 文章id
+ * @description: 增加或者修改文章
  * @param {string} content 内容
- * @param {string} tags tag
+ * @param {number} id 右值为编辑，无值为新增
+ * @param {number} type 1为文章，2为动态
+ * @param {Array} tags 标签数组
  * @param {string} title 标题
- * @return {*}
- * @author: Austral
- */
-export const editeArticle = (id, content, tags, title) => {
-  return Put({
-    url: '/publication',
-    params: {
-      id
-    },
-    data: {
-      content,
-      tags,
-      title
-    }
-  })
-}
-
-/**
- * @description: 添加文章
- * @param {string} content 内容
- * @param {string} tags 标签
- * @param {string} title 标题
+ * @param {Array} pictures 图片数组
  * @return {*}
  * @author: Austral
  */
 export const addArticle = (content, tags, title) => {
   return Post({
-    url: '/publication/pagingPublication',
+    url: '/publication/publication/manage',
     data: {
+      id,
+      type,
+      title,
       content,
       tags,
-      title
+      pictures,
+
     }
   })
 }
 
 /**
- * @description: 获取文章或动态详情
+ * @description: 获取文章详情
  * @param {*} publicationId
  * @return {*}
  * @author: Austral
@@ -85,14 +69,41 @@ export const getArticleDetail = (publicationId) => {
 }
 
 /**
- * @description: 分页获取文章评论
- * @param {string} page 页数
- * @param {string} limit 
- * @param {string} publicationId 文章id
+ * @description: 删除文章
+ * @param {*} publicationId 文章id
  * @return {*}
  * @author: Austral
  */
-export const getComment = (publicationId,pageNum,pageSize,fetchAll) => {
+export const deleteArticle = (publicationId) => {
+  return Post({
+    url: `/publication/delete/${publicationId}`,
+  })
+}
+
+/**
+ * @description: 文章点赞/取消点赞
+ * @param {number} publicationId 文章id
+ * @param {number} type 1为给文章点赞，2为给动态点赞
+ * @param {number} option 1表示点赞，2表示取消点赞
+ * @return {*}
+ * @author: Austral
+ */
+export const upArticle = (publicationId, type, option) => {
+  return Post({
+    url: `/like/publication/${publicationId}/${type}/${option}`
+  })
+}
+
+/**
+ * @description: 分页获取文章评论
+ * @param {number} publicationId 文章id
+ * @param {number} pageNum 
+ * @param {number} pageSize 
+ * @param {boolean} fetchAll 全部
+ * @return {*}
+ * @author: Austral
+ */
+export const getComment = (publicationId, pageNum, pageSize, fetchAll) => {
   return Post({
     url: `/comment/page/${publicationId}`,
     body: {
@@ -104,18 +115,20 @@ export const getComment = (publicationId,pageNum,pageSize,fetchAll) => {
 }
 
 /**
- * @description: 发布评论
- * @param {*} content
- * @param {*} publicationId
+ * @description: 发表评论
+ * @param {string} content 评论内容（必须）
+ * @param {number} publicationId 文章id
+ * @param {number} toCommentId 被回复者id
  * @return {*}
  * @author: Austral
  */
-export const postComment = (content, publicationId) => {
-  return Get({
-    url: '/publicationComment/postComment',
+export const postComment = (publicationId, content, toCommentId) => {
+  return Post({
+    url: '/comment/add',
     data: {
       content,
       publicationId,
+      toCommentId,
     }
   })
 }
@@ -135,6 +148,27 @@ export const replyComment = (content, publicationId, toCommentId) => {
       content,
       publicationId,
       toCommentId
+    }
+  })
+}
+
+/**
+ * @description: 获取用户动态
+ * @param {string} userId 用户id
+ * @param {String} type 1文章，2动态
+ * @param {Number} pageNum
+ * @param {Number} pageSize
+ * @param {Boolean} fetchAll
+ * @return {*}
+ * @author: Austral
+ */
+export const getUserArticle = (type, userId, pageNum, pageSize, fetchAll) => {
+  return Post({
+    url: `/page/getPublicationByUserId/${type}/${userId}`,
+    data: {
+      pageNum,
+      pageSize,
+      fetchAll,
     }
   })
 }

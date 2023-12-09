@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:16:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-18 11:01:46
+ * @LastEditTime: 2023-12-08 17:23:46
  */
 
 import { Avatar } from '@rneui/base';
@@ -25,7 +25,6 @@ const Article = ({ navigation }) => {
   useEffect(() => {
     getArticle(1, 10)
       .then(res => {
-        console.log(res);
         setArticle(res.data.list);
         console.log(res.data.list[0]);
       })
@@ -49,10 +48,10 @@ const Article = ({ navigation }) => {
               username={item.username}
               comment={item.conmmentCount}
               sun={item.likeCount}
-              pictures={item.pictures}
+              pictures={item.pictures[0]}
               onPress={() => {
                 console.log('navigate');
-                navigation.navigate('ARTICLEDETAIL');
+                navigation.navigate('ARTICLEDETAIL', { id: item.id });
               }}
             />
           );

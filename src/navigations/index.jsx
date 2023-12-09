@@ -13,6 +13,7 @@ import BottomTabNavigator from './BottomTab';
 import { createStackNavigator } from '@react-navigation/stack';
 import { CommunityNavigation } from './modules/Community';
 import { MeNavigation } from './modules/Me';
+import { MessageNavigation } from './modules/Message';
 import LoginNavigation from './modules/login';
 import { RelieveRoomNavagation } from './modules/RelieveRoom';
 import { NavigationContainer } from '@react-navigation/native';
@@ -32,6 +33,7 @@ const Navigation = () => {
       />
       {CommunityNavigation(stack)}
       {MeNavigation(stack)}
+      {MessageNavigation(stack)}
       {RelieveRoomNavagation(stack)}
     </stack.Navigator>
   );
