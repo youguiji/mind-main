@@ -10,7 +10,7 @@ import {View,Text, StyleSheet} from 'react-native';
  * @return {ReactNode}
  * @author: Austral
  */
-const Icon = ({size,color,icode,iconPress=()=>{}},style, ) => {
+const Icon = ({size,color,icode,iconPress=()=>{}},style) => {
   return (
     <Text onPress={()=>iconPress()} style={[styles.icon,style,{fontSize: size , color:color}]}> 
       {icode}

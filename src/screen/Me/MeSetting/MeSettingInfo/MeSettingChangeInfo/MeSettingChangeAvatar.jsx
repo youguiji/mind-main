@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-17 20:01:29
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-09 18:59:43
+ * @LastEditTime: 2023-12-10 14:16:25
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -23,6 +23,7 @@ import { changeAvatar, getUserInfo } from '../../../../../network/modules/user';
 import { changeUserInfo } from '../../../../../network/modules/user';
 import { Avatar } from '@rneui/base/dist/Avatar/Avatar';
 import Button from '../../../../../components/Button';
+import { selectUserInfo } from '../../../../../store/modules/user';
 
 const MeSettingChangeAvatar = ({ navigation }) => {
   const [imgList, setImgList] = useState('');
@@ -34,6 +35,31 @@ const MeSettingChangeAvatar = ({ navigation }) => {
     });
     return () => {};
   }, []);
+
+  const uploadImageToServer = async img => {
+    try {
+      const formData = new FormData();
+
+      // 将图片文件添加到表单数据
+      formData.append('image', {
+        uri: img,
+        type: 'image/jpeg',
+        name: 'avatar.jpg',
+      });
+
+
+      changeAvatar(formData)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+      
+    } catch (error) {
+      console.error('Image Upload Error:', error);
+    }
+  };
 
   const handleClick = async () => {
     launchImageLibrary(
@@ -49,9 +75,7 @@ const MeSettingChangeAvatar = ({ navigation }) => {
         console.log(res.uri);
         const base64Image = `data:${curFiles.type};base64,${curFiles.base64}`;
         setImgList(base64Image);
-        changeAvatar(imgList).then(res => {
-          console.log(res);
-        });
+        uploadImageToServer(imgList);
         console.log('imglist:  ' + imgList);
       },
     );

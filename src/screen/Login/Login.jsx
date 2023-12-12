@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-08 15:15:00
+ * @LastEditTime: 2023-12-09 20:32:29
  */
 
 // import Dialog from '../../components/Notification';
@@ -73,10 +73,14 @@ const Login = ({ navigation }) => {
             try {
               if (phone.length != 0) {
                 const res = await getCode(phone, 'login');
+                // console.log(res);
+                // if (res.code != '00000') {
+                //   showNotification(res.message);
+                // }
                 navigation.navigate('LOGINGETCODE', {
                   phone: phone,
                 });
-                showNotification("验证码已发送，请注意查收");
+                showNotification('验证码已发送，请注意查收');
               } else {
                 showNotification('请输入邮箱哦！');
               }

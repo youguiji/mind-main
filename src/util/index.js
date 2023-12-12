@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-12-08 10:59:26
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-09 01:05:42
+ * @LastEditTime: 2023-12-11 13:08:53
  */
 
 /**
@@ -27,6 +27,12 @@ export const currentTime = () => {
   return formattedTime;
 }
 
+/**
+ * @description: 
+ * @param {*} timeStr
+ * @return {*}
+ * @author: Austral
+ */
 export const transforTime = (timeStr) => {
   // 创建一个 Date 对象
   const dateObj = new Date(timeStr);
@@ -49,4 +55,10 @@ export const transforTime = (timeStr) => {
     month: monthName,
     day: day
   };
+}
+
+export const extractTimeFromDateTime = (dateTimeString) => {
+  const dateObject = new Date(dateTimeString);
+  const timeString = `${String(dateObject.getHours()).padStart(2, '0')}:${String(dateObject.getMinutes()).padStart(2, '0')}`;
+  return timeString;
 }

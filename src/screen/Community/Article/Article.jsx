@@ -23,10 +23,11 @@ const Article = ({ navigation }) => {
   ];
   const [article, setArticle] = useState([]);
   useEffect(() => {
-    getArticle(1, 10)
+    getArticle(1,2,2,true)
       .then(res => {
+        console.log(res);
         setArticle(res.data.list);
-        console.log(res.data.list[0]);
+        //console.log('List:' + res.data.list[0]);
       })
       .catch(err => {
         console.error(err);
@@ -46,7 +47,7 @@ const Article = ({ navigation }) => {
               content={item.content}
               title={item.title}
               username={item.username}
-              comment={item.conmmentCount}
+              viewCount={item.viewCount}
               sun={item.likeCount}
               pictures={item.pictures[0]}
               onPress={() => {

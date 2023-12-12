@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-24 15:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-08 23:52:51
+ * @LastEditTime: 2023-12-10 16:52:39
  */
 
 import {
@@ -19,13 +19,13 @@ import {
  * @return {*}
  * @author: Austral
  */
-export const getArticle = (type, pageNum, pageSize) => {
+export const getArticle = (type, pageNum, pageSize, fetchAll) => {
   return Post({
-    url: `/publication/page/{type}`,
+    url: `/publication/publication/page/${type}`,
     data: {
       pageNum,
       pageSize,
-
+      fetchAll,
     }
   })
 }
@@ -64,7 +64,7 @@ export const addArticle = (content, tags, title) => {
  */
 export const getArticleDetail = (publicationId) => {
   return Get({
-    url: `/publication/${publicationId}`,
+    url: `/publication/publication/${publicationId}`,
   })
 }
 
@@ -76,7 +76,7 @@ export const getArticleDetail = (publicationId) => {
  */
 export const deleteArticle = (publicationId) => {
   return Post({
-    url: `/publication/delete/${publicationId}`,
+    url: `/publication/publication/delete/${publicationId}`,
   })
 }
 
@@ -90,7 +90,7 @@ export const deleteArticle = (publicationId) => {
  */
 export const upArticle = (publicationId, type, option) => {
   return Post({
-    url: `/like/publication/${publicationId}/${type}/${option}`
+    url: `/publication/like/publication/${publicationId}/${type}/${option}`
   })
 }
 
@@ -105,8 +105,8 @@ export const upArticle = (publicationId, type, option) => {
  */
 export const getComment = (publicationId, pageNum, pageSize, fetchAll) => {
   return Post({
-    url: `/comment/page/${publicationId}`,
-    body: {
+    url: `/publication/comment/page/${publicationId}`,
+    data: {
       pageNum,
       pageSize,
       fetchAll,
@@ -124,7 +124,7 @@ export const getComment = (publicationId, pageNum, pageSize, fetchAll) => {
  */
 export const postComment = (publicationId, content, toCommentId) => {
   return Post({
-    url: '/comment/add',
+    url: '/publication/comment/add',
     data: {
       content,
       publicationId,
@@ -143,7 +143,7 @@ export const postComment = (publicationId, content, toCommentId) => {
  */
 export const replyComment = (content, publicationId, toCommentId) => {
   return Get({
-    url: '/publicationComment/replyComment',
+    url: '/publication/publicationComment/replyComment',
     data: {
       content,
       publicationId,
@@ -164,7 +164,7 @@ export const replyComment = (content, publicationId, toCommentId) => {
  */
 export const getUserArticle = (type, userId, pageNum, pageSize, fetchAll) => {
   return Post({
-    url: `/page/getPublicationByUserId/${type}/${userId}`,
+    url: `/publication/page/getPublicationByUserId/${type}/${userId}`,
     data: {
       pageNum,
       pageSize,

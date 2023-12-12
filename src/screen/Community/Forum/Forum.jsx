@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:12:55
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-28 17:07:53
+ * @LastEditTime: 2023-12-10 16:48:39
  */
 
 import { Avatar } from '@rneui/base';
@@ -94,9 +94,9 @@ const Forum = ({ navigation }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getArticle(1, 10)
+    getArticle(2, 2, 2, true)
       .then(res => {
-        console.log(res);
+        console.log(res.data.list[0]);
         setList(res.data.list);
         console.log('form:' + res.data.list);
       })
@@ -115,21 +115,24 @@ const Forum = ({ navigation }) => {
           <Pressable
             style={styles.itemContainer}
             onPress={() => {
-              navigation.navigate('FORUMDETAIL',{id:item.id});
+              navigation.navigate('FORUMDETAIL', { id: item.id });
             }}>
             <View style={styles.item}>
-              <View style={styles.imgBox}>
-                <Image
-                  style={styles.img}
-                  source={{
-                    uri: item.pictures[
-                      Math.floor(Math.random() * item.pictures.length)
-                    ],
-                  }}
-                />
-              </View>
+              {item.pictures.length == 0 ? (
+                ''
+              ) : (
+                <View style={styles.imgBox}>
+                  <Image
+                    style={styles.img}
+                    source={{
+                      uri: item.pictures[0].url,
+                    }}
+                  />
+                </View>
+              )}
+
               <Text numberOfLines={2} style={styles.content}>
-                {item.content}
+                {item.title}
               </Text>
               <View
                 style={{

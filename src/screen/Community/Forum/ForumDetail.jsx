@@ -4,10 +4,17 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-03 17:46:58
+ * @LastEditTime: 2023-12-10 17:13:40
  */
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import TitleHeader from '../../../components/TitleHeader';
 import { Avatar } from '@rneui/base';
 import { color } from '../../../assets/color';
@@ -19,12 +26,15 @@ import {
   postComment,
 } from '../../../network/modules/community';
 import Swiper from '../../../components/Swiper';
+import { getUserInfo } from '../../../network/modules/user';
 
 const ForumDetail = ({ route, navigation }) => {
   //路径参数
   const { id } = route.params;
   //评论内容
   const [comment, setComment] = useState('');
+  const [userInfo, setUserInfo] = useState({});
+
   //评论列表
   const [commentList, setCommentList] = useState([]);
   //图片
@@ -34,12 +44,16 @@ const ForumDetail = ({ route, navigation }) => {
   //数据加载
   useEffect(() => {
     console.log(id);
+    getUserInfo().then(res => {
+      setUserInfo(res.data);
+      console.log(res.data);
+    });
     getArticleDetail(id).then(res => {
       //console.log(res.data);
       setarticleDetail(res.data);
       setImages(res.data.pictures.map(item => item.url));
-      getComment(id, 1, 1, true).then(res => {
-        //console.log(res);
+      getComment(id, 1, 1, false).then(res => {
+        console.log(res);
         setCommentList(res.data.list);
         //console.log(commentList.rootCommentVo);
       });
@@ -57,13 +71,17 @@ const ForumDetail = ({ route, navigation }) => {
       <ScrollView>
         <View style={styles.userBox}>
           <Pressable style={styles.userLeft}>
-          <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
                 navigation.navigate('MEUSERPAGE', {
                   userId: articleDetail.userId,
                 });
               }}>
-            <Avatar size={64} source={{ uri: articleDetail.avatar }} rounded />
+              <Avatar
+                size={64}
+                source={{ uri: articleDetail.avatar }}
+                rounded
+              />
             </TouchableOpacity>
             <Text style={styles.name}>{articleDetail.username}</Text>
           </Pressable>
@@ -164,15 +182,16 @@ const ForumDetail = ({ route, navigation }) => {
                 id: 1,
                 content: comment,
                 likeCount: 0,
-                avatar:
-                  'https://tupian.qqw21.com/article/UploadPic/2020-10/202010521523155343.jpg',
+                avatar: userInfo.avatar,
                 parentCommentId: -1,
-                username: 'new',
+                username: userInfo.username,
                 createTime: formattedTime,
               },
             });
             //清空
-            postComment().then(res => {});
+            postComment(articleDetail.id,comment,-1).then(res => {
+              console.log(res);
+            });
             setComment('');
           }}>
           <Text style={styles.btn}>发送</Text>

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-08 17:35:35
+ * @LastEditTime: 2023-12-10 16:57:12
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -18,7 +18,7 @@ const ArticleSingle = ({
   title,
   onPress = () => {},
   sun,
-  comment,
+  viewCount,
   pictures,
 }) => {
   return (
@@ -50,9 +50,9 @@ const ArticleSingle = ({
       </View>
       <View style={styles.commentBox}>
         <Icon icode={'\ue64a'} size={18}></Icon>
-        <Text>12{sun} </Text>
-        <Icon icode={'\ue74e'} size={18}></Icon>
-        <Text>12{comment}</Text>
+        <Text>{sun} </Text>
+        <Icon icode={'\ue634'} size={16}></Icon>
+        <Text>{viewCount}</Text>
         <Text
           style={{
             fontFamily: 'iconfont',

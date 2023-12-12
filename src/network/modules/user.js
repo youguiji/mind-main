@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 20:57:00
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-08 10:39:44
+ * @LastEditTime: 2023-12-10 14:07:43
  */
 import {
   Get,
@@ -37,11 +37,11 @@ export const getCode = (account, action) => {
  * @return {*}
  * @author: Austral
  */
-export const login = ({
+export const login = (
   account,
   password,
   code
-}) => {
+) => {
   return Post({
     url: '/profile/user/login',
     data: {
@@ -139,18 +139,19 @@ export const changeUserInfo = ({
 
 /**
  * @description: 修改头像
- * @param {String} file 文件
+ * @param {object} formData 文件
  * @return {*}
  * @author: Austral
  */
 export const changeAvatar = (
-  file
+  formData
 ) => {
   return Post({
     url: '/profile/user/avatar',
-    data: {
-      file
-    }
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formData
   })
 }
 

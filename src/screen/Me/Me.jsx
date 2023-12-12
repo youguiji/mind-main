@@ -77,7 +77,7 @@ const Me = ({ navigation }) => {
         <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
         <Text style={styles.name}>{userInfo.username}</Text>
         <Text>ID:{userInfo.userId}</Text>
-        <Text>{userInfo.personnalLabel}</Text>
+        <Text>{userInfo.personalLabel}</Text>
         <View style={styles.contain}>
           <Pressable
             style={styles.btn}
@@ -141,10 +141,12 @@ const Me = ({ navigation }) => {
                     pagingEnabled={true}
                     ></FlatList>
                 </View>
-                {/* <View style={styles.comment}>
-                  <Icon size={18} icode={'\ue64a'} />
+                <View style={styles.comment}>
+                  <Icon size={18} icode={'\uec7b'} iconPress={()=>{
+                    console.log("iconpress");
+                  }} />
                   <Text style={{ marginRight: 20 }}>{item.likeCount}</Text>
-                </View> */}
+                </View>
               </View>
             </Pressable>
           );

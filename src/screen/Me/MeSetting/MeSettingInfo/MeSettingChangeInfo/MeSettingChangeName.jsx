@@ -56,7 +56,7 @@ const MeSettingChangeName = ({ navigation }) => {
           }
           onBlur={() => {
             console.log(userInfo);
-            changeUserInfo(userInfo).then(res => {
+            changeUserInfo({...userInfo}).then(res => {
               console.log(res);
             });
           }}

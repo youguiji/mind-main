@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-09 01:48:07
+ * @LastEditTime: 2023-12-10 17:29:29
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -144,22 +144,19 @@ const ArticleDetail = ({ route, navigation }) => {
     setReplyCommentId(null);
   };
 
-  //点赞
-  const handleUpArticle = () => {};
-
   //数据加载
   useEffect(() => {
     console.log(id);
-    // getArticleDetail(id).then(res => {
-    //   //console.log(res.data);
-    //   setarticleDetail(res.data);
-    //   setImages(res.data.pictures.map(item => item.url));
-    //   getComment(id, 1, 10, true).then(res => {
-    //     //console.log(res);
-    //     setCommentList(res.data.list);
-    //     //console.log(commentList.rootCommentVo);
-    //   });
-    // });
+    getArticleDetail(id).then(res => {
+      //console.log(res.data);
+      setarticleDetail(res.data);
+      setImages(res.data.pictures.map(item => item.url));
+      getComment(id, 1, 1, true).then(res => {
+        //console.log(res);
+        setCommentList(res.data.list);
+        //console.log(commentList.rootCommentVo);
+      });
+    });
   }, []);
 
   return (

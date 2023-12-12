@@ -19,6 +19,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TitleHeader from '../../../../../components/TitleHeader';
 import { changeUserInfo } from '../../../../../network/modules/user';
+import { getUserInfo } from '../../../../../network/modules/user';
 
 const MeSettingChangeBirth = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
