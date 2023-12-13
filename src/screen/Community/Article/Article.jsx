@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:16:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-12 21:56:51
+ * @LastEditTime: 2023-12-13 21:31:40
  */
 
 import { Avatar } from '@rneui/base';
@@ -28,7 +28,7 @@ const Article = ({ navigation }) => {
   const [article, setArticle] = useState([]);
   useEffect(() => {
     //dispatch(LoginOut());
-    getArticle(1, 1, 1, true)
+    getArticle(1, 1, 2, true)
       .then(res => {
         console.log(res);
         setArticle(res.data.list);

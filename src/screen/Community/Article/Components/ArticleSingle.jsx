@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 10:59:23
+ * @LastEditTime: 2023-12-13 23:26:00
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -31,6 +31,9 @@ const ArticleSingle = ({
         }}>
         <Avatar size={32} rounded source={{ uri: avatar }} />
         <Text style={{ padding: 5 }}>{username}</Text>
+        <Pressable style={styles.health}>
+          <Text style={styles.healthText}>心理健康师</Text>
+        </Pressable>
       </View>
 
       <View style={{ paddingHorizontal: 10 }}>
@@ -44,7 +47,7 @@ const ArticleSingle = ({
             {content}
           </Text>
           <View style={styles.imgBox}>
-            <Image style={styles.img} source={{ uri: pictures }} />
+            {/* <Image style={styles.img} source={{ uri: pictures[0].url }} /> */}
           </View>
         </View>
       </View>
@@ -76,6 +79,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderColor: '#000',
     backgroundColor: '#fff',
+  },
+  health: {
+    marginLeft: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    backgroundColor: 'rgb(110,165,95)',
+    borderRadius: 14,
+  },
+  healthText: {
+    color: '#fff',
+    fontSize: 12,
   },
   contentBox: {
     display: 'flex',

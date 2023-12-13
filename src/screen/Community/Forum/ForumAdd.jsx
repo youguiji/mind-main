@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-15 08:11:31
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 11:16:20
+ * @LastEditTime: 2023-12-14 00:34:23
  */
 import React, { useState, useRef } from 'react';
 import {
@@ -55,6 +55,16 @@ const ForumAdd = ({ navigation }) => {
     );
   };
 
+  const publish = () => {
+    addArticle(content, title, null, selectedImages, null, 2)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const renderItem = ({ item }) => (
     <Image style={styles.image} source={{ uri: item.uri }} />
   );
@@ -74,7 +84,7 @@ const ForumAdd = ({ navigation }) => {
         }}
         headerRight={() => {
           return (
-            <Pressable style={styles.btn}>
+            <Pressable style={styles.btn} onPress={publish}>
               <Text style={styles.btnText}>发布</Text>
             </Pressable>
           );
@@ -84,16 +94,16 @@ const ForumAdd = ({ navigation }) => {
         placeholder="请输入标题"
         ref={titleRef}
         style={styles.title}
-        value={title}
-        onChange={setTitle}
+        defaultValue={title}
+        onChangeText={text => setTitle(text)}
       />
       <TextInput
         placeholder="分享你的经历和感受吧！"
         multiline={true}
         ref={contentRef}
         style={styles.content}
-        value={content}
-        onChange={setContent}
+        defaultValue={content}
+        onChangeText={text => setContent(text)}
       />
       {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {selectedImage && (
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 10,
-    color: color.gray.deep,
+    //color: color.gray.deep,
   },
   bottomBox: {
     width: '100%',

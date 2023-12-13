@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 15:21:31
+ * @LastEditTime: 2023-12-13 20:13:16
  */
 
 // import Dialog from '../../components/Notification';
@@ -74,7 +74,7 @@ const Login = ({ navigation }) => {
             try {
               if (phone.length != 0) {
                 const res = await getCode(phone, 'login');
-                // console.log(res);
+                console.log(res);
                 // if (res.code != '00000') {
                 //   showNotification(res.message);
                 // }

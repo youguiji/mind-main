@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-11 10:59:25
+ * @LastEditTime: 2023-12-13 21:05:30
  */
 
 // screens/HomeScreen.js
@@ -81,7 +81,7 @@ const LoginGetcode = ({ route, navigation }) => {
             if (code.length == 6) {
               console.log(phone, code, typeof phone, typeof code);
               //改变登录状态
-              dispatch(LoginIn()); //(待删)
+              //dispatch(LoginIn()); //(待删)
               login(phone, 'null', code)
                 .then(res => {
                   console.log(res);

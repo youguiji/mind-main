@@ -14,6 +14,7 @@ import { getUserInfo, getUsersInfo } from '../../network/modules/user';
 import { getChathistory } from '../../network/modules/message';
 import { Avatar } from '@rneui/base';
 import { Image } from '@rneui/themed';
+import { store } from '../../store/configureStore';
 import { currentTime } from '../../util';
 
 const MessageDetail = ({ navigation, route }) => {
@@ -26,10 +27,11 @@ const MessageDetail = ({ navigation, route }) => {
   const [receiverInfo, setReceiverInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
-  var ws = React.useRef(new WebSocket('110.42.236.60:8079/ws')).current;
+  var ws = React.useRef(new WebSocket('http://110.42.236.60:8079/ws')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
+    setChatHistory((prevChatHistory) => prevChatHistory || []);
     //获取接收者信息
     getUsersInfo(receiverId)
       .then(res => {
@@ -39,22 +41,30 @@ const MessageDetail = ({ navigation, route }) => {
       .catch(err => {
         console.log(err);
       });
-    //获取聊天记录
-    getChathistory(receiverId, lastTime)
-      .then(res => {
-        console.log(res);
-        setChatHistory(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    
     //获取用户的基本信息
     getUserInfo().then(res => {
       setUserInfo(res.data);
     });
+    //获取聊天记录
+    getChathistory(receiverId, lastTime)
+      .then(res => {
+        console.log(res);
+        setChatHistory((prevChatHistory) => res.data || prevChatHistory);
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
     ws.onopen = () => {
       console.log('WebSocket connected');
       setServerState('Connected to the server');
+      ws.send(
+        JSON.stringify({
+          token: `mindinsight=${store.getState().user.token}`,
+          type: 'login',
+        }),
+      );
       setDisableButton(false);
     };
     ws.onclose = e => {
@@ -69,40 +79,44 @@ const MessageDetail = ({ navigation, route }) => {
     ws.onmessage = e => {
       const receivedMessage = JSON.parse(e.data);
       console.log(receivedMessage);
-      setChatHistory(prevChatHistory => [...prevChatHistory, {
-        content: receivedMessage.content,
-        sendId: receiverId,
-        sendTime: receivedMessage.sendTime,
-      }]);
+      setChatHistory(prevChatHistory => [
+        ...prevChatHistory,
+        {
+          content: receivedMessage.content,
+          sendId: receiverId,
+          sendTime: receivedMessage.sendTime,
+        },
+      ]);
       serverMessagesList.push(e.data);
       setServerMessages([...serverMessagesList]);
     };
   }, []);
-
-
-
 
   //发送消息
   const submitMessage = () => {
     if (messageText.trim() === '') {
       return;
     }
-
+    
+    // 在你的代码中的后续部分，在使用 push 之前
     chatHistory.push({
       content: messageText,
       sendId: userInfo.sendId,
       sendTime: currentTime(),
     });
+    setChatHistory(chatHistory);
     console.log(chatHistory);
     //更新message数组
     // const newMessage = { id: messages.length + 1, content: inputMessage, sender: 'me' };
     // setMessages([...messages, newMessage]);
     // setInputMessage('');
 
-    ws.send(JSON.stringify({
-      type: 'send',
-      data: { toUserId: receiverId, content: messageText },
-    }));
+    ws.send(
+      JSON.stringify({
+        type: 'send',
+        data: { toUserId: receiverId, content: messageText },
+      }),
+    );
     setMessageText('');
     setInputFieldEmpty(true);
   };
@@ -150,8 +164,8 @@ const MessageDetail = ({ navigation, route }) => {
                     rounded
                     size={48}
                     source={{ uri: receiverInfo.avatar }}
-                    onPress={()=>{
-                      navigation.navigate('MEUSERPAGE',{userId:receiverId})
+                    onPress={() => {
+                      navigation.navigate('MEUSERPAGE', { userId: receiverId });
                     }}
                   />
                   <View style={styles.innerBox}>

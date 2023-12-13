@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-24 15:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 14:04:47
+ * @LastEditTime: 2023-12-14 00:29:43
  */
 
 import {
@@ -37,7 +37,7 @@ export const getArticle = (type, pageNum, pageSize, fetchAll) => {
  * @param {string} title 标题
  * @param {Array} selectedImages 已选择的图片数组 (可选，默认为 [])
  * @param {number|null} id 文章的 id (可选，默认为 null)
- * @param {number|null} type 文章的类型 (可选，默认为 null)
+ * @param {number|null} type 文章的类型 (1为文章，2为动态)
  * @return {*}
  * @author: Austral
  */
@@ -48,9 +48,9 @@ export const addArticle = (content, title, tags = [], selectedImages = [], id = 
   formData.append('title', title);
 
   // 添加 tags 数组
-  tags.forEach((tag, index) => {
-    formData.append(`tags[${index}]`, tag);
-  });
+  // tags.forEach((tag, index) => {
+  //   formData.append(`tags[${index}]`, tag);
+  // });
 
   // 添加图片文件到 FormData
   selectedImages.forEach((image, index) => {

@@ -122,11 +122,11 @@ export const changePassword = ({
  * @return {*}
  * @author: Austral
  */
-export const changeUserInfo = ({
+export const changeUserInfo = (
   username,
   birthdate,
   sex
-}) => {
+) => {
   return Put({
     url: '/profile/user/info',
     data: {

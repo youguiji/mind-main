@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 11:03:32
+ * @LastEditTime: 2023-12-13 21:53:24
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -182,6 +182,9 @@ const ArticleDetail = ({ route, navigation }) => {
                 source={{ uri: articleDetail.avatar }}
                 rounded
               />
+              <View style={styles.health}>
+                <Text style={styles.healthText}>心理健康师</Text>
+              </View>
             </Pressable>
             <Text style={styles.name}>{articleDetail.username}</Text>
           </Pressable>
@@ -420,6 +423,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     //
   },
+  health: {
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    backgroundColor: 'rgb(110,165,95)',
+    borderRadius: 14,
+    marginLeft: 5,
+  },
+  healthText: {
+    color: '#fff',
+    fontSize: 12,
+  },
   childListBox: {
     marginTop: 15,
   },
@@ -440,13 +454,13 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 14,
     paddingLeft: 10,
-    paddingVertical:5,
+    paddingVertical: 5,
   },
-  childContent:{
+  childContent: {
     color: '#000',
     fontSize: 12,
     paddingLeft: 10,
-    paddingVertical:5,
+    paddingVertical: 5,
   },
   time: {
     marginLeft: 10,

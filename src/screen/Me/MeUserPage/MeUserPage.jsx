@@ -79,13 +79,13 @@ const MeUserPage = ({ navigation, route }) => {
                 id: 1,
               });
             }}>
-            <Text>关注 {userInfo.attention}</Text>
+            <Text>关注 0 {userInfo.attention}</Text>
           </Pressable>
           <Pressable
             onPress={() => {
               navigation.navigate('MEATTENTIONFANS');
             }}>
-            <Text style={{ marginHorizontal: 20 }}>粉丝 {userInfo.fans}</Text>
+            <Text style={{ marginHorizontal: 20 }}>粉丝 0 {userInfo.fans}</Text>
           </Pressable>
           <Text>动态 {trends.length}</Text>
         </View>
@@ -95,7 +95,7 @@ const MeUserPage = ({ navigation, route }) => {
               key={item.id}
               style={styles.item}
               onPress={() => {
-                navigation.navigate('FORUMDETAIL',{id: item.id});
+                navigation.navigate('FORUMDETAIL', { id: item.id });
               }}>
               <View style={styles.left}>
                 <Text style={styles.day}>
@@ -123,22 +123,26 @@ const MeUserPage = ({ navigation, route }) => {
                   <Text style={{ marginRight: 20 }}>{item.likeCount}</Text>
 
                 </View> */}
-                
               </View>
             </Pressable>
           );
         })}
       </ScrollView>
       <View style={styles.bottomBox}>
-                  <Pressable style={styles.botn}>
-                    <Text style={styles.boText}>关注</Text>
-                  </Pressable>
-                  <Pressable onPress={()=>{
-                    navigation.navigate('MESSAGEDETAIL',{receiverId: userId,lastTime:currentTime})
-                  }}  style={styles.botn}>
-                    <Text style={styles.boText}>私信</Text>
-                  </Pressable>
-                </View>
+        <Pressable style={styles.botn}>
+          <Text style={styles.boText}>关注</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('MESSAGEDETAIL', {
+              receiverId: userId,
+              lastTime: currentTime,
+            });
+          }}
+          style={styles.botn}>
+          <Text style={styles.boText}>私信</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -225,10 +229,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: color.purple.deep,
     borderRadius: 16,
-    
   },
   boText: {
     color: '#fff',
-  }
+  },
 });
 export default MeUserPage;

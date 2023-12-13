@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 17:25:34
+ * @LastEditTime: 2023-12-13 21:48:39
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -27,7 +27,7 @@ import { getUsersInfo } from '../../network/modules/user';
 import { extractTimeFromDateTime } from '../../util';
 
 const Message = ({ navigation }) => {
-  //const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -52,43 +52,58 @@ const Message = ({ navigation }) => {
   };
 
   // 更新数组
-  const updateChatGroupArray = async () => {
-    try {
-      const res = await getChatGroup(1, 1);
-      console.log(res);
-      const chatGroupArray = res.data.list;
-      console.log(chatGroupArray[0]);
+  const updateChatGroupArray = () => {
+    getChatGroup(1, 3)
+      .then(res => {
+        console.log(res);
+        const chatGroupArray = res.data.list;
+        console.log(chatGroupArray[0]);
 
-      if (!Array.isArray(chatGroupArray)) {
-        console.log('chatGroup:' + chatGroupArray[0]);
-        console.error('Error: chatGroupArray is not an array');
-        return;
-      }
+        if (!Array.isArray(chatGroupArray)) {
+          console.log('chatGroup:' + chatGroupArray[0]);
+          console.error('Error: chatGroupArray is not an array');
+          return Promise.reject('chatGroupArray is not an array');
+        }
 
-      const updatedArray = await Promise.all(
-        chatGroupArray.map(async item => {
-          const userInfo = await getUsersInfo(item.toUserId);
-          console.log(userInfo);
-          if (userInfo) {
-            return { ...item, ...userInfo };
-          }
-          return item;
-        }),
-      );
-
-      // 根据 updateTime 排序数组
-      // const sortedArray = updatedArray.sort(
-      //   (a, b) => new Date(b.updateTime) - new Date(a.updateTime),
-      // );
-
-      //console.log(sortedArray);
-      // 这里可以使用 sortedArray，它是更新并排序后的数组
-      setMessageList(sortedArray);
-    } catch (error) {
-      console.error('Error updating and sorting array:', error);
-    }
+        // 使用 Promise.all() 处理并行请求
+        return Promise.all(
+          chatGroupArray.map(item => {
+            console.log(item);
+            // 返回一个 Promise 对象
+            return getUsersInfo(item.toUserId)
+              .then(userInfo => {
+                console.log('userInfo');
+                console.log(userInfo);
+                if (userInfo) {
+                  return { ...item, ...userInfo };
+                }
+                return item;
+              })
+              .catch(error => {
+                console.error(
+                  `Error fetching user info for user ${item.toUserId}:`,
+                  error,
+                );
+                return item;
+              });
+          }),
+        );
+      })
+      .then(updatedArray => {
+        //根据 updateTime 排序数组
+        const sortedArray = updatedArray.sort(
+          (a, b) => new Date(b.updateTime) - new Date(a.updateTime),
+        );
+        console.log(sortedArray);
+        //这里可以使用 sortedArray，它是更新并排序后的数组
+        setMessageList(updatedArray);
+      })
+      .catch(error => {
+        console.error('Error updating and sorting array:', error);
+      });
   };
 
+  // 在 useEffect 中使用
   useEffect(() => {
     updateChatGroupArray();
   }, []);
@@ -177,32 +192,6 @@ const Message = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* 标题
-      <View>
-        <Text style={styles.topTitle}>消息</Text>
-      </View>
-      顶部
-      <View style={styles.top}>
-        <View>
-          <View style={styles.box1}>
-            <Icon size={32} icode={'\ue8c3'} color={'rgb(253,94,91)'} />
-          </View>
-          <Text>赞和收藏</Text>
-        </View>
-        <View>
-          <View style={styles.box2}>
-            <Icon size={38} icode={'\uebac'} color={'rgb(50,136,255)'} />
-          </View>
-          <Text>新增关注</Text>
-        </View>
-        <View>
-          <View style={styles.box3}>
-            <Icon size={32} icode={'\ue60c'} color={'rgb(52,218,152)'} />
-          </View>
-          <Text>新增评论</Text>
-        </View>
-      </View>
-      聊天列表 */}
       <FlatList
         data={messageList}
         keyExtractor={(item, index) => index}
@@ -234,27 +223,35 @@ const Message = ({ navigation }) => {
           </View>
         }
         renderItem={({ item }) => {
-          return (
-            <Pressable
-              style={styles.listBox}
-              onPress={() => {
-                navigation.navigate('MESSAGEDETAIL', {
-                  receiverId: item.toUserId,
-                  lastTime: item.updateTime,
-                });
-              }}>
-              <Avatar size={48} rounded source={{ uri: 'item.data.avatar' }} />
-              <View style={styles.userRight}>
-                <View style={styles.innerLeft}>
-                  <Text style={styles.text}>{item.data.username}</Text>
-                  <Text style={styles.context}>{item.lastMessage}</Text>
+          if (messageList.length != 0) {
+            return (
+              <Pressable
+                style={styles.listBox}
+                onPress={() => {
+                  navigation.navigate('MESSAGEDETAIL', {
+                    receiverId: item.toUserId,
+                    lastTime: item.updateTime,
+                  });
+                }}>
+                <Avatar
+                  size={48}
+                  rounded
+                  source={{ uri: 'item.data.avatar' }}
+                />
+                <View style={styles.userRight}>
+                  <View style={styles.innerLeft}>
+                    <Text style={styles.text}>{item.data.username}</Text>
+                    <Text style={styles.context}>{item.lastMessage}</Text>
+                  </View>
+                  <View style={styles.innerRight}>
+                    <Text>{extractTimeFromDateTime(item.updateTime)}</Text>
+                  </View>
                 </View>
-                <View style={styles.innerRight}>
-                  <Text>{extractTimeFromDateTime(item.updateTime)}</Text>
-                </View>
-              </View>
-            </Pressable>
-          );
+              </Pressable>
+            );
+          } else {
+            return <Text style={styles.loss}>当前暂无好友和您聊天哦！</Text>;
+          }
         }}></FlatList>
     </View>
   );
@@ -307,6 +304,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  loss: {
+    width: '100%',
+    paddingVertical: 40,
   },
   // 列表
   listBox: {
