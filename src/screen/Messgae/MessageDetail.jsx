@@ -26,7 +26,7 @@ const MessageDetail = ({ navigation, route }) => {
   const [receiverInfo, setReceiverInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
-  var ws = React.useRef(new WebSocket('ws://192.168.57.117:8079/ws')).current;
+  var ws = React.useRef(new WebSocket('110.42.236.60:8079/ws')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
@@ -150,6 +150,9 @@ const MessageDetail = ({ navigation, route }) => {
                     rounded
                     size={48}
                     source={{ uri: receiverInfo.avatar }}
+                    onPress={()=>{
+                      navigation.navigate('MEUSERPAGE',{userId:receiverId})
+                    }}
                   />
                   <View style={styles.innerBox}>
                     <Text>{receiverInfo.username}</Text>
@@ -240,12 +243,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     left: 10,
     alignSelf: 'flex-start',
+    marginVertical: 10,
   },
   right: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
     maxWidth: '80%',
     right: 10,
+    marginVertical: 10,
   },
   innerBox: {
     marginHorizontal: 10,

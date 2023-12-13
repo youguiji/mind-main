@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 16:57:12
+ * @LastEditTime: 2023-12-13 10:59:23
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -50,9 +50,9 @@ const ArticleSingle = ({
       </View>
       <View style={styles.commentBox}>
         <Icon icode={'\ue64a'} size={18}></Icon>
-        <Text>{sun} </Text>
+        <Text style={styles.iconMargin}>{sun}</Text>
         <Icon icode={'\ue634'} size={16}></Icon>
-        <Text>{viewCount}</Text>
+        <Text style={styles.iconMargin}>{viewCount}</Text>
         <Text
           style={{
             fontFamily: 'iconfont',
@@ -71,8 +71,8 @@ const ArticleSingle = ({
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    margin: 10,
-    borderRadius: 20,
+    marginBottom: 10,
+    //borderRadius: 20,
     fontSize: 16,
     borderColor: '#000',
     backgroundColor: '#fff',
@@ -96,7 +96,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     position: 'relative',
+  },
+  iconMargin: {
+    paddingLeft: 8,
+    paddingRight: 20,
   },
 });
 

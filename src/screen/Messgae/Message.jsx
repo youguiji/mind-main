@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-11 12:12:01
+ * @LastEditTime: 2023-12-13 17:25:34
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -54,18 +54,21 @@ const Message = ({ navigation }) => {
   // 更新数组
   const updateChatGroupArray = async () => {
     try {
-      const res = await getChatGroup(1, 10);
+      const res = await getChatGroup(1, 1);
+      console.log(res);
       const chatGroupArray = res.data.list;
+      console.log(chatGroupArray[0]);
 
       if (!Array.isArray(chatGroupArray)) {
-        console.log(chatGroupArray);
+        console.log('chatGroup:' + chatGroupArray[0]);
         console.error('Error: chatGroupArray is not an array');
         return;
       }
 
       const updatedArray = await Promise.all(
         chatGroupArray.map(async item => {
-          const userInfo = await getUsersInfo(item.touserId);
+          const userInfo = await getUsersInfo(item.toUserId);
+          console.log(userInfo);
           if (userInfo) {
             return { ...item, ...userInfo };
           }
@@ -74,11 +77,11 @@ const Message = ({ navigation }) => {
       );
 
       // 根据 updateTime 排序数组
-      const sortedArray = updatedArray.sort(
-        (a, b) => new Date(b.updateTime) - new Date(a.updateTime),
-      );
+      // const sortedArray = updatedArray.sort(
+      //   (a, b) => new Date(b.updateTime) - new Date(a.updateTime),
+      // );
 
-      console.log(sortedArray);
+      //console.log(sortedArray);
       // 这里可以使用 sortedArray，它是更新并排序后的数组
       setMessageList(sortedArray);
     } catch (error) {
@@ -235,9 +238,12 @@ const Message = ({ navigation }) => {
             <Pressable
               style={styles.listBox}
               onPress={() => {
-                navigation.navigate('MESSAGEDETAIL',{receiverId: item.touserId,lastTime:item.updateTime});
+                navigation.navigate('MESSAGEDETAIL', {
+                  receiverId: item.toUserId,
+                  lastTime: item.updateTime,
+                });
               }}>
-              <Avatar size={48} rounded source={{ uri: item.data.avatar }} />
+              <Avatar size={48} rounded source={{ uri: 'item.data.avatar' }} />
               <View style={styles.userRight}>
                 <View style={styles.innerLeft}>
                   <Text style={styles.text}>{item.data.username}</Text>
@@ -312,7 +318,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
-
   },
   userRight: {
     flexDirection: 'row',

@@ -41,7 +41,7 @@ const cacheRequest = async (options) => {
 export function request(option) {
   return new Promise((resolve, reject) => {
     const instances = axios.create({
-      baseURL: 'https://mock.apifox.com/m1/2971789-0-default',
+      baseURL: 'http://110.42.236.60:8080',
       timeout: 5000,
     })
 

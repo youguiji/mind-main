@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-24 15:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 16:52:39
+ * @LastEditTime: 2023-12-13 14:04:47
  */
 
 import {
@@ -33,28 +33,53 @@ export const getArticle = (type, pageNum, pageSize, fetchAll) => {
 /**
  * @description: 增加或者修改文章
  * @param {string} content 内容
- * @param {number} id 右值为编辑，无值为新增
- * @param {number} type 1为文章，2为动态
- * @param {Array} tags 标签数组
+ * @param {Array} tags 标签数组 (可选，默认为 [])
  * @param {string} title 标题
- * @param {Array} pictures 图片数组
+ * @param {Array} selectedImages 已选择的图片数组 (可选，默认为 [])
+ * @param {number|null} id 文章的 id (可选，默认为 null)
+ * @param {number|null} type 文章的类型 (可选，默认为 null)
  * @return {*}
  * @author: Austral
  */
-export const addArticle = (content, tags, title) => {
+export const addArticle = (content, title, tags = [], selectedImages = [], id = null, type = null) => {
+  // 创建一个 FormData 对象
+  const formData = new FormData();
+  formData.append('content', content);
+  formData.append('title', title);
+
+  // 添加 tags 数组
+  tags.forEach((tag, index) => {
+    formData.append(`tags[${index}]`, tag);
+  });
+
+  // 添加图片文件到 FormData
+  selectedImages.forEach((image, index) => {
+    // 使用 index 作为文件名，你可以根据实际情况设置文件名
+    formData.append(`pictures[${index}]`, {
+      uri: image.uri,
+      type: image.type, // 设置文件类型
+      name: `image_${index}.jpg`, // 设置文件名
+    });
+  });
+
+  // 如果提供了 id 和 type，添加到 FormData
+  if (id !== null) {
+    formData.append('id', id);
+  }
+
+  if (type !== null) {
+    formData.append('type', type);
+  }
+
   return Post({
     url: '/publication/publication/manage',
-    data: {
-      id,
-      type,
-      title,
-      content,
-      tags,
-      pictures,
-
-    }
-  })
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 }
+
 
 /**
  * @description: 获取文章详情

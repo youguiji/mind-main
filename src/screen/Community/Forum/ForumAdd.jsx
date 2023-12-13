@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Version:
+ * @Autor: Austral
+ * @Date: 2023-11-15 08:11:31
+ * @LastEditors: Austral
+ * @LastEditTime: 2023-12-13 11:16:20
+ */
 import React, { useState, useRef } from 'react';
 import {
   View,
@@ -16,6 +24,7 @@ import TitleHeader from '../../../components/TitleHeader';
 import { color } from '../../../assets/color';
 import Icon from '../../../components/Icon';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { addArticle } from '../../../network/modules/community';
 
 const ForumAdd = ({ navigation }) => {
   const [title, setTitle] = useState('');
@@ -28,6 +37,7 @@ const ForumAdd = ({ navigation }) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   const openImagePicker = async () => {
+    console.log('open successfully');
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -36,12 +46,12 @@ const ForumAdd = ({ navigation }) => {
         maxWidth: 1000,
         maxHeight: 1000,
       },
-      (response) => {
+      response => {
         if (!response.didCancel && !response.errorCode) {
           // 更新选择的图片数组
           setSelectedImages([...selectedImages, ...response.assets]);
         }
-      }
+      },
     );
   };
 
@@ -99,11 +109,11 @@ const ForumAdd = ({ navigation }) => {
           <Image key={index} source={{ uri: image.uri }} style={styles.image} />
         ))}
       </ScrollView>
-      <Pressable style={styles.bottomBox}>
-        <TouchableOpacity  onPress={openImagePicker}>
-          <Icon icode={'\ue60b'} size={26} />
-        </TouchableOpacity>
-      </Pressable>
+      <View style={styles.bottomBox}>
+        <Pressable onPress={openImagePicker}>
+          <Icon icode={'\ue60b'} size={26} iconPress={openImagePicker} />
+        </Pressable>
+      </View>
     </Pressable>
   );
 };

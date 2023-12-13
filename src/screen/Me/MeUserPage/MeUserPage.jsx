@@ -11,6 +11,8 @@ import { getUserArticle } from '../../../network/modules/community';
 import { getUsersInfo } from '../../../network/modules/user';
 import { transforTime } from '../../../util';
 import { color } from '../../../assets/color';
+import { currentTime } from '../../../util';
+
 const MeUserPage = ({ navigation, route }) => {
   //用户id
   const { userId } = route.params;
@@ -132,7 +134,7 @@ const MeUserPage = ({ navigation, route }) => {
                     <Text style={styles.boText}>关注</Text>
                   </Pressable>
                   <Pressable onPress={()=>{
-                    navigation.navigate('MESSAGEDETAIL',{userId: userInfo.userId})
+                    navigation.navigate('MESSAGEDETAIL',{receiverId: userId,lastTime:currentTime})
                   }}  style={styles.botn}>
                     <Text style={styles.boText}>私信</Text>
                   </Pressable>

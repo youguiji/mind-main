@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 17:13:40
+ * @LastEditTime: 2023-12-13 05:57:33
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -27,6 +27,8 @@ import {
 } from '../../../network/modules/community';
 import Swiper from '../../../components/Swiper';
 import { getUserInfo } from '../../../network/modules/user';
+import { currentTime } from '../../../util';
+import { upArticle } from '../../../network/modules/community';
 
 const ForumDetail = ({ route, navigation }) => {
   //路径参数
@@ -34,13 +36,13 @@ const ForumDetail = ({ route, navigation }) => {
   //评论内容
   const [comment, setComment] = useState('');
   const [userInfo, setUserInfo] = useState({});
-
   //评论列表
   const [commentList, setCommentList] = useState([]);
   //图片
   const [images, setImages] = useState([]);
   //详细内容
   const [articleDetail, setarticleDetail] = useState({});
+  const [up, setUp] = useState(false);
   //数据加载
   useEffect(() => {
     console.log(id);
@@ -147,7 +149,24 @@ const ForumDetail = ({ route, navigation }) => {
           onChangeText={setComment}
         />
         <View style={styles.iconBox}>
-          <Icon size={32} icode={'\ue64a'} />
+          <Icon
+            iconPress={() => {
+              if (up) {
+                upArticle(id, 1, 2).then(res => {
+                  console.log(res);
+                });
+              } else {
+                upArticle(id, 1, 1).then(res => {
+                  console.log(res);
+                });
+              }
+              setUp(!up);
+              console.log(up);
+            }}
+            size={28}
+            icode={'\ue8c3'}
+            color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
+          />
           <Text>{articleDetail.likeCount}</Text>
           <Icon size={32} icode={'\ue74e'} />
           <Text>{articleDetail.likeCount}</Text>
@@ -155,27 +174,6 @@ const ForumDetail = ({ route, navigation }) => {
         <Pressable
           style={styles.userRight}
           onPress={() => {
-            console.log(comment);
-            console.log(commentList);
-            // 创建一个新的 Date 对象
-            let currentDate = new Date();
-
-            // 获取当前时间的各个部分
-            let year = currentDate.getFullYear();
-            let month = (currentDate.getMonth() + 1)
-              .toString()
-              .padStart(2, '0'); // 月份是从 0 开始计数的，需要加 1
-            let day = currentDate.getDate().toString().padStart(2, '0');
-            let hours = currentDate.getHours().toString().padStart(2, '0');
-            let minutes = currentDate.getMinutes().toString().padStart(2, '0');
-            let seconds = currentDate.getSeconds().toString().padStart(2, '0');
-
-            // 构建时间字符串
-            let formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-            // 输出当前时间
-            console.log('当前时间是：' + formattedTime);
-
             //更新评论数组
             commentList.unshift({
               rootCommentVo: {
@@ -185,11 +183,11 @@ const ForumDetail = ({ route, navigation }) => {
                 avatar: userInfo.avatar,
                 parentCommentId: -1,
                 username: userInfo.username,
-                createTime: formattedTime,
+                createTime: currentTime(),
               },
             });
             //清空
-            postComment(articleDetail.id,comment,-1).then(res => {
+            postComment(articleDetail.id, comment, -1).then(res => {
               console.log(res);
             });
             setComment('');

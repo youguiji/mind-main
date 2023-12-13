@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 17:29:29
+ * @LastEditTime: 2023-12-13 11:03:32
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -240,7 +240,7 @@ const ArticleDetail = ({ route, navigation }) => {
                       <Pressable style={styles.childListBox}>
                         <View style={styles.commentDetail}>
                           <Avatar
-                            size={48}
+                            size={32}
                             source={{ uri: child.avatar }}
                             rounded
                           />
@@ -255,7 +255,7 @@ const ArticleDetail = ({ route, navigation }) => {
                                 <Text> to {child.toUsername}</Text>
                               )}
                             </Text>
-                            <Text style={styles.commentContent}>
+                            <Text style={styles.childContent}>
                               {child.content}
                             </Text>
                             <Text style={styles.time}>{child.createTime}</Text>
@@ -438,8 +438,15 @@ const styles = StyleSheet.create({
   },
   commentContent: {
     color: '#000',
-    fontSize: 15,
+    fontSize: 14,
     paddingLeft: 10,
+    paddingVertical:5,
+  },
+  childContent:{
+    color: '#000',
+    fontSize: 12,
+    paddingLeft: 10,
+    paddingVertical:5,
   },
   time: {
     marginLeft: 10,

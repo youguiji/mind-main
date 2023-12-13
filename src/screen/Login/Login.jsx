@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-09 20:32:29
+ * @LastEditTime: 2023-12-13 15:21:31
  */
 
 // import Dialog from '../../components/Notification';
@@ -66,10 +66,11 @@ const Login = ({ navigation }) => {
             },
           ]}
           textStyle={{
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: '500',
           }}
           onPress={async () => {
+            dispatch(LoginIn);
             try {
               if (phone.length != 0) {
                 const res = await getCode(phone, 'login');
@@ -97,7 +98,7 @@ const Login = ({ navigation }) => {
             },
           ]}
           textStyle={{
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: '500',
           }}
           onPress={() => {

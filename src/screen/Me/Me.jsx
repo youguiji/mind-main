@@ -8,7 +8,8 @@ import {
   FlatList,
   Pressable,
   ScrollView,
-  TouchableOpacity,Dimensions,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Button from '../../components/Button';
 import { useDispatch } from 'react-redux';
@@ -20,12 +21,35 @@ import { getUserInfo } from '../../network/modules/user';
 import { getUserArticle } from '../../network/modules/community';
 import { transforTime } from '../../util';
 import { color } from '../../assets/color';
+import ModalComponent from '../../components/Model';
+import { deleteArticle } from '../../network/modules/community';
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 2; // 定义列数
 
 const Me = ({ navigation }) => {
   const [trends, setTrends] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
+
+  const openModal = id => {
+    setDeleteId(id);
+    setIsModalVisible(true);
+  };
+  const handleConfirm = () => {
+    console.log('确认操作，参数为:', deleteId);
+    deleteArticle(deleteId)
+      .then(res => {
+        console.log(res);
+        if (res.ok) {
+          console.log('删除成功');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // 在这里处理确认操作
+  };
   const dispatch = useDispatch();
 
   const [userInfo, setUserInfo] = useState({
@@ -54,6 +78,13 @@ const Me = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ModalComponent
+        visible={isModalVisible}
+        title="确定要删除这条动态吗？"
+        onClose={() => setIsModalVisible(false)}
+        onConfirm={handleConfirm}
+        parameter={deleteId}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -138,14 +169,18 @@ const Me = ({ navigation }) => {
                     keyExtractor={(item, index) => item.id}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    pagingEnabled={true}
-                    ></FlatList>
+                    pagingEnabled={true}></FlatList>
                 </View>
                 <View style={styles.comment}>
-                  <Icon size={18} icode={'\uec7b'} iconPress={()=>{
-                    console.log("iconpress");
-                  }} />
-                  <Text style={{ marginRight: 20 }}>{item.likeCount}</Text>
+                  <Icon
+                    size={18}
+                    icode={'\uec7b'}
+                    iconPress={() => {
+                      console.log('iconpress');
+                      console.log(item.id);
+                      openModal(item.id);
+                    }}
+                  />
                 </View>
               </View>
             </Pressable>
@@ -228,7 +263,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
     height: 100,
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: color.purple.deep, // 边框颜色
   },
   day: {
