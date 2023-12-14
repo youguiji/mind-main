@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 23:26:00
+ * @LastEditTime: 2023-12-14 08:55:14
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
   },
   health: {
     marginLeft: 5,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
+    paddingHorizontal: 3,
+    paddingVertical: 5,
     backgroundColor: 'rgb(110,165,95)',
     borderRadius: 14,
   },

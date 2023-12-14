@@ -50,6 +50,7 @@ const ForumAdd = ({ navigation }) => {
         if (!response.didCancel && !response.errorCode) {
           // 更新选择的图片数组
           setSelectedImages([...selectedImages, ...response.assets]);
+          console.log(selectedImages);
         }
       },
     );

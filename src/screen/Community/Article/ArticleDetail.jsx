@@ -182,11 +182,11 @@ const ArticleDetail = ({ route, navigation }) => {
                 source={{ uri: articleDetail.avatar }}
                 rounded
               />
-              <View style={styles.health}>
-                <Text style={styles.healthText}>心理健康师</Text>
-              </View>
             </Pressable>
             <Text style={styles.name}>{articleDetail.username}</Text>
+            <View style={styles.health}>
+              <Text style={styles.healthText}>心理健康师</Text>
+            </View>
           </Pressable>
           <Pressable style={styles.userRight}>
             <Text style={styles.btn}>关注</Text>
@@ -299,10 +299,19 @@ const ArticleDetail = ({ route, navigation }) => {
               if (up) {
                 upArticle(id, 1, 2).then(res => {
                   console.log(res);
+                  setArticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
                 });
+                
               } else {
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
+                  setArticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
                 });
               }
               setUp(!up);
