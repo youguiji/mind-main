@@ -299,7 +299,7 @@ const ArticleDetail = ({ route, navigation }) => {
               if (up) {
                 upArticle(id, 1, 2).then(res => {
                   console.log(res);
-                  setArticleDetail(prevState => ({
+                  setarticleDetail(prevState => ({
                     ...prevState,
                     likeCount: res.data,
                   }));
@@ -308,7 +308,7 @@ const ArticleDetail = ({ route, navigation }) => {
               } else {
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
-                  setArticleDetail(prevState => ({
+                  setarticleDetail(prevState => ({
                     ...prevState,
                     likeCount: res.data,
                   }));
