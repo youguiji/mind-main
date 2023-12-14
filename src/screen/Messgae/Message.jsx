@@ -45,8 +45,8 @@ const Message = ({ navigation }) => {
     try {
       const res = await getUsersInfo(userId);
       return res.data;
-    } catch (err) {
-      console.error(`Error fetching user info for user ${userId}:`, error);
+    } catch (error) {
+      console.error(`Error fetching user info for user ${userId}:`, err);
       return null;
     }
   };

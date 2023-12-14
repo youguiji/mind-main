@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 09:12:20
+ * @LastEditTime: 2023-12-14 10:38:10
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -24,10 +24,12 @@ import {
   getArticleDetail,
   getComment,
   postComment,
+  replyComment,
   upArticle,
 } from '../../../network/modules/community';
 import Swiper from '../../../components/Swiper';
 import { useNotification } from '../../../components/Notification';
+import { getUserInfo } from '../../../network/modules/user';
 import { currentTime } from '../../../util';
 
 const ArticleDetail = ({ route, navigation }) => {
@@ -45,6 +47,7 @@ const ArticleDetail = ({ route, navigation }) => {
   const [replyCommentId, setReplyCommentId] = useState(null);
   //通知框
   const showNotification = useNotification();
+  const [userInfo, setUserInfo] = useState({});
 
   const [up, setUp] = useState(false);
 
@@ -71,8 +74,8 @@ const ArticleDetail = ({ route, navigation }) => {
         // 找到母评论后，在其 childComment 数组中添加新的子评论
         commentList[parentCommentIndex].childComment.unshift({
           // 新评论的数据对象
-          createTime: formattedTime,
-          updateTIme: formattedTime,
+          createTime: currentTime,
+          updateTIme: currentTime,
           deleteFlag: false,
           id: commentList[parentCommentIndex].childComment.length + 1, // 替换为实际的 ID 生成逻辑
           publicationId: 0,
@@ -91,51 +94,42 @@ const ArticleDetail = ({ route, navigation }) => {
           likeCount: 0,
           isFeatured: 12,
         });
+        replyComment(articleDetail.id, comment, replyCommentId).then(res => {
+          console.log(res);
+        });
+        setComment('');
       } else {
         commentList[parentCommentIndex].rootCommentVo.unshift({
-          // 新评论的数据对象
-          createTime: formattedTime,
-          updateTIme: formattedTime,
+          createTime: currentTime,
+          updateTIme: currentTime,
           deleteFlag: false,
           id: commentList[parentCommentIndex].rootCommentVo.length + 1, // 替换为实际的 ID 生成逻辑
           publicationId: 0,
-          userId: 1, // 替换为实际的用户 ID
-          username: 'newChild', // 替换为实际的用户名
-          sex: 1,
-          avatar:
-            'https://tupian.qqw21.com/article/UploadPic/2019-1/201912022251641200.jpg', // 替换为实际的头像 URL
-          content: comment, // 从输入框获取评论内容
-          parentCommentId: replyCommentId, // 指定父评论 ID
+          userId: userInfo.userId,
+          username: userInfo.username,
+          sex: userInfo.sex,
+          avatar: userInfo.avatar,
+          content: comment,
+          parentCommentId: replyCommentId,
           toCommentUserId: -1,
-          toUsername: 'parent1', // 替换为实际的母评论用户名
-          toSex: 1,
-          toAvatar: 'http://dummyimage.com/200x300', // 替换为实际的母评论用户头像 URL
-          toCommentId: replyCommentId, // 指定母评论 ID
+          toUsername: 'parent1',
+          // toSex: 1,
+          // toAvatar: 'http://dummyimage.com/200x300',
+          // toCommentId: replyCommentId,
           likeCount: 0,
-          isFeatured: 12,
+          isFeatured: 0,
         });
+        console.log(commentList);
+        postComment(articleDetail.id, comment, -1).then(res => {
+          console.log(res);
+        });
+        setComment('');
+        console.log(commentList);
       }
     }
-    //更新评论数组
-    commentList.unshift({
-      rootCommentVo: {
-        id: 1,
-        content: comment,
-        likeCount: 0,
-        avatar:
-          'https://tupian.qqw21.com/article/UploadPic/2020-10/202010521523155343.jpg',
-        parentCommentId: -1,
-        username: 'new',
-        createTime: currentTime(),
-      },
-    });
 
     postComment(id, comment, replyCommentId).then(res => {
-      if (ok) {
-        showNotification('评论成功');
-      } else {
-        showNotification('评论失败');
-      }
+      console.log(res);
     });
     //清空
     setComment('');
@@ -147,6 +141,10 @@ const ArticleDetail = ({ route, navigation }) => {
   //数据加载
   useEffect(() => {
     console.log(id);
+    getUserInfo().then(res => {
+      setUserInfo(res.data);
+      console.log(res.data);
+    });
     getArticleDetail(id).then(res => {
       //console.log(res.data);
       setarticleDetail(res.data);
@@ -237,44 +235,50 @@ const ArticleDetail = ({ route, navigation }) => {
                       <Text>{item.rootCommentVo.likeCount}</Text>
                     </View>
                   </View>
-                  {item.childComment.map(child => {
-                    return (
-                      // 子评论
-                      <Pressable style={styles.childListBox}>
-                        <View style={styles.commentDetail}>
-                          <Avatar
-                            size={32}
-                            source={{ uri: child.avatar }}
-                            rounded
-                          />
-                          <View
-                            style={styles.middleBox}
-                            onPress={commentPress(child.id)}>
-                            <Text style={styles.commentName}>
-                              {child.username}
-                              {child.toCommentUserId == -1 ? (
-                                ''
-                              ) : (
-                                <Text> to {child.toUsername}</Text>
-                              )}
-                            </Text>
-                            <Text style={styles.childContent}>
-                              {child.content}
-                            </Text>
-                            <Text style={styles.time}>{child.createTime}</Text>
-                            {/* <Text>回复</Text> */}
+                  {item.childComment &&
+                    item.childComment.map(child => {
+                      return (
+                        // 子评论
+                        <Pressable style={styles.childListBox}>
+                          <View style={styles.commentDetail}>
+                            <Avatar
+                              size={32}
+                              source={{ uri: child.avatar }}
+                              rounded
+                            />
+                            <View
+                              style={styles.middleBox}
+                              onPress={commentPress(child.id)}>
+                              <Text style={styles.commentName}>
+                                {child.username}
+                                {child.toCommentUserId == -1 ? (
+                                  ''
+                                ) : (
+                                  <Text> to {child.toUsername}</Text>
+                                )}
+                              </Text>
+                              <Text style={styles.childContent}>
+                                {child.content}
+                              </Text>
+                              <Text style={styles.time}>
+                                {child.createTime}
+                              </Text>
+                              {/* <Text>回复</Text> */}
+                            </View>
+                            <View style={styles.sun}>
+                              <Text
+                                style={{
+                                  fontFamily: 'iconfont',
+                                  fontSize: 18,
+                                }}>
+                                {'\ue64a'}
+                              </Text>
+                              <Text>{child.likeCount}</Text>
+                            </View>
                           </View>
-                          <View style={styles.sun}>
-                            <Text
-                              style={{ fontFamily: 'iconfont', fontSize: 18 }}>
-                              {'\ue64a'}
-                            </Text>
-                            <Text>{child.likeCount}</Text>
-                          </View>
-                        </View>
-                      </Pressable>
-                    );
-                  })}
+                        </Pressable>
+                      );
+                    })}
                 </View>
               </Pressable>
             );
@@ -326,8 +330,25 @@ const ArticleDetail = ({ route, navigation }) => {
         </View>
         <Pressable
           style={styles.userRight}
-          // onPress={() => {
-        >
+          onPress={() => {
+            //更新评论数组
+            commentList.unshift({
+              rootCommentVo: {
+                id: 1,
+                content: comment,
+                likeCount: 0,
+                avatar: userInfo.avatar,
+                parentCommentId: -1,
+                username: userInfo.username,
+                createTime: currentTime(),
+              },
+            });
+            //清空
+            postComment(articleDetail.id, comment, -1).then(res => {
+              console.log(res);
+            });
+            setComment('');
+          }}>
           <Text style={styles.btn}>发送</Text>
         </Pressable>
       </Pressable>
