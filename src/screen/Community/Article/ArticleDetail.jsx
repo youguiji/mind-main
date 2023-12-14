@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 21:53:24
+ * @LastEditTime: 2023-12-14 09:12:20
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -304,7 +304,6 @@ const ArticleDetail = ({ route, navigation }) => {
                     likeCount: res.data,
                   }));
                 });
-                
               } else {
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
@@ -322,8 +321,8 @@ const ArticleDetail = ({ route, navigation }) => {
             color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
           />
           <Text>{articleDetail.likeCount}</Text>
-          <Icon size={28} icode={'\ue74e'} />
-          <Text>{articleDetail.likeCount}</Text>
+          {/* <Icon size={28} icode={'\ue74e'} />
+          <Text>{articleDetail.likeCount}</Text> */}
         </View>
         <Pressable
           style={styles.userRight}

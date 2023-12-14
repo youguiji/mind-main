@@ -155,10 +155,18 @@ const ForumDetail = ({ route, navigation }) => {
                 upArticle(id, 1, 2).then(res => {
                   console.log(res);
                 });
+                setarticleDetail(prevState => ({
+                  ...prevState,
+                  likeCount: res.data,
+                }));
               } else {
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
                 });
+                setarticleDetail(prevState => ({
+                  ...prevState,
+                  likeCount: res.data,
+                }));
               }
               setUp(!up);
               console.log(up);

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:12:55
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 16:48:39
+ * @LastEditTime: 2023-12-14 09:17:38
  */
 
 import { Avatar } from '@rneui/base';
@@ -94,7 +94,7 @@ const Forum = ({ navigation }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getArticle(2, 2, 2, true)
+    getArticle(2, 1, 2, true)
       .then(res => {
         console.log(res.data.list[0]);
         setList(res.data.list);
