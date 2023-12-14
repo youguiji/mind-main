@@ -236,7 +236,7 @@ const Message = ({ navigation }) => {
                 <Avatar
                   size={48}
                   rounded
-                  source={{ uri: 'item.data.avatar' }}
+                  source={{ uri: item.data.avatar }}
                 />
                 <View style={styles.userRight}>
                   <View style={styles.innerLeft}>
