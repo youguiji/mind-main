@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 21:48:39
+ * @LastEditTime: 2023-12-14 15:42:03
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -53,7 +53,7 @@ const Message = ({ navigation }) => {
 
   // 更新数组
   const updateChatGroupArray = () => {
-    getChatGroup(1, 3)
+    getChatGroup(1, 1)
       .then(res => {
         console.log(res);
         const chatGroupArray = res.data.list;

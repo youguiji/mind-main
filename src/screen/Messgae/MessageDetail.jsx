@@ -31,7 +31,7 @@ const MessageDetail = ({ navigation, route }) => {
 
   useEffect(() => {
     const serverMessagesList = [];
-    setChatHistory((prevChatHistory) => prevChatHistory || []);
+    setChatHistory(prevChatHistory => prevChatHistory || []);
     //获取接收者信息
     getUsersInfo(receiverId)
       .then(res => {
@@ -41,7 +41,7 @@ const MessageDetail = ({ navigation, route }) => {
       .catch(err => {
         console.log(err);
       });
-    
+
     //获取用户的基本信息
     getUserInfo().then(res => {
       setUserInfo(res.data);
@@ -50,8 +50,7 @@ const MessageDetail = ({ navigation, route }) => {
     getChathistory(receiverId, lastTime)
       .then(res => {
         console.log(res);
-        setChatHistory((prevChatHistory) => res.data || prevChatHistory);
-
+        setChatHistory(prevChatHistory => res.data || prevChatHistory);
       })
       .catch(err => {
         console.log(err);
@@ -97,11 +96,11 @@ const MessageDetail = ({ navigation, route }) => {
     if (messageText.trim() === '') {
       return;
     }
-    
+
     // 在你的代码中的后续部分，在使用 push 之前
     chatHistory.push({
       content: messageText,
-      sendId: userInfo.sendId,
+      sendId: userInfo.userId,
       sendTime: currentTime(),
     });
     setChatHistory(chatHistory);

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 10:38:10
+ * @LastEditTime: 2023-12-14 15:47:51
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -174,6 +174,7 @@ const ArticleDetail = ({ route, navigation }) => {
                 navigation.navigate('MEUSERPAGE', {
                   userId: articleDetail.userId,
                 });
+                console.log(articleDetail.userId)
               }}>
               <Avatar
                 size={64}

@@ -52,7 +52,7 @@ export function request(option) {
           params.headers['MindInsight']
         ) 
           params.headers['MindInsight'] = store.getState().user.token;
-          // console.log("store:" + store.getState().user.token);
+          console.log("store:" + store.getState().user.token);
           // console.log("header2:" + params.headers['MindInsight']);
           // console.log("judge:" + Object.prototype.hasOwnProperty.call(params.headers, 'MindInsight') ||
           //   params.headers['MindInsight'])

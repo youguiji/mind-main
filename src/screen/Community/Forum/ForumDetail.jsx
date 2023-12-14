@@ -177,7 +177,7 @@ const ForumDetail = ({ route, navigation }) => {
           />
           <Text>{articleDetail.likeCount}</Text>
           <Icon size={32} icode={'\ue74e'} />
-          <Text>{articleDetail.likeCount}</Text>
+          <Text>{commentList.length}</Text>
         </View>
         <Pressable
           style={styles.userRight}

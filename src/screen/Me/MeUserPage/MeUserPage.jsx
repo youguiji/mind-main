@@ -32,6 +32,7 @@ const MeUserPage = ({ navigation, route }) => {
   });
   useEffect(() => {
     //获取用户信息
+    console.log(userId);
     getUsersInfo(userId).then(res => {
       console.log('获取其他用户信息' + res);
       //获取用户动态
@@ -41,8 +42,7 @@ const MeUserPage = ({ navigation, route }) => {
         setTrends(res.data.list);
       });
     });
-    //获取用户
-    getUserArticle();
+
   }, []);
 
   return (
@@ -138,6 +138,7 @@ const MeUserPage = ({ navigation, route }) => {
               receiverId: userId,
               lastTime: currentTime,
             });
+            console.log(userId);
           }}
           style={styles.botn}>
           <Text style={styles.boText}>私信</Text>
