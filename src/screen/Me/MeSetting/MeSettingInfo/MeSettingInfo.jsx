@@ -24,6 +24,10 @@ const MeSettingInfo = ({ navigation }) => {
       destination: 'MESETTINGCHANGENAME',
     },
     {
+      title: '个性签名',
+      destination: 'MESETTINGCHANGELABEL',
+    },
+    {
       title: '性别',
       destination: 'MESETTINGCHANGSEX',
     },

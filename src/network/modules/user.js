@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 20:57:00
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 14:07:43
+ * @LastEditTime: 2023-12-21 18:31:42
  */
 import {
   Get,
@@ -91,6 +91,7 @@ export const getUsersInfo = (userId) => {
 /**
  * @description: 修改密码
  * @param {String} account 账户
+ * @param {String} oldPass 旧密码
  * @param {String} newPass 新密码
  * @param {String} confirmPass 确认密码
  * @param {String} code 验证码
@@ -99,6 +100,7 @@ export const getUsersInfo = (userId) => {
  */
 export const changePassword = ({
   account,
+  oldPass,
   newPass,
   confirmPass,
   code
@@ -107,6 +109,7 @@ export const changePassword = ({
     url: '/profile/user/password',
     data: {
       account,
+      oldPass,
       newPass,
       confirmPass,
       code,
@@ -144,14 +147,18 @@ export const changeUserInfo = (
  * @author: Austral
  */
 export const changeAvatar = (
-  formData
+  blob,
+  img
 ) => {
+  const formData = new FormData();
+  formData.append('file', blob, img);
+  console.log(formData instanceof File);
   return Post({
     url: '/profile/user/avatar',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    data: formData
+    data: formData,
   })
 }
 

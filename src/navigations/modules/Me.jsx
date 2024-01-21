@@ -17,6 +17,7 @@ import MeSettingSecrity from '../../screen/Me/MeSetting/MeSettingSecrity/MeSetti
 import MeSettingChangeBirth from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeBirth';
 import MeSettingThank from '../../screen/Me/MeSetting/MeSettingThank/MeSettingThank';
 import MeSettingChangeName from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeName';
+import MeSettingChangeLabel from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeLabel';
 import MeSettingChangeAvatar from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeAvatar';
 import MeSettingChangeSex from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeSex';
 
@@ -39,6 +40,7 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MESETTINGCHANGEBIRTH', MeSettingChangeBirth)}
       {initStackNavigation(Stack, 'MESETTINGCHANGSEX', MeSettingChangeSex)}
       {initStackNavigation(Stack, 'MESETTINGCHANGENAME', MeSettingChangeName)}
+      {initStackNavigation(Stack,'MESETTINGCHANGELABEL',MeSettingChangeLabel)}
       {initStackNavigation(
         Stack,
         'MESETTINGCHANGEAVATAR',

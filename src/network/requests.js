@@ -41,7 +41,7 @@ const cacheRequest = async (options) => {
 export function request(option) {
   return new Promise((resolve, reject) => {
     const instances = axios.create({
-      baseURL: 'http://110.42.236.60:8080',
+      baseURL: 'https://mock.apifox.com/m1/2971789-0-default',
       timeout: 5000,
     })
 
@@ -52,7 +52,7 @@ export function request(option) {
           params.headers['MindInsight']
         ) 
           params.headers['MindInsight'] = store.getState().user.token;
-          console.log("store:" + store.getState().user.token);
+          // console.log("store:" + store.getState().user.token);
           // console.log("header2:" + params.headers['MindInsight']);
           // console.log("judge:" + Object.prototype.hasOwnProperty.call(params.headers, 'MindInsight') ||
           //   params.headers['MindInsight'])

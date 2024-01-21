@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 08:55:14
+ * @LastEditTime: 2023-12-23 21:48:29
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -28,6 +28,7 @@ const ArticleSingle = ({
           padding: 10,
           display: 'flex',
           flexDirection: 'row',
+          alignItems: 'center',
         }}>
         <Avatar size={32} rounded source={{ uri: avatar }} />
         <Text style={{ padding: 5 }}>{username}</Text>
@@ -81,15 +82,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   health: {
+    height: 25,
     marginLeft: 5,
-    paddingHorizontal: 3,
-    paddingVertical: 5,
-    backgroundColor: 'rgb(110,165,95)',
-    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 0,
+    backgroundColor: 'rgb(0,190,169)',
+    borderRadius: 16,
   },
   healthText: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 8,
   },
   contentBox: {
     display: 'flex',

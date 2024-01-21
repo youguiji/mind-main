@@ -68,11 +68,11 @@ const Me = ({ navigation }) => {
       console.log(res);
       setUserInfo(res.data);
       //获取用户动态
-      getUserArticle('2',userInfo.userId,1,2,true).then(res => {
-        console.log(res);
+      getUserArticle('2',userInfo.userId,1,1,true).then(res => {
+        console.log("获取用户动态"+res.form);
         setTrends(res.data.list);
       }).catch(err=>{
-        console.log(err);
+        console.log("获取用户动态"+err);
       });
     });
     //获取用户

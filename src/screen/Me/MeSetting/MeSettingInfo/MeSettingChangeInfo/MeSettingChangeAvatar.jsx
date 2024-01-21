@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-17 20:01:29
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-10 14:16:25
+ * @LastEditTime: 2023-12-21 20:47:18
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -15,6 +15,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import { Buffer } from 'buffer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import TitleHeader from '../../../../../components/TitleHeader';
 import Navigation from '../../../../../navigations';
@@ -47,15 +48,13 @@ const MeSettingChangeAvatar = ({ navigation }) => {
         name: 'avatar.jpg',
       });
 
-
       changeAvatar(formData)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err=>{
-        console.log(err);
-      });
-      
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } catch (error) {
       console.error('Image Upload Error:', error);
     }
@@ -71,12 +70,28 @@ const MeSettingChangeAvatar = ({ navigation }) => {
         maxHeight: 1000,
       },
       res => {
+        console.log(res);
         const curFiles = res.assets[0];
-        console.log(res.uri);
-        const base64Image = `data:${curFiles.type};base64,${curFiles.base64}`;
-        setImgList(base64Image);
-        uploadImageToServer(imgList);
-        console.log('imglist:  ' + imgList);
+        // console.log(res.assets instanceof File);
+        // const base64Image = `data:${curFiles.type};base64,${curFiles.base64}`;
+        // const byteCharacters = atob(curFiles.base64);
+        // const byteNumbers = new Array(byteCharacters.length);
+        // for (let i = 0; i < byteCharacters.length; i++) {
+        //   byteNumbers[i] = byteCharacters.charCodeAt(i);
+        // }
+        // const byteArray = new Uint8Array(byteNumbers);
+        // const blob = new Blob([byteArray], { type: 'image/png' });
+        // changeAvatar(blob, curFiles.fileName)
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   });
+
+        //setImgList(base64Image);
+        //uploadImageToServer(imgList);
+        //console.log('imglist:  ' + imgList);
       },
     );
   };
