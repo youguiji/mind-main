@@ -107,7 +107,10 @@ const Me = ({ navigation }) => {
           }}>
           {'\ue68f'}
         </Text>
-        <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
+        {userInfo&& (
+  <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
+)}
+        {/* <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar> */}
         <Text style={styles.name}>{userInfo.username}</Text>
         <Text>ID:{userInfo.userId}</Text>
         <Text>{userInfo.personalLabel}</Text>
@@ -118,7 +121,8 @@ const Me = ({ navigation }) => {
               navigation.navigate('MEATTENTIONFOLLOW', {
                 id: 1,
               });
-            }}>
+            }}
+          >
             <Text>关注 {userInfo.attention}</Text>
           </Pressable>
           <Pressable

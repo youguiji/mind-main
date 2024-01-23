@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 15:42:03
+ * @LastEditTime: 2024-01-23 15:03:58
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -233,11 +233,17 @@ const Message = ({ navigation }) => {
                     lastTime: item.updateTime,
                   });
                 }}>
-                <Avatar
+                  {item.data.avatar?
+                  <Avatar
                   size={48}
                   rounded
                   source={{ uri: item.data.avatar }}
-                />
+                />:''}
+                {/* <Avatar
+                  size={48}
+                  rounded
+                  source={{ uri: item.data.avatar }}
+                /> */}
                 <View style={styles.userRight}>
                   <View style={styles.innerLeft}>
                     <Text style={styles.text}>{item.data.username}</Text>
