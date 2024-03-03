@@ -136,7 +136,7 @@ const Me = ({ navigation }) => {
             onPress={() => {
               navigation.navigate('MEDIARY');
             }}>
-            <Text style={{ marginRight: 20 }}>日记 {userInfo.fans}</Text>
+            <Text style={{ marginRight: 20 }}>随心记 {userInfo.fans}</Text>
           </Pressable>
           <Text>动态 {trends.length}</Text>
         </View>
