@@ -63,6 +63,7 @@ const Me = ({ navigation }) => {
     personnalLabel: '没什么想说的',
   });
   useEffect(() => {
+    // dispatch(LoginOut());
     //获取用户信息
     getUserInfo().then(res => {
       console.log(res);

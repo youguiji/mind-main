@@ -15,6 +15,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import Tag from '../../../components/Tag';
 import TitleHeader from '../../../components/TitleHeader';
 import { Avatar } from '@rneui/base';
 import { color } from '../../../assets/color';
@@ -100,8 +101,9 @@ const ForumDetail = ({ route, navigation }) => {
         <View style={styles.contentBox}>
           <Text style={styles.title}>{articleDetail.title}</Text>
           <Text style={styles.content}>{articleDetail.content}</Text>
+          
           {/* 发布时间 */}
-          <Text style={styles.time}>发布于{articleDetail.updateTime}</Text>
+          <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
         </View>
 
         {/* 评论区 */}
@@ -254,8 +256,12 @@ const styles = StyleSheet.create({
     borderBottomColor: color.gray.line,
     borderBottomWidth: 1,
   },
-  time: {
+  tag: {
+    flexDirection: 'row',
+  },
+  time1: {
     marginVertical: 10,
+    fontSize:12,
   },
   iconBox: {
     flexDirection: 'row',

@@ -1,100 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  Button,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import Icon from '../../components/Icon';
-import { getUserInfo, getUsersInfo } from '../../network/modules/user';
-import { getChathistory } from '../../network/modules/message';
+import { Text, View, StyleSheet,FlatList, TouchableOpacity,TextInput, Button, ScrollView, Pressable } from 'react-native';
+import { getUserInfo } from '../../../network/modules/user';
 import { Avatar } from '@rneui/base';
-import { Image } from '@rneui/themed';
-import { store } from '../../store/configureStore';
-import { currentTime } from '../../util';
+import Icon from '../../../components/Icon';
+import { currentTime } from '../../../util';
 
-const MessageDetail = ({ navigation, route }) => {
-  const { receiverId, lastTime } = route.params;
+const ConsultingDetail = ({navigation,route})=> {
+  const { receiverInfo } = route.params;
+
   const [serverState, setServerState] = useState('Loading...');
   const [messageText, setMessageText] = useState('');
   const [disableButton, setDisableButton] = useState(true);
   const [inputFieldEmpty, setInputFieldEmpty] = useState(true);
   const [serverMessages, setServerMessages] = useState([]);
-  const [receiverInfo, setReceiverInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
-  var ws = React.useRef(new WebSocket('http://110.42.236.60:8079/ws')).current;
+
+  var ws = React.useRef(new WebSocket('ws://192.168.1.11:8078')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
-    console.log(lastTime)
-    setChatHistory(prevChatHistory => prevChatHistory || []);
-    //获取接收者信息
-    getUsersInfo(receiverId)
-      .then(res => {
-        console.log(res);
-        setReceiverInfo(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
     //获取用户的基本信息
     getUserInfo().then(res => {
       setUserInfo(res.data);
     });
-    //获取聊天记录
-    getChathistory(receiverId, lastTime)
-      .then(res => {
-        console.log('liaot')
-        console.log(lastTime)
-        console.log(res);
-        setChatHistory(prevChatHistory => res.data || prevChatHistory);
-      })
-      .catch(err => {
-        console.log(err);
-      });
     ws.onopen = () => {
-      console.log('WebSocket connected');
-      setServerState('Connected to the server');
-      ws.send(
-        JSON.stringify({
-          token: `mindinsight=${store.getState().user.token}`,
-          type: 'login',
-        }),
-      );
+      setServerState('Connected to the server')
       setDisableButton(false);
     };
-    ws.onclose = e => {
-      console.log('WebSocket closed');
-      setServerState('Disconnected. Check internet or server.');
+    ws.onclose = (e) => {
+      setServerState('Disconnected. Check internet or server.')
       setDisableButton(true);
     };
-    ws.onerror = e => {
-      console.log('WebSocket error:', e);
+    ws.onerror = (e) => {
       setServerState(e.message);
     };
-    ws.onmessage = e => {
+    ws.onmessage = (e) => {
       const receivedMessage = JSON.parse(e.data);
       console.log(receivedMessage);
       setChatHistory(prevChatHistory => [
         ...prevChatHistory,
         {
-          content: receivedMessage.data.content,
-          sendId: receiverId,
-          sendTime: receivedMessage.data.sendTime,
+          content: receivedMessage.content,
+          sendId: receiverInfo.receiverId,
+          sendTime: receivedMessage.sendTime,
         },
       ]);
       serverMessagesList.push(e.data);
-      setServerMessages([...serverMessagesList]);
+      setServerMessages([...serverMessagesList])
     };
-  }, []);
-
-  //发送消息
+  }, [])
   const submitMessage = () => {
     if (messageText.trim() === '') {
       return;
@@ -116,24 +71,12 @@ const MessageDetail = ({ navigation, route }) => {
     ws.send(
       JSON.stringify({
         type: 'send',
-        data: { toUserId: receiverId, content: messageText,sendTime:currentTime(), },
+        data: { toUserId: receiverInfo.receiverId, content: messageText,sendTime:currentTime(), },
       }),
     );
     setMessageText('');
     setInputFieldEmpty(true);
   };
-  // const renderMessage = (item) => {
-  //   const sendId = item;
-  //   return (
-  //     <View key={message.id} style={[styles.messageContainer, isMe ? styles.messageMe : styles.messageOther]}>
-  //       <Avatar rounded size={48}/>
-  //       <View>
-  //       <Text>username</Text>
-  //       <Text style={styles.messageText}>{message.content}</Text>
-  //       </View>
-  //     </View>
-  //   );
-  // };
 
   return (
     <View style={styles.container}>
@@ -160,15 +103,15 @@ const MessageDetail = ({ navigation, route }) => {
         renderItem={({ item }) => {
           return (
             <>
-              {item.sendId == receiverId ? (
+              {item.sendId == receiverInfo.receiverId ? (
                 <View style={styles.left}>
                   <Avatar
                     rounded
                     size={48}
                     source={{ uri: receiverInfo.avatar }}
-                    onPress={() => {
-                      navigation.navigate('MEUSERPAGE', { userId: receiverId });
-                    }}
+                    // onPress={() => {
+                    //   navigation.navigate('MEUSERPAGE', { userId: receiverId });
+                    // }}
                   />
                   <View style={styles.innerBox}>
                     <Text>{receiverInfo.username}</Text>
@@ -197,7 +140,7 @@ const MessageDetail = ({ navigation, route }) => {
         <Text>{serverState}</Text>
       </View>
       {/* 回复 */}
-      <View
+      {/* <View
         style={{
           backgroundColor: '#ffeece',
           padding: 5,
@@ -208,7 +151,7 @@ const MessageDetail = ({ navigation, route }) => {
             return <Text key={ind}>{item}</Text>;
           })}
         </ScrollView>
-      </View>
+      </View> */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -230,7 +173,7 @@ const MessageDetail = ({ navigation, route }) => {
       </View>
     </View>
   );
-};
+}
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -315,4 +258,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MessageDetail;
+export default  ConsultingDetail;

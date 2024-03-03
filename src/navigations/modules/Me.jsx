@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 22:04:23
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-18 10:55:09
+ * @LastEditTime: 2024-03-04 01:33:24
  */
 import { initStackNavigation } from '../navigation';
 import React from 'react';
@@ -28,6 +28,7 @@ import MeAttentionPerPage from '../../screen/Me/MeAttention/MeAttentionPerPage';
 import MeDiary from '../../screen/Me/MeDiary/MeDiary';
 
 import MeUserPage from '../../screen/Me/MeUserPage/MeUserPage';
+import MeCertification from '../../screen/Me/MeCertification/MeCertification';
 
 export const MeNavigation = Stack => {
   return (
@@ -40,7 +41,7 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MESETTINGCHANGEBIRTH', MeSettingChangeBirth)}
       {initStackNavigation(Stack, 'MESETTINGCHANGSEX', MeSettingChangeSex)}
       {initStackNavigation(Stack, 'MESETTINGCHANGENAME', MeSettingChangeName)}
-      {initStackNavigation(Stack,'MESETTINGCHANGELABEL',MeSettingChangeLabel)}
+      {initStackNavigation(Stack, 'MESETTINGCHANGELABEL', MeSettingChangeLabel)}
       {initStackNavigation(
         Stack,
         'MESETTINGCHANGEAVATAR',
@@ -50,10 +51,9 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MEATTENTIONFANS', MeAttentionFans)}
       {initStackNavigation(Stack, 'MEATTENTIONFOLLOW', MeAttentionFollow)}
       {initStackNavigation(Stack, 'MEATTENTIONPERPAGE', MeAttentionPerPage)}
-
       {initStackNavigation(Stack, 'MEDIARY', MeDiary)}
-
-      {initStackNavigation(Stack,'MEUSERPAGE',MeUserPage)}
+      {initStackNavigation(Stack, 'MEUSERPAGE', MeUserPage)}
+      {initStackNavigation(Stack, 'MECERTIFICATION',MeCertification)}
     </>
   );
 };

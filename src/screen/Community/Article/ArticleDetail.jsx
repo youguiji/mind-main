@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 15:47:51
+ * @LastEditTime: 2024-03-04 01:20:00
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -31,6 +31,7 @@ import Swiper from '../../../components/Swiper';
 import { useNotification } from '../../../components/Notification';
 import { getUserInfo } from '../../../network/modules/user';
 import { currentTime } from '../../../util';
+import Tag from '../../../components/Tag';
 
 const ArticleDetail = ({ route, navigation }) => {
   //路径参数
@@ -174,13 +175,13 @@ const ArticleDetail = ({ route, navigation }) => {
                 navigation.navigate('MEUSERPAGE', {
                   userId: articleDetail.userId,
                 });
-                console.log(articleDetail.userId)
+                console.log(articleDetail.userId);
               }}>
-              <Avatar
+              {/* <Avatar
                 size={64}
                 source={{ uri: articleDetail.avatar }}
                 rounded
-              />
+              /> */}
             </Pressable>
             <Text style={styles.name}>{articleDetail.username}</Text>
             <View style={styles.health}>
@@ -200,8 +201,14 @@ const ArticleDetail = ({ route, navigation }) => {
         <View style={styles.contentBox}>
           <Text style={styles.title}>{articleDetail.title}</Text>
           <Text style={styles.content}>{articleDetail.content}</Text>
+
+          {/* tag组 */}
+          <View style={styles.tag}>
+            <Tag text="1" />
+            <Tag text="1" />
+          </View>
           {/* 发布时间 */}
-          <Text style={styles.time}>发布于{articleDetail.updateTime}</Text>
+          <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
         </View>
 
         {/* 评论区 */}
@@ -404,8 +411,12 @@ const styles = StyleSheet.create({
     borderBottomColor: color.gray.line,
     borderBottomWidth: 1,
   },
-  time: {
+  tag: {
+    flexDirection: 'row',
+  },
+  time1: {
     marginVertical: 10,
+    fontSize: 12,
   },
   iconBox: {
     flexDirection: 'row',

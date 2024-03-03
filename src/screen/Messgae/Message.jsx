@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2024-01-23 15:03:58
+ * @LastEditTime: 2024-01-29 12:01:27
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -201,19 +201,32 @@ const Message = ({ navigation }) => {
               <Text style={styles.topTitle}>消息</Text>
             </View>
             <View style={styles.top}>
-              <View>
+              {/* 赞和收藏 */}
+              <Pressable
+                onPress={() => {
+                  console.log('zan');
+                  navigation.navigate('MESSAGENOTICEUP');
+                }}>
                 <View style={styles.box1}>
                   <Icon size={32} icode={'\ue8c3'} color={'rgb(253,94,91)'} />
                 </View>
                 <Text>赞和收藏</Text>
-              </View>
-              <View>
+              </Pressable>
+              {/* 新增关注 */}
+              <View
+                onPress={() => {
+                  navigation.navigate('MESSAGENOTICEATTENTION');
+                }}>
                 <View style={styles.box2}>
                   <Icon size={38} icode={'\uebac'} color={'rgb(50,136,255)'} />
                 </View>
                 <Text>新增关注</Text>
               </View>
-              <View>
+              {/* 新增评论 */}
+              <View
+                onPress={() => {
+                  navigation.navigate('MESSAGENOTICECOMMENT');
+                }}>
                 <View style={styles.box3}>
                   <Icon size={32} icode={'\ue60c'} color={'rgb(52,218,152)'} />
                 </View>
@@ -230,15 +243,16 @@ const Message = ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate('MESSAGEDETAIL', {
                     receiverId: item.toUserId,
-                    lastTime: item.updateTime,
+                    lastTime: item.lastTime,
                   });
                 }}>
-                  {item.data.avatar?
+                {item.data.avatar && (
                   <Avatar
-                  size={48}
-                  rounded
-                  source={{ uri: item.data.avatar }}
-                />:''}
+                    size={48}
+                    rounded
+                    source={{ uri: item.data.avatar }}
+                  />
+                )}
                 {/* <Avatar
                   size={48}
                   rounded
@@ -250,7 +264,7 @@ const Message = ({ navigation }) => {
                     <Text style={styles.context}>{item.lastMessage}</Text>
                   </View>
                   <View style={styles.innerRight}>
-                    <Text>{extractTimeFromDateTime(item.updateTime)}</Text>
+                    <Text>{extractTimeFromDateTime(item.lastTime)}</Text>
                   </View>
                 </View>
               </Pressable>

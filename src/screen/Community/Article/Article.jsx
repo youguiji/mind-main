@@ -45,7 +45,7 @@ const Article = ({ navigation }) => {
       });
   }, []);
   return (
-    <View>
+    <View style={{backgroundColor: '#fff'}}>
       {/* <Swiper /> */}
       <FlatList
         data={article}

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-15 08:11:31
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-02 15:12:13
+ * @LastEditTime: 2024-03-04 02:35:17
  */
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
@@ -58,7 +58,8 @@ const Swiper = ({ images }) => {
           />
         ))}
       </ScrollView>
-      <View style={styles.dotsContainer}>
+      {/* 指示点 */}
+      {/* <View style={styles.dotsContainer}>
         {images.map((_, index) => (
           <View
             key={index}
@@ -69,7 +70,7 @@ const Swiper = ({ images }) => {
             onTouchStart={() => scrollToIndex(index)}
           />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -77,10 +78,13 @@ const Swiper = ({ images }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderRadius: 10,
+    padding: 5,
   },
   image: {
-    width,
-    // 这里没有固定的高度
+    width, // 这里没有固定的高度
+    borderRadius: 10,
+    // marginHorizontal: 5,
   },
   dotsContainer: {
     flexDirection: 'row',

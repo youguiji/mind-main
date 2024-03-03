@@ -12,6 +12,7 @@ import React from 'react';
 import Message from '../../screen/Messgae/Message';
 import MessageDetail from '../../screen/Messgae/MessageDetail';
 import SendMessage from '../../screen/Messgae/SendMessage';
+import MessageNoticeUp from '../../screen/Messgae/MessageNotice/MessageNoticeUp';
 
 export const MessageNavigation = Stack => {
   return (
@@ -19,6 +20,7 @@ export const MessageNavigation = Stack => {
       {initStackNavigation(Stack, 'MESSAGE', Message)}
       {initStackNavigation(Stack, 'MESSAGEDETAIL', MessageDetail)}
       {initStackNavigation(Stack,'SENDMESSAGE',SendMessage)}
+      {initStackNavigation(Stack,'MESSAGENOTICEUP',MessageNoticeUp)}
     </>
   );
 };

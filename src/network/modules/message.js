@@ -33,17 +33,36 @@ export const getChatGroup = (pageNum, pageSize) => {
 
 /**
  * @description: 获取用户聊天记录
- * @param {*} viewId
+ * @param {string} viewId
  * @param {*} dateTime
  * @return {*}
  * @author: Austral
  */
-export const getChathistory = (viewId,dateTime) => {
+export const getChathistory = (viewId, dateTime) => {
   return Post({
-    url:'/chat/user',
+    url: '/chat/user',
     data: {
-        viewId,
-        dateTime,
+      viewId,
+      dateTime,
+    }
+  })
+}
+
+/**
+ * @description: 获取事件分页提醒
+ * @param {string} action 获取事件类型如like
+ * @param {integer} pageNum 
+ * @param {pageSize} pageSize
+ * @return {*}
+ * @author: Austral
+ */
+export const getChatEvent = (action,pageNum,pageSize) => {
+  return Post({
+    url: '/chat/user',
+    data: {
+      action,
+      pageNum,
+      pageSize,
     }
   })
 }
