@@ -4,24 +4,31 @@
  * @Autor: Austral
  * @Date: 2024-03-04 06:31:59
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 06:32:06
+ * @LastEditTime: 2024-03-04 07:49:47
  */
-import React from 'react';
-import {View,Text, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import MeDiaryCard from '../Components/MeDiaryCard';
 
 const MeDiaryWork = () => {
+  const [diary, setDiary] = useState([
+    {id:0, title: '今天是一个好天气', content: '今天去跑步了，很有成就感' },
+    {id:1, title: '今天是一个好天气', content: '今天去跑步了，很有成就感' },
+  ]);
   return (
-    <View style={styles.container}>
-      <Text>Hello, World!</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      {diary.map(item => {
+        return (
+          <MeDiaryCard key={item.id} title={item.title} content={item.content} onPress={console.log('res')} />
+        );
+      })}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // backgroundColor: '#fff'
   },
 });
 

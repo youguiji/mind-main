@@ -124,21 +124,21 @@ const Me = ({ navigation }) => {
               });
             }}
           >
-            <Text>关注 {userInfo.attention}</Text>
+            <Text>关注 </Text>
           </Pressable>
           <Pressable
             onPress={() => {
               navigation.navigate('MEATTENTIONFANS');
             }}>
-            <Text style={{ marginHorizontal: 20 }}>粉丝 {userInfo.fans}</Text>
+            <Text style={{ marginHorizontal: 20 }}>粉丝</Text>
           </Pressable>
           <Pressable
             onPress={() => {
               navigation.navigate('MEDIARY');
             }}>
-            <Text style={{ marginRight: 20 }}>随心记 {userInfo.fans}</Text>
+            <Text style={{ marginRight: 20 }}>随心记 </Text>
           </Pressable>
-          <Text>动态 {trends.length}</Text>
+          <Text>动态</Text>
         </View>
         {trends.map(item => {
           return (

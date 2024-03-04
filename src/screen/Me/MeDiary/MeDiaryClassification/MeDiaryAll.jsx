@@ -4,25 +4,31 @@
  * @Autor: Austral
  * @Date: 2024-03-04 07:07:14
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 07:07:21
+ * @LastEditTime: 2024-03-04 08:13:12
  */
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { getUserDirary } from '../../../../network/modules/user';
+import MeDiaryCard from '../Components/MeDiaryCard';
 
-const MeDiaryAll = () => {
+const MeDiaryAll = ({ navigation }) => {
+  const [diary, setDiary] = useState([]);
+  useEffect(() => {
+    getUserDirary(0, 1, 10).then(res => {
+      setDiary(res.data);
+    });
+  }, [diary]);
   return (
-    <View style={styles.container}>
-      <Text>Hello, World!</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      {diary.map(item => {
+        return <MeDiaryCard title={item.title} content={item.content} onPress={navigation.navigate('MeDiaryDetail')}/>;
+      })}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: {},
 });
 
 export default MeDiaryAll;

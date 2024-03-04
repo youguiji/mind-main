@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-17 21:48:01
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 07:03:22
+ * @LastEditTime: 2024-03-04 08:31:12
  */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -15,20 +15,26 @@ import MeDiarySchool from './MeDiaryClassification/MeDiarySchool';
 import MeDiaryWork from './MeDiaryClassification/MeDiaryWork';
 import MeDiaryHome from './MeDiaryClassification/MeDiaryHome';
 import Icon from '../../../components/Icon';
+import MeDiaryAll from './MeDiaryClassification/MeDiaryAll';
 
 const MeDiary = ({ navigation }) => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
-        <Icon
-          iconPress={() => {
-            navigation.goBack();
-          }}
-          icode={'\ueb05'}
-          size={20}
-        />
-        <Text style={styles.title}> 随心记 </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Icon
+            iconPress={() => {
+              navigation.goBack();
+            }}
+            icode={'\ueb05'}
+            size={20}
+          />
+          <Text style={styles.title}> 随心记 </Text>
+        </View>
+        <Icon icode={'\ue600'} size={20} iconPress={() => {
+          navigation.navigate('MeDiaryAdd')
+        }} />
       </View>
       <View style={styles.tabContainer}>
         <Tab.Navigator
@@ -53,6 +59,14 @@ const MeDiary = ({ navigation }) => {
             tabBarPressColor: 'transparent', // 取消点击Tab时的黑灰色过渡
             tabBarPressOpacity: 1, // 取消点击Tab时的黑灰色过渡
           }}>
+          <Tab.Screen
+            name="全部"
+            component={MeDiaryAll}
+            options={{
+              title: '全部',
+              key: 'all_tab',
+            }}
+          />
           <Tab.Screen
             name="工作"
             component={MeDiaryWork}
@@ -100,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContent: {
-    height: 50,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
   },

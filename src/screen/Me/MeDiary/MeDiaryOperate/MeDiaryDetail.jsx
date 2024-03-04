@@ -1,18 +1,18 @@
 /*
- * @Description: 日记朋友
+ * @Description: 日记详情
  * @Version:
  * @Autor: Austral
- * @Date: 2024-03-04 06:31:17
+ * @Date: 2024-03-04 08:14:10
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 07:53:43
+ * @LastEditTime: 2024-03-04 08:14:18
  */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View,Text, StyleSheet} from 'react-native';
 
-const MeDiaryFriend = () => {
+const MeDiaryDetail = () => {
   return (
     <View style={styles.container}>
-      <Text>暂时没有随心记哦!</Text>
+      <Text>Hello, World!</Text>
     </View>
   );
 };
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MeDiaryFriend;
+export default MeDiaryDetail;

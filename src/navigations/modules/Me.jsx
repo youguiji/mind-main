@@ -29,6 +29,8 @@ import MeDiary from '../../screen/Me/MeDiary/MeDiary';
 
 import MeUserPage from '../../screen/Me/MeUserPage/MeUserPage';
 import MeCertification from '../../screen/Me/MeCertification/MeCertification';
+import MeDiaryAdd from '../../screen/Me/MeDiary/MeDiaryOperate/MeDiaryAdd';
+import MeDiaryDetail from '../../screen/Me/MeDiary/MeDiaryOperate/MeDiaryDetail';
 
 export const MeNavigation = Stack => {
   return (
@@ -51,9 +53,12 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MEATTENTIONFANS', MeAttentionFans)}
       {initStackNavigation(Stack, 'MEATTENTIONFOLLOW', MeAttentionFollow)}
       {initStackNavigation(Stack, 'MEATTENTIONPERPAGE', MeAttentionPerPage)}
+      {/* 随心记 */}
       {initStackNavigation(Stack, 'MEDIARY', MeDiary)}
+      {initStackNavigation(Stack, 'MeDiaryAdd', MeDiaryAdd)}
+      {initStackNavigation(Stack,'MeDiaryDetail',MeDiaryDetail)}
       {initStackNavigation(Stack, 'MEUSERPAGE', MeUserPage)}
-      {initStackNavigation(Stack, 'MECERTIFICATION',MeCertification)}
+      {initStackNavigation(Stack, 'MECERTIFICATION', MeCertification)}
     </>
   );
 };

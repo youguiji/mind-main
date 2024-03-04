@@ -12,7 +12,7 @@ import {View,Text, StyleSheet} from 'react-native';
 const MeDiaryHome = () => {
   return (
     <View style={styles.container}>
-      <Text>Hello, World!</Text>
+      <Text>暂时没有随心记哦!</Text>
     </View>
   );
 };
