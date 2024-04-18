@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   tagText: {
-    color: '#fff', // 文字颜色
+    color: color.purple.deep, // 文字颜色
     fontSize: 12, // 字体大小
   },
 });

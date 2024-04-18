@@ -16,7 +16,7 @@ const ConsultingDetail = ({navigation,route})=> {
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
 
-  var ws = React.useRef(new WebSocket('ws://192.168.1.11:8078')).current;
+  var ws = React.useRef(new WebSocket('ws://192.168.157.117:8078')).current;
 
   useEffect(() => {
     const serverMessagesList = [];

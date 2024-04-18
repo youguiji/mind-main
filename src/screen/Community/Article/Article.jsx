@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:16:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 21:31:40
+ * @LastEditTime: 2024-03-30 11:12:36
  */
 
 import { Avatar } from '@rneui/base';
@@ -21,9 +21,11 @@ const Article = ({ navigation }) => {
   const dispatch = useDispatch();
 
   images = [
-    'https://w.wallhaven.cc/full/qz/wallhaven-qzoxzd.jpg',
-    'https://w.wallhaven.cc/full/l8/wallhaven-l8dxe2.jpg',
-    'https://w.wallhaven.cc/full/we/wallhaven-wex9dr.jpg',
+    'https://qiniu.flywe.xyz/MindInsight/2024/03/30/49f8674a43a0d2c1.jpg',
+    'https://qiniu.flywe.xyz/MindInsight/2024/03/30/93e15a8af45b93f1.jpg',
+    'https://qiniu.flywe.xyz/MindInsight/2024/03/30/7b05a9f1b4e03745.jpg',
+    'https://qiniu.flywe.xyz/MindInsight/2024/03/30/f20b03052253a65c.jpg',
+    'https://qiniu.flywe.xyz/MindInsight/2024/03/30/657fc1013c487316.jpg'
   ];
   const [article, setArticle] = useState([]);
   useEffect(() => {
@@ -45,7 +47,7 @@ const Article = ({ navigation }) => {
       });
   }, []);
   return (
-    <View style={{backgroundColor: '#fff'}}>
+    <View style={{ backgroundColor: '#fff' }}>
       {/* <Swiper /> */}
       <FlatList
         data={article}

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 01:20:00
+ * @LastEditTime: 2024-03-05 00:42:18
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -147,10 +147,10 @@ const ArticleDetail = ({ route, navigation }) => {
       console.log(res.data);
     });
     getArticleDetail(id).then(res => {
-      //console.log(res.data);
+      console.log(res.data);
       setarticleDetail(res.data);
       setImages(res.data.pictures.map(item => item.url));
-      getComment(id, 1, 1, true).then(res => {
+      getComment(id, 1, 30, true).then(res => {
         //console.log(res);
         setCommentList(res.data.list);
         //console.log(commentList.rootCommentVo);
@@ -177,11 +177,11 @@ const ArticleDetail = ({ route, navigation }) => {
                 });
                 console.log(articleDetail.userId);
               }}>
-              {/* <Avatar
+              <Avatar
                 size={64}
                 source={{ uri: articleDetail.avatar }}
                 rounded
-              /> */}
+              />
             </Pressable>
             <Text style={styles.name}>{articleDetail.username}</Text>
             <View style={styles.health}>
@@ -204,6 +204,11 @@ const ArticleDetail = ({ route, navigation }) => {
 
           {/* tag组 */}
           <View style={styles.tag}>
+            {articleDetail.tags &&
+              articleDetail.tags.map(item => {
+                return <Tag key={item.id} text={item.tagName} />;
+              })}
+
             <Tag text="1" />
             <Tag text="1" />
           </View>

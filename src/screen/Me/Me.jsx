@@ -28,7 +28,120 @@ const screenWidth = Dimensions.get('window').width;
 const numColumns = 2; // 定义列数
 
 const Me = ({ navigation }) => {
-  const [trends, setTrends] = useState([]);
+  const [trends, setTrends] = useState([
+    {
+      id: '1734590948757262339',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '有的孩子表面没啥，其实困在无意义感里很久了',
+      content:
+        '2022版“心理健康蓝皮书”《中国国民心理健康发展报告(2021~2022)》显示，参加调查的三万余名青少年中有14.8%存在不同程度的抑郁风险。',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: "2023-11-05T12:00:00",
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+    {
+      id: '1734590948757262331',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '你为什么明明身怀潜能，却总在“画地为牢”？',
+      content:
+        '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: "2024-01-23T12:00:00",
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+    {
+      id: '1734590948757262332',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '“回避型依恋”在亲密关系中都会有哪些特质？',
+      content:
+        '一些人在恋爱时，会有这些令人抓狂的感受： 你不找对方，对方也不找你；',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: "2024-01-23T12:00:00",
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+    {
+      id: '1734590948757262390',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '你为什么明明身怀潜能，却总在“画地为牢”？',
+      content:
+        '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: "2024-01-23T12:00:00",
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+  ]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deleteId, setDeleteId] = useState('');
 
@@ -69,12 +182,14 @@ const Me = ({ navigation }) => {
       console.log(res);
       setUserInfo(res.data);
       //获取用户动态
-      getUserArticle('2',userInfo.userId,1,1,true).then(res => {
-        console.log("获取用户动态"+res.form);
-        setTrends(res.data.list);
-      }).catch(err=>{
-        console.log("获取用户动态"+err);
-      });
+      getUserArticle('2', userInfo.userId, 1, 1, true)
+        .then(res => {
+          console.log('获取用户动态' + res.form);
+          setTrends(res.data.list);
+        })
+        .catch(err => {
+          console.log('获取用户动态' + err);
+        });
     });
     //获取用户
   }, []);
@@ -108,9 +223,9 @@ const Me = ({ navigation }) => {
           }}>
           {'\ue68f'}
         </Text>
-        {userInfo&& (
-  <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
-)}
+        {userInfo && (
+          <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar>
+        )}
         {/* <Avatar size={64} rounded source={{ uri: userInfo.avatar }}></Avatar> */}
         <Text style={styles.name}>{userInfo.username}</Text>
         <Text>ID:{userInfo.userId}</Text>
@@ -122,8 +237,7 @@ const Me = ({ navigation }) => {
               navigation.navigate('MEATTENTIONFOLLOW', {
                 id: 1,
               });
-            }}
-          >
+            }}>
             <Text>关注 </Text>
           </Pressable>
           <Pressable
@@ -150,10 +264,10 @@ const Me = ({ navigation }) => {
               }}>
               <View style={styles.left}>
                 <Text style={styles.day}>
-                  {transforTime(item.creatTime).day}
+                  {transforTime(item.updateTime).day}
                 </Text>
                 <Text style={styles.month}>
-                  {transforTime(item.creatTime).month}
+                  {transforTime(item.updateTime).month}
                 </Text>
               </View>
               <View style={styles.right}>

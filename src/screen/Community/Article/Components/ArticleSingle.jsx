@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-23 21:48:29
+ * @LastEditTime: 2024-03-30 15:32:53
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 0,
-    backgroundColor: 'rgb(0,190,169)',
-    borderRadius: 16,
+    backgroundColor: 'rgb(255,236,245)',
+    borderRadius: 10,
   },
   healthText: {
-    color: '#fff',
+    color: 'rgb(255,130,192)',
     fontSize: 8,
   },
   contentBox: {

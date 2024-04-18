@@ -13,14 +13,20 @@ import Message from '../../screen/Messgae/Message';
 import MessageDetail from '../../screen/Messgae/MessageDetail';
 import SendMessage from '../../screen/Messgae/SendMessage';
 import MessageNoticeUp from '../../screen/Messgae/MessageNotice/MessageNoticeUp';
+import MessageNoticeAttention from '../../screen/Messgae/MessageNotice/MessageNoticeAttention';
 
 export const MessageNavigation = Stack => {
   return (
     <>
       {initStackNavigation(Stack, 'MESSAGE', Message)}
       {initStackNavigation(Stack, 'MESSAGEDETAIL', MessageDetail)}
-      {initStackNavigation(Stack,'SENDMESSAGE',SendMessage)}
-      {initStackNavigation(Stack,'MESSAGENOTICEUP',MessageNoticeUp)}
+      {initStackNavigation(Stack, 'SENDMESSAGE', SendMessage)}
+      {initStackNavigation(Stack, 'MESSAGENOTICEUP', MessageNoticeUp)}
+      {initStackNavigation(
+        Stack,
+        'MESSAGENOTICEATTENTION',
+        MessageNoticeAttention,
+      )}
     </>
   );
 };

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-13 05:57:33
+ * @LastEditTime: 2024-03-05 00:47:45
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -55,7 +55,7 @@ const ForumDetail = ({ route, navigation }) => {
       //console.log(res.data);
       setarticleDetail(res.data);
       setImages(res.data.pictures.map(item => item.url));
-      getComment(id, 1, 1, false).then(res => {
+      getComment(id, 1, 10, false).then(res => {
         console.log(res);
         setCommentList(res.data.list);
         //console.log(commentList.rootCommentVo);
@@ -101,7 +101,7 @@ const ForumDetail = ({ route, navigation }) => {
         <View style={styles.contentBox}>
           <Text style={styles.title}>{articleDetail.title}</Text>
           <Text style={styles.content}>{articleDetail.content}</Text>
-          
+
           {/* 发布时间 */}
           <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
         </View>
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   time1: {
     marginVertical: 10,
-    fontSize:12,
+    fontSize: 12,
   },
   iconBox: {
     flexDirection: 'row',
