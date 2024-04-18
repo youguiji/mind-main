@@ -1,6 +1,13 @@
 import { Avatar } from '@rneui/base';
 import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 
 const SendMessage = () => {
   const [inputMessage, setInputMessage] = useState('');
@@ -10,14 +17,19 @@ const SendMessage = () => {
     // Add more messages as needed
   ]);
 
-  const renderMessage = (message) => {
+  const renderMessage = message => {
     const isMe = message.sender === 'me';
     return (
-      <View key={message.id} style={[styles.messageContainer, isMe ? styles.messageMe : styles.messageOther]}>
-        <Avatar rounded size={48}/>
+      <View
+        key={message.id}
+        style={[
+          styles.messageContainer,
+          isMe ? styles.messageMe : styles.messageOther,
+        ]}>
+        <Avatar rounded size={48} />
         <View>
-        <Text>username</Text>
-        <Text style={styles.messageText}>{message.content}</Text>
+          <Text>username</Text>
+          <Text style={styles.messageText}>{message.content}</Text>
         </View>
       </View>
     );
@@ -28,14 +40,20 @@ const SendMessage = () => {
       return;
     }
 
-    const newMessage = { id: messages.length + 1, content: inputMessage, sender: 'me' };
+    const newMessage = {
+      id: messages.length + 1,
+      content: inputMessage,
+      sender: 'me',
+    };
     setMessages([...messages, newMessage]);
     setInputMessage('');
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.messagesContainer}>
+      <ScrollView
+        style={styles.messagesContainer}
+        showsVerticalScrollIndicator={false}>
         {messages.map(renderMessage)}
       </ScrollView>
       <View style={styles.inputContainer}>
@@ -43,7 +61,7 @@ const SendMessage = () => {
           style={styles.input}
           placeholder="Type a message..."
           value={inputMessage}
-          onChangeText={(text) => setInputMessage(text)}
+          onChangeText={text => setInputMessage(text)}
         />
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
           <Text style={styles.sendButtonText}>Send</Text>

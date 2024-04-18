@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-03-04 07:07:14
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-30 14:29:13
+ * @LastEditTime: 2024-03-30 19:58:15
  */
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
@@ -26,13 +26,15 @@ const MeDiaryAll = ({ navigation }) => {
   //   });
   // }, [diary]);
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}         showsVerticalScrollIndicator={false}
+    >
       {diary.map(item => {
         return (
           <MeDiaryCard
+            key={item.id}
             title={item.title}
             content={item.content}
-            onPress={navigation.navigate('MeDiaryDetail')}
+            // onPress={navigation.navigate('MeDiaryDetail')}
           />
         );
       })}

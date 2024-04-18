@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 21:21:18
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-07 15:34:46
+ * @LastEditTime: 2024-03-30 16:57:00
  */
 import { initStackNavigation } from '../navigation';
 import React from 'react';
@@ -14,6 +14,7 @@ import MessageDetail from '../../screen/Messgae/MessageDetail';
 import SendMessage from '../../screen/Messgae/SendMessage';
 import MessageNoticeUp from '../../screen/Messgae/MessageNotice/MessageNoticeUp';
 import MessageNoticeAttention from '../../screen/Messgae/MessageNotice/MessageNoticeAttention';
+import MessageNoticeComment from '../../screen/Messgae/MessageNotice/MessageNoticeComment';
 
 export const MessageNavigation = Stack => {
   return (
@@ -27,6 +28,7 @@ export const MessageNavigation = Stack => {
         'MESSAGENOTICEATTENTION',
         MessageNoticeAttention,
       )}
+      {initStackNavigation(Stack, 'MESSAGENOTICECOMMENT', MessageNoticeComment)}
     </>
   );
 };

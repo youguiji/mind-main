@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-15 08:11:31
  * @LastEditors: Austral
- * @LastEditTime: 2024-02-05 22:07:36
+ * @LastEditTime: 2024-04-17 15:11:03
  */
 import React, { useState, useRef } from 'react';
 import {
@@ -27,6 +27,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { addArticle } from '../../../network/modules/community';
 import Tag from '../../../components/Tag';
 import { store } from '../../../store/configureStore';
+import Spinner from '../../../components/Spinner';
 
 const ForumAdd = ({ navigation }) => {
   const [title, setTitle] = useState('');
@@ -39,8 +40,45 @@ const ForumAdd = ({ navigation }) => {
   const contentRef = useRef(null);
   const [newTag, setNewTag] = useState('');
   const [isAddingTag, setIsAddingTag] = useState(false);
-
+  const [isVisible, setIsVisible] = useState(false);
+  const [recordText, setRecordText] = useState('');
+  const [recordIndex, setRecordIndex] = useState(0);
+  const recordStrings = ['今天天气很好', '让人的心情也好起来了'];
+  const recordTimerRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
+
+  const startRecord = () => {
+    setIsVisible(true);
+    setRecordIndex(0);
+    setTitle('');
+    setContent('');
+    const titleText = recordStrings[0];
+    const contentText = recordStrings[1];
+
+    const totalLength = titleText.length + contentText.length;
+    let index = 0;
+
+    const intervalId = setInterval(() => {
+      if (index < totalLength) {
+        if (index < titleText.length) {
+          setTitle(prevTitle => prevTitle + titleText.charAt(index));
+        } else {
+          setContent(
+            prevContent =>
+              prevContent + contentText.charAt(index - titleText.length),
+          );
+        }
+        index++;
+      } else {
+        clearInterval(intervalId);
+        setIsVisible(false);
+      }
+    }, 300);
+  };
+
+  const stopRecord = () => {
+    setIsVisible(false);
+  };
 
   const openImagePicker = async () => {
     console.log('open successfully');
@@ -100,7 +138,7 @@ const ForumAdd = ({ navigation }) => {
   //     });
   // };
 
-  const publish = data => {
+  const publish = navigation => {
     const formData = new FormData();
     formData.append('type', '2');
     formData.append('title', title);
@@ -112,15 +150,16 @@ const ForumAdd = ({ navigation }) => {
     });
 
     // 添加图片
-    selectedImages.forEach((image, index) => {
-      formData.append(`pictures[${index}]`, {
-        url: image.url,
-        type: 'image/jpeg',
-        name: `image_${index}.jpg`,
-        rank: index,
-        id: index,
-      });
-    });
+    const imagesData = selectedImages.map((image, index) => ({
+      url: image.url,
+      type: 'image/jpeg',
+      name: `image_${index}.jpg`,
+      rank: index,
+      id: index,
+    }));
+
+    formData.append('pictures', JSON.stringify(imagesData));
+
     const params = {
       method: 'POST',
       body: formData,
@@ -130,20 +169,27 @@ const ForumAdd = ({ navigation }) => {
       },
       timeout: 5000,
     };
+
+    console.log('params', params.body);
+    console.log('formData 参数:', formData);
     return fetch(
       'http://110.42.236.60:8080//publication/publication/manage',
       params,
     )
-      .then(response => response.json())
-      .then(data => data)
+      .then(response => {
+        console.log('Response:', response);
+        return response.json(); // 这里添加了 return
+      })
+      .then(data => {
+        navigation.goBack();
+        // console.log(data.json());
+        return data;
+      })
       .catch(error => {
         console.error('Error:', error);
         return { error: '请求异常，请重试' };
       });
   };
-  const renderItem = ({ item }) => (
-    <Image style={styles.image} source={{ uri: item.uri }} />
-  );
 
   return (
     <Pressable
@@ -158,13 +204,13 @@ const ForumAdd = ({ navigation }) => {
         headerLeftPress={() => {
           navigation.goBack();
         }}
-        headerRight={() => {
-          return (
-            <Pressable style={styles.btn} onPress={publish}>
-              <Text style={styles.btnText}>发布</Text>
-            </Pressable>
-          );
-        }}
+        // headerRight={() => {
+        //   return (
+        // <Pressable style={styles.btn} onPress={publish}>
+        //   <Text style={styles.btnText}>发布</Text>
+        // </Pressable>
+        //   );
+        // }}
       />
       <TextInput
         placeholder="请输入标题"
@@ -193,7 +239,7 @@ const ForumAdd = ({ navigation }) => {
       {/* 添加tag */}
       <View style={styles.tags}>
         {tags.map((tag, index) => (
-          <Tag text={tag.tagName} />
+          <Tag key={index} text={tag.tagName} />
         ))}
         {isAddingTag && (
           <TextInput
@@ -211,15 +257,33 @@ const ForumAdd = ({ navigation }) => {
           </TouchableOpacity>
         )}
       </View>
-      <ScrollView contentContainerStyle={styles.imageContainer} horizontal>
+      <ScrollView
+        contentContainerStyle={styles.imageContainer}
+        showsVerticalScrollIndicator={false}
+        horizontal>
         {selectedImages.map((image, index) => (
           <Image key={index} source={{ uri: image.url }} style={styles.image} />
         ))}
       </ScrollView>
 
+      {isVisible && (
+        <View style={{ position: 'absolute', bottom: 100, left: '45%' }}>
+          <Spinner />
+        </View>
+      )}
       <View style={styles.bottomBox}>
         <Pressable onPress={openImagePicker}>
           <Icon icode={'\ue60b'} size={26} iconPress={openImagePicker} />
+        </Pressable>
+        <Pressable
+          style={styles.recordContainer}
+          onPressIn={startRecord}
+          onPressOut={stopRecord}>
+          <Text>按住说话</Text>
+          {/* <Text>{recordText}</Text> */}
+        </Pressable>
+        <Pressable style={styles.btn} onPress={() => publish(navigation)}>
+          <Text style={styles.btnText}>发布</Text>
         </Pressable>
       </View>
     </Pressable>
@@ -251,8 +315,8 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: color.purple.deep,
     borderRadius: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 0,
+    paddingHorizontal: 14,
+    paddingVertical: 5,
     marginLeft: 10,
   },
   btnText: {
@@ -263,7 +327,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingHorizontal: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: 'rgb(242,242,242)',
   },
   content: {
     paddingHorizontal: 10,
@@ -277,8 +341,8 @@ const styles = StyleSheet.create({
   addButton: {
     backgroundColor: color.purple.light,
     borderRadius: 10,
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     paddingHorizontal: 8, // 左右内边距
     paddingVertical: 3, // 上下内边距
     alignItems: 'center',
@@ -292,10 +356,14 @@ const styles = StyleSheet.create({
   bottomBox: {
     width: '100%',
     position: 'absolute',
-    height: 40,
-    justifyContent: 'center',
-    borderTopColor: '#ccc',
+    flexDirection: 'row',
+
+    height: 50,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTopColor: 'rgb(242,242,242)',
     borderTopWidth: 1,
+    paddingHorizontal: 10,
     bottom: 0,
   },
 });

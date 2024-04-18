@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-03-30 11:57:52
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-30 14:24:18
+ * @LastEditTime: 2024-04-15 14:39:41
  */
 import { Avatar } from '@rneui/base';
 import React from 'react';
@@ -20,7 +20,7 @@ const ProfileCard = ({
   return (
     <View style={styles.container}>
       <View style={styles.profileInfo}>
-        <Avatar size={48} rounded source={{ uri: profileImageURL }} />
+        <Avatar size={32} rounded source={{ uri: profileImageURL }} />
         {/* <Image
           source={{ uri: profileImageURL }}
           style={styles.profileImage}
@@ -62,11 +62,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 14,
+    color: '#333',
     fontWeight: 'bold',
   },
   lastSeen: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#888',
   },
   button: {

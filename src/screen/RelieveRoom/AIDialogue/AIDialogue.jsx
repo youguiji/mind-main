@@ -20,7 +20,7 @@ const AIDialogue = ({navigation,route})=> {
     avatar: 'https://qiniu.flywe.xyz/MindInsight/2024/03/30/7c7153f08b6b419c.jpg',
 
   })
-  var ws = React.useRef(new WebSocket('ws://192.168.157.117:8079')).current;
+  var ws = React.useRef(new WebSocket('ws://192.168.21.117:8079')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
@@ -103,6 +103,7 @@ const AIDialogue = ({navigation,route})=> {
       {/* 聊天记录 */}
       <FlatList
         data={chatHistory}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index}
         renderItem={({ item }) => {
           return (
@@ -111,7 +112,7 @@ const AIDialogue = ({navigation,route})=> {
                 <View style={styles.left}>
                   <Avatar
                     rounded
-                    size={48}
+                    size={32}
                     source={{ uri: receiverInfo.avatar }}
                     // onPress={() => {
                     //   navigation.navigate('MEUSERPAGE', { userId: receiverId });
@@ -128,7 +129,7 @@ const AIDialogue = ({navigation,route})=> {
                     {/* <Text>{userInfo.username}</Text> */}
                     <Text style={styles.rightContent}>{item.content}</Text>
                   </View>
-                  <Avatar rounded size={48} source={{ uri: userInfo.avatar }} />
+                  <Avatar rounded size={32} source={{ uri: userInfo.avatar }} />
                 </View>
               )}
             </>

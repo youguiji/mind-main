@@ -1,18 +1,18 @@
 /*
- * @Description: 日记详情
+ * @Description: 转圈圈指示器
  * @Version:
  * @Autor: Austral
- * @Date: 2024-03-04 08:14:10
+ * @Date: 2024-04-16 14:12:07
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-30 19:57:32
+ * @LastEditTime: 2024-04-16 14:12:15
  */
 import React from 'react';
-import {View,Text, StyleSheet} from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
-const MeDiaryDetail = () => {
+const Spinner = ({ size }) => {
   return (
     <View style={styles.container}>
-      <Text>Hello, World!s</Text>
+      <ActivityIndicator size={size || 'large'} color="#0000ff" />
     </View>
   );
 };
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MeDiaryDetail;
+export default Spinner;

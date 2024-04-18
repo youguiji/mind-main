@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 16:15:14
  * @LastEditors: Austral
- * @LastEditTime: 2024-02-24 20:53:04
+ * @LastEditTime: 2024-04-09 20:08:45
  */
 import { initStackNavigation } from '../navigation';
 import React from 'react';
@@ -23,6 +23,7 @@ import Assessment from '../../screen/RelieveRoom/Assessment/Assessment';
 import AssessmentDetail from '../../screen/RelieveRoom/Assessment/AssessmentDetail';
 import AssessmentTest from '../../screen/RelieveRoom/Assessment/AssessmentTest';
 import AssessmentResult from '../../screen/RelieveRoom/Assessment/AssessmentResult';
+import EmotionalMailboxAdd from '../../screen/RelieveRoom/EmotionalMailbox/EmotionalMailboxAdd';
 
 export const RelieveRoomNavagation = Stack => {
   return (
@@ -37,11 +38,12 @@ export const RelieveRoomNavagation = Stack => {
       {initStackNavigation(Stack, 'ConsultingDetail', ConsultingDetail)}
       {/* 情绪信箱 */}
       {initStackNavigation(Stack, 'EmotionalMailbox', EmotionalMailbox)}
+      {initStackNavigation(Stack, 'EmotionalMailboxAdd', EmotionalMailboxAdd)}
       {/* 心理测评 */}
       {initStackNavigation(Stack, 'Assessment', Assessment)}
       {initStackNavigation(Stack, 'AssessmentDetail', AssessmentDetail)}
       {initStackNavigation(Stack, 'AssessmentTest', AssessmentTest)}
-      {initStackNavigation(Stack,'AssessmentResult',AssessmentResult)}
+      {initStackNavigation(Stack, 'AssessmentResult', AssessmentResult)}
     </>
   );
 };

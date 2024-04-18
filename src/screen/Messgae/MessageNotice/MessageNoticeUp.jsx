@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-01-23 16:32:13
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-30 11:54:37
+ * @LastEditTime: 2024-03-30 17:45:11
  */
 import { Avatar } from '@rneui/base';
 import React, { useState, useEffect } from 'react';
@@ -66,15 +66,16 @@ const MessageNoticeUp = ({ navigation }) => {
         {upList.map(item => {
           return (
             <Pressable
+            key={item.id}
               style={styles.listBox}
               onPress={() => {
                 navigation.navigate('MEATTENTIONPERPAGE');
               }}>
-              <Avatar rounded size={50} source={{ uri: item.avatar }} />
+              <Avatar rounded size={30} source={{ uri: item.avatar }} />
               <View style={styles.mid}>
                 <Text style={styles.text}>{item.username}</Text>
 
-                <Text>赞了你 {item.number}分钟前</Text>
+                <Text style={{fontSize: 12}}>赞了你 {item.number}分钟前</Text>
                 <Text style={styles.content}>{item.sourceContent}</Text>
               </View>
             </Pressable>
@@ -94,13 +95,13 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   listBox: {
-    height: 110,
+    height: 120,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBlockColor: color.gray.light,
     flexDirection: 'row',
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingVertical: 20,
   },
   mid: {
@@ -110,9 +111,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#000',
-    fontSize: 16,
+    fontSize: 14,
   },
-  content: {},
+  content: {
+    borderLeftWidth: 3,
+    paddingLeft: 10,
+    fontSize: 12,
+    marginVertical: 10,
+    borderLeftColor: 'rgb(229,229,229)',
+  },
 });
 
 export default MessageNoticeUp;

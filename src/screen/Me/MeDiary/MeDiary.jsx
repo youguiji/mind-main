@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-17 21:48:01
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 08:31:12
+ * @LastEditTime: 2024-03-31 07:33:59
  */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -32,9 +32,13 @@ const MeDiary = ({ navigation }) => {
           />
           <Text style={styles.title}> 随心记 </Text>
         </View>
-        <Icon icode={'\ue600'} size={20} iconPress={() => {
-          navigation.navigate('MeDiaryAdd')
-        }} />
+        <Icon
+          icode={'\ue600'}
+          size={20}
+          iconPress={() => {
+            navigation.navigate('MeDiaryAdd');
+          }}
+        />
       </View>
       <View style={styles.tabContainer}>
         <Tab.Navigator
@@ -45,16 +49,16 @@ const MeDiary = ({ navigation }) => {
               // fontWeight: 'bold',
               fontSize: 12, // 设置字体大小为16
             },
-            // tabBarItemStyle: { marginLeft: 14, width: '200px' }, // 控制标签页位置
-            tabBarStyle: { backgroundColor: 'white' },
-            tabBarIndicatorStyle: {
-              backgroundColor: '#fff',
-            },
             tabBarStyle: {
               height: 45,
               justifyContent: 'center',
               elevation: 0, // 去掉底部边框阴影
-              backgroundColor: '#fff', // 设置背景颜色为 #fff
+            },
+            tabBarBackground: () => (
+              <View style={{ backgroundColor: 'rgb(255,255,160)', flex: 1 }} />
+            ),
+            tabBarIndicatorStyle: {
+              backgroundColor: 'rgb(240,216,255)',
             },
             tabBarPressColor: 'transparent', // 取消点击Tab时的黑灰色过渡
             tabBarPressOpacity: 1, // 取消点击Tab时的黑灰色过渡

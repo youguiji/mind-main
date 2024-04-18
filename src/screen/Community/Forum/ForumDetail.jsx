@@ -4,13 +4,14 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-05 00:47:45
+ * @LastEditTime: 2024-04-17 21:13:36
  */
 import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  Image,
   Pressable,
   TextInput,
   TouchableOpacity,
@@ -55,7 +56,7 @@ const ForumDetail = ({ route, navigation }) => {
       //console.log(res.data);
       setarticleDetail(res.data);
       setImages(res.data.pictures.map(item => item.url));
-      getComment(id, 1, 10, false).then(res => {
+      getComment(id, 1, 20, false).then(res => {
         console.log(res);
         setCommentList(res.data.list);
         //console.log(commentList.rootCommentVo);
@@ -71,48 +72,63 @@ const ForumDetail = ({ route, navigation }) => {
           navigation.goBack();
         }}
       />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userBox}>
           <Pressable style={styles.userLeft}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('MEUSERPAGE', {
-                  userId: articleDetail.userId,
-                });
-              }}>
-              <Avatar
-                size={64}
-                source={{ uri: articleDetail.avatar }}
-                rounded
-              />
-            </TouchableOpacity>
+            {articleDetail.avatar && (
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('MEUSERPAGE', {
+                    userId: articleDetail.userId,
+                  });
+                }}>
+                <Avatar
+                  size={64}
+                  source={{ uri: articleDetail.avatar }}
+                  rounded
+                />
+              </Pressable>
+            )}
             <Text style={styles.name}>{articleDetail.username}</Text>
           </Pressable>
+
           <Pressable style={styles.userRight}>
             <Text style={styles.btn}>关注</Text>
           </Pressable>
         </View>
         {/* 轮播图 */}
         <View style={styles.swiper}>
-          <Swiper images={images} />
+          {/* <Swiper images={images} /> */}
+          {images[0] && (
+            <Image source={{ uri: images[0] }} style={styles.topImage} />
+          )}
         </View>
 
         {/* 内容 */}
         <View style={styles.contentBox}>
           <Text style={styles.title}>{articleDetail.title}</Text>
           <Text style={styles.content}>{articleDetail.content}</Text>
-
+          {/* tag组 */}
+          <View style={styles.tag}>
+            {
+              articleDetail.tags &&
+                articleDetail.tags.map(item => {
+                  return <Tag key={item.id} text={item.tagName} />;
+                })
+              // console.log()
+            }
+          </View>
           {/* 发布时间 */}
           <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
         </View>
 
         {/* 评论区 */}
         <View style={styles.commentBox}>
-          {commentList.map(item => {
+          {commentList.map((item, index) => {
             return (
-              <View style={styles.commentList}>
+              <View style={styles.commentList} key={index}>
                 <Avatar
-                  size={48}
+                  size={32}
                   source={{ uri: item.rootCommentVo.avatar }}
                   rounded
                 />
@@ -156,19 +172,19 @@ const ForumDetail = ({ route, navigation }) => {
               if (up) {
                 upArticle(id, 1, 2).then(res => {
                   console.log(res);
+                  setarticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
                 });
-                setarticleDetail(prevState => ({
-                  ...prevState,
-                  likeCount: res.data,
-                }));
               } else {
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
+                  setarticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
                 });
-                setarticleDetail(prevState => ({
-                  ...prevState,
-                  likeCount: res.data,
-                }));
               }
               setUp(!up);
               console.log(up);
@@ -238,7 +254,14 @@ const styles = StyleSheet.create({
   },
   swiper: {
     paddingVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
+  },
+  topImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 14,
+    // margin: 10, // 添加外边距
+    // marginTop: 5,
   },
   btn: {
     color: '#fff',
@@ -258,6 +281,7 @@ const styles = StyleSheet.create({
   },
   tag: {
     flexDirection: 'row',
+    marginVertical: 10,
   },
   time1: {
     marginVertical: 10,
@@ -282,7 +306,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    width: '50%',
+    width: '55%',
     backgroundColor: 'rgb(244,242,250)',
     borderRadius: 16,
     marginVertical: 5,
@@ -295,12 +319,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 20,
     marginVertical: 10,
-    borderStyle: 'solid',
-    borderBottomColor: color.gray.line,
-    borderBottomWidth: 1,
+    // borderStyle: 'solid',
+    // borderBottomColor: color.gray.line,
+    // borderBottomWidth: 1,
   },
   commentDetail: {
-    width: '80%',
+    width: '85%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
@@ -311,6 +335,10 @@ const styles = StyleSheet.create({
   commentContent: {
     color: '#000',
     fontSize: 15,
+    marginVertical: 10,
+  },
+  time: {
+    fontSize: 10,
   },
   sun: {
     marginLeft: 10,

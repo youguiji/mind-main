@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-09 15:34:24
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-06 21:49:51
+ * @LastEditTime: 2024-04-15 20:10:51
  */
 /**
  * @format
@@ -26,15 +26,18 @@ import { NotificationProvider } from './src/components/Notification';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // 导入AsyncStorage
 import NetInfo from '@react-native-community/netinfo'; //检查网络状态
 import { useNotification } from './src/components/Notification';
+import WaveAnimation from './src/components/WaveAnimation';
+import VoiceNavigaion from './src/components/VoiceNavigation';
 
 const Tab = createBottomTabNavigator();
+console.warn = () => {};
+
 
 const App= ()=> {
   const isLogin = useSelector(state=>state.login.isLogin);
   const [isConnect, setIsConnect] = useState(true);
   const showNotification = useNotification();
   const dispatch = useDispatch();
-
   useEffect(() => {
     //检查网络连接
     const Internet = NetInfo.addEventListener(state => {
@@ -75,7 +78,8 @@ const App= ()=> {
         <>
           <StatusBar 
             animated={true}
-            translucent={true}
+            translucent={false}
+            showHideTransition={true}
             backgroundColor="rgba(255, 255, 255, 0)"
             barStyle="dark-content" />
                 {isLogin ? <Navigation /> : <LoginNavigation />}

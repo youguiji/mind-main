@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-11 09:03:41
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 03:22:44
+ * @LastEditTime: 2024-04-13 20:33:38
  */
 // navigation/BottomTabNavigator.js
 
@@ -26,7 +26,7 @@ const BottomTabNavigator = () => {
         '解忧室',
         'RELIEVEROOM',
         RelieveRoom,
-        '\ue66b',
+        '\ue63d',
         Tab,
       )}
       {initBottomNavigation('消息', 'MESSAGE', Message, '\ue630', Tab)}

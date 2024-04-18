@@ -49,6 +49,7 @@ const MeSettingInfo = ({ navigation }) => {
         {title.map(item => {
           return (
             <ClickItem
+            key={item.id}
               title={item.title}
               navigation={navigation}
               destination={item.destination}

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet,FlatList } from 'react-native';
 import TitleHeader from '../../../components/TitleHeader';
 import ProfileCard from './Components/ProfileCard';
-import { ScrollView } from 'react-native-gesture-handler';
 const MessageNoticeAttention = ({ navigation }) => {
 
   const userList = [{
@@ -18,6 +17,7 @@ const MessageNoticeAttention = ({ navigation }) => {
   },]
     const renderItem = ({ item }) => (
       <ProfileCard
+      
         userName={item.userName}
         lastSeen={item.lastSeen}
         profileImageURL={item.profileImageURL}

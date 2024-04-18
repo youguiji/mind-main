@@ -6,10 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { color } from '../../../assets/color';
 import TitleHeader from '../../../components/TitleHeader';
+import Icon from '../../../components/Icon';
 
 // 自定义 Radio 组件
 const Radio = ({ value, selected, onSelect }) => {
@@ -17,7 +18,12 @@ const Radio = ({ value, selected, onSelect }) => {
     <Pressable
       onPress={onSelect}
       style={[styles.radio, selected && styles.selected]}>
-      <Text>{value}</Text>
+      {/* 总是显示第一个图标组件 */}
+      {!selected && <Icon size={18} icode={'\ue72f'} color={color.purple.light} />}
+
+      {/* 根据 selected 的值选择是否显示第二个图标组件 */}
+      {selected && <Icon size={18} icode={'\uec44'} color={color.purple.light} />}
+      <Text style={[styles.tet, selected && styles.selectText]}>{value}</Text>
     </Pressable>
   );
 };
@@ -29,50 +35,50 @@ const AssessmentTest = ({ navigation }) => {
   const questions = [
     {
       question: '1、你跟男女性朋友能否无所不谈？',
-      options: ['是', '否'],
+      options: ['A.   是', 'B.   否'],
     },
     {
       question: '2、当恋爱出现问题时，你是否自然就会责备自己，认为是自己的错？',
-      options: ['是', '否'],
+      options: ['A.   是', 'B.   否'],
     },
     {
       question: '3、你是否不太愿意跟随自己的浪漫直觉行事？',
-      options: ['是', '否'],
+      options: ['A.   是', 'B.   否'],
     },
     {
-      question: '6、你是否愿意做一个独身女（男）郎？',
-      options: ['是', '否'],
+      question: '4、你是否愿意做一个独身女（男）郎？',
+      options: ['A.   是', 'B.   否'],
     },
     {
-      question: '7、你是否要经过长时间相处才能够真正信任一个人？',
-      options: ['是', '否'],
+      question: '5、你是否要经过长时间相处才能够真正信任一个人？',
+      options: ['A.   是', 'B.   否'],
     },
     {
-      question: '10、你看见一对情侣在街上手牵手，会感到妒忌吗？',
-      options: ['是', '否'],
+      question: '6、你看见一对情侣在街上手牵手，会感到妒忌吗？',
+      options: ['A.   是', 'B.   否'],
     },
     {
-      question: '13、若男（女）朋友对你很差，你还会跟他继续拍拖？',
-      options: ['是', '否'],
+      question: '7、若男（女）朋友对你很差，你还会跟他继续拍拖？',
+      options: ['A.   是', 'B.   否'],
     },
     {
-      question: '14、你是否宁愿“拍散拖”，多余拥有一段认真的恋爱关系？',
-      options: ['是', '否'],
-    },
-    {
-      question:
-        '16、如果你的男（女）友说：“我们的性格不合，还是分手吧。”你会哀求他不要抛弃你吗？',
-      options: ['是', '否'],
+      question: '8、你是否宁愿“拍散拖”，多余拥有一段认真的恋爱关系？',
+      options: ['A.   是', 'B.   否'],
     },
     {
       question:
-        '19、如果你认为改变自己的外貌能令分手的男（女）友回心转意，你会那样做吗？',
-      options: ['是', '否'],
+        '9、如果你的男（女）友说：“我们的性格不合，还是分手吧。”你会哀求他不要抛弃你吗？',
+      options: ['A.   是', 'B.   否'],
     },
     {
       question:
-        '20、你是否一想到要对一个男（女）人做出承诺便害怕得要拔足逃跑？',
-      options: ['是', '否'],
+        '10、如果你认为改变自己的外貌能令分手的男（女）友回心转意，你会那样做吗？',
+      options: ['A.   是', 'B.   否'],
+    },
+    {
+      question:
+        '11、你是否一想到要对一个男（女）人做出承诺便害怕得要拔足逃跑？',
+      options: ['A.   是', 'B.   否'],
     },
   ];
 
@@ -102,17 +108,22 @@ const AssessmentTest = ({ navigation }) => {
         }}
         headerRight={() => {
           return (
-            <Pressable style={styles.btn} onPress={()=>{navigation.navigate('AssessmentResult')}}>
+            <Pressable
+              style={styles.btn}
+              onPress={() => {
+                navigation.navigate('AssessmentResult');
+              }}>
               <Text style={styles.btnText}>完成</Text>
             </Pressable>
           );
         }}
       />
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{
           marginTop: 40,
-          padding: 10,
-          backgroundColor: '#fff',
+          // padding: 10,
+          // backgroundColor: '#fff',
           height: '100%',
         }}>
         {!showResult ? (
@@ -156,38 +167,53 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   questionContainer: {
-    marginBottom: 20,
+    // marginBottom: 20,
     backgroundColor: '#fff',
-    borderRadius: 15,
-    // borderWidth: 1,
-    // borderColor: color.purple.light,
+    // marginBottom: 10,
+    // borderRadius: 15,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
     padding: 10,
+    
   },
   questionText: {
     fontSize: 16,
+    color: '#000',
     marginBottom: 10,
-    fontWeight: '20',
   },
   optionsContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     width: '90%',
     marginLeft: 20,
+    paddingVertical: 5,
   },
   radio: {
-    //borderWidth: 1,
-    //borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 20,
+    paddingVertical: 10,
+    
+    padding: 5,
+    flexDirection: 'row',
+    // color: '#333',
+    // borderRadius: 20,
+  },
+  tet: {
+    paddingLeft: 15,
+    color: "#000"
+
   },
   selected: {
-    // backgroundColor: 'green',
-    borderWidth: 1,
-    borderColor: color.purple.light,
+    // backgroundColor: 'rgb(232,232,232)',
+    // borderWidth: 1,
+    borderRadius: 5,
+   
+    // borderColor: color.purple.light,
+  },
+  selectText: {
+    // color: "#000"
+    // color: color.pink,
   },
   resultText: {
     fontSize: 18,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   btn: {

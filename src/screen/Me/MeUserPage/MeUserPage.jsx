@@ -17,7 +17,103 @@ const MeUserPage = ({ navigation, route }) => {
   //用户id
   const { userId } = route.params;
 
-  const [trends, setTrends] = useState([]);
+  const [trends, setTrends] = useState([
+    {
+      id: '1734590948757262339',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '有的孩子表面没啥，其实困在无意义感里很久了',
+      content:
+        '2022版“心理健康蓝皮书”《中国国民心理健康发展报告(2021~2022)》显示，参加调查的三万余名青少年中有14.8%存在不同程度的抑郁风险。',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: '2023-11-05T12:00:00',
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201911%2F04%2F20191104160224_aXyMk.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1715594868&t=bcecc79496326d231c9dce0eb253a607',
+          rank: 0,
+        },
+        {
+          id: 1,
+          url: 'https://img0.baidu.com/it/u=825934528,506475343&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
+          rank: 0,
+        },
+        {
+          id: 2,
+          url: 'https://img0.baidu.com/it/u=825934528,506475343&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
+          rank: 0,
+        },
+      ],
+    },
+    {
+      id: '1734590948757262331',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '你为什么明明身怀潜能，却总在“画地为牢”？',
+      content:
+        '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: '2024-01-23T12:00:00',
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+    {
+      id: '1734590948757262332',
+      userId: '19263416795418624',
+      username: 'string',
+      sex: 0,
+      avatar: 'string',
+      type: 1,
+      title: '“回避型依恋”在亲密关系中都会有哪些特质？',
+      content:
+        '一些人在恋爱时，会有这些令人抓狂的感受： 你不找对方，对方也不找你；',
+      viewCount: 0,
+      likeCount: 0,
+      updateTime: '2024-01-23T12:00:00',
+      tags: [
+        {
+          id: 0,
+          tagName: 'string',
+          rank: 0,
+        },
+      ],
+      pictures: [
+        {
+          id: 0,
+          url: 'string',
+          rank: 0,
+        },
+      ],
+    },
+
+  ]);
   const dispatch = useDispatch();
 
   const [userInfo, setUserInfo] = useState({
@@ -42,7 +138,6 @@ const MeUserPage = ({ navigation, route }) => {
         setTrends(res.data.list);
       });
     });
-
   }, []);
 
   return (
@@ -85,7 +180,7 @@ const MeUserPage = ({ navigation, route }) => {
             onPress={() => {
               navigation.navigate('MEATTENTIONFANS');
             }}>
-            <Text style={{ marginHorizontal: 20 }}>粉丝 0 {userInfo.fans}</Text>
+            <Text style={{ marginHorizontal: 20 }}>粉丝 2 {userInfo.fans}</Text>
           </Pressable>
           <Text>动态 {trends.length}</Text>
         </View>
@@ -99,10 +194,10 @@ const MeUserPage = ({ navigation, route }) => {
               }}>
               <View style={styles.left}>
                 <Text style={styles.day}>
-                  {transforTime(item.creatTime).day}
+                  {transforTime(item.updateTime).day}
                 </Text>
                 <Text style={styles.month}>
-                  {transforTime(item.creatTime).month}
+                  {transforTime(item.updateTime).month}{' '}
                 </Text>
               </View>
               <View style={styles.right}>
@@ -129,7 +224,17 @@ const MeUserPage = ({ navigation, route }) => {
         })}
       </ScrollView>
       <View style={styles.bottomBox}>
-        <Pressable style={styles.botn}>
+        <Pressable style={styles.botnt}>
+        <Icon
+            size={18}
+            color={'#fff'}
+            icode={'\ue7d4'}
+            iconPress={() => {
+              console.log('iconpress');
+              console.log(item.id);
+              openModal(item.id);
+            }}
+          />
           <Text style={styles.boText}>关注</Text>
         </Pressable>
         <Pressable
@@ -141,6 +246,16 @@ const MeUserPage = ({ navigation, route }) => {
             console.log(userId);
           }}
           style={styles.botn}>
+          <Icon
+            size={18}
+            color={'#fff'}
+            icode={'\ue60c'}
+            iconPress={() => {
+              console.log('iconpress');
+              console.log(item.id);
+              openModal(item.id);
+            }}
+          />
           <Text style={styles.boText}>私信</Text>
         </Pressable>
       </View>
@@ -151,6 +266,7 @@ const MeUserPage = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: '#fff',
   },
   floatingIconContainer: {
     position: 'absolute',
@@ -224,15 +340,29 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   botn: {
-    width: 100,
+    flexDirection: 'row',
+    alignItem: 'center',
+    width: '40%',
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.purple.deep,
     borderRadius: 16,
   },
+  botnt: {
+    flexDirection: 'row',
+    alignItem: 'center',
+    width: '40%',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(255,168,203)',
+    borderRadius: 16,
+  },
   boText: {
     color: '#fff',
+    paddingHorizontal: 5,
+    paddingBottom: 4,
   },
 });
 export default MeUserPage;

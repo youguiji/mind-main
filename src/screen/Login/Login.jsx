@@ -1,7 +1,14 @@
 import React, { useState, useRef } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ImageBackground,
+  KeyboardAvoidingView
+} from 'react-native';
 import { color } from '../../assets/color';
 import { getCode, login } from '../../network/modules/user';
 import { useDispatch } from 'react-redux/es/exports';
@@ -16,116 +23,124 @@ const Login = ({ navigation }) => {
   const phoneRef = useRef(null);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../../assets/systemImage/F0FA48FB26FB6DE0F8358ED6BC34C5D3.jpg')}
-        resizeMode="cover"
-        style={styles.backgroundImage}>
-        <Pressable
-          style={styles.outContent}
-          onPress={event => {
-            phoneRef.current.blur();
-          }}>
-          <View style={styles.contains}>
-            {/* <View>
+      <View style={styles.container}>
+
+        <ImageBackground
+          source={require('../../assets/systemImage/F0FA48FB26FB6DE0F8358ED6BC34C5D3.jpg')}
+          resizeMode="cover"
+          style={styles.backgroundImage}>
+                        <KeyboardAvoidingView style={{ flex: 1 }} >
+
+          <Pressable
+            style={styles.outContent}
+            onPress={event => {
+              phoneRef.current.blur();
+            }}>
+            <View style={styles.contains}>
+              {/* <View>
             <Dialog visible={visible} message="请输入登录邮箱" />
           </View> */}
-            <Text
-              style={{
-                fontSize: 40,
-                color: color.purple.light,
-                paddingTop: 10,
-                // paddingVertical: 20,
-              }}>
-              {' '}
-              MindInsight{' '}
-            </Text>
-            <Text style={{ marginBottom: 10 }}>属于您的心理专属心理管家</Text>
-            <Input
-              type="text"
-              placeholder="请输入登录邮箱或者手机号"
-              style={StyleSheet.flatten([{ width: '100%' }, styles.inputBoxItem])}
-              keyboardType="numeric"
-              value={[phone, setPhone]}
-              ref={phoneRef}
-            />
-            <Button
-              title="获取验证码"
-              style={[
-                styles.inputBoxItem,
-                {
-                  height: 60,
-                },
-              ]}
-              textStyle={{
-                fontSize: 18,
-                fontWeight: '500',
-              }}
-              onPress={async () => {
-                dispatch(LoginIn);
-                try {
-                  if (phone.length != 0) {
-                    const res = await getCode(phone, 'login');
-                    console.log(res);
-                    // if (res.code != '00000') {
-                    //   showNotification(res.message);
-                    // }
-                    navigation.navigate('LOGINGETCODE', {
-                      phone: phone,
-                    });
-                    showNotification('验证码已发送，请注意查收');
-                  } else {
-                    showNotification('请输入邮箱哦！');
+              <Text
+                style={{
+                  fontSize: 40,
+                  color: color.purple.light,
+                  paddingTop: 10,
+                  // paddingVertical: 20,
+                }}>
+                {' '}
+                MindInsight{' '}
+              </Text>
+              <Text style={{ marginBottom: 10 }}>属于您的心理专属心理管家</Text>
+              <Input
+                type="text"
+                placeholder="请输入登录邮箱或者手机号"
+                style={StyleSheet.flatten([
+                  { width: '100%' },
+                  styles.inputBoxItem,
+                ])}
+                keyboardType="numeric"
+                value={[phone, setPhone]}
+                ref={phoneRef}
+              />
+              <Button
+                title="获取验证码"
+                style={[
+                  styles.inputBoxItem,
+                  {
+                    height: 60,
+                  },
+                ]}
+                textStyle={{
+                  fontSize: 18,
+                  fontWeight: '500',
+                }}
+                onPress={async () => {
+                  dispatch(LoginIn);
+                  try {
+                    if (phone.length != 0) {
+                      const res = await getCode(phone, 'login');
+                      console.log(res);
+                      // if (res.code != '00000') {
+                      //   showNotification(res.message);
+                      // }
+                      navigation.navigate('LOGINGETCODE', {
+                        phone: phone,
+                      });
+                      showNotification('验证码已发送，请注意查收');
+                    } else {
+                      showNotification('请输入邮箱哦！');
+                    }
+                  } catch (error) {
+                    console.error('Network Error: ', error.message);
                   }
-                } catch (error) {
-                  console.error('Network Error: ', error.message);
-                }
-              }}></Button>
-            <Button
-              title="密码登录"
-              style={[
-                styles.inputBoxItem,
-                {
-                  height: 60,
-                },
-              ]}
-              textStyle={{
-                fontSize: 18,
-                fontWeight: '500',
-              }}
-              onPress={() => {
-                navigation.navigate('LOGINREGISTER');
-              }}></Button>
-            <Text
-              style={{
-                color: '#000',
-              }}>
-              其他方式登录
-            </Text>
-            <View style={styles.other}>
-              <Pressable>
-                <Icon
-                  style={{ marginRight: 20 }}
-                  icode={'\ue618'}
-                  size={20}
-                  color="rgb(9,187,7)"
-                />
-              </Pressable>
-              <Pressable>
-                <Icon
-                  style={{ marginRight: 20 }}
-                  icode={'\ue6ca'}
-                  size={20}
-                  color="rgb(54,155,206)"
-                />
-              </Pressable>
+                }}></Button>
+              <Button
+                title="密码登录"
+                style={[
+                  styles.inputBoxItem,
+                  {
+                    height: 60,
+                  },
+                ]}
+                textStyle={{
+                  fontSize: 18,
+                  fontWeight: '500',
+                }}
+                onPress={() => {
+                  navigation.navigate('LOGINREGISTER');
+                }}></Button>
+              <Text
+                style={{
+                  color: '#000',
+                }}>
+                其他方式登录
+              </Text>
+              <View style={styles.other}>
+                <Pressable>
+                  <Icon
+                    style={{ marginRight: 20 }}
+                    icode={'\ue618'}
+                    size={20}
+                    color="rgb(9,187,7)"
+                  />
+                </Pressable>
+                <Pressable>
+                  <Icon
+                    style={{ marginRight: 20 }}
+                    icode={'\ue6ca'}
+                    size={20}
+                    color="rgb(54,155,206)"
+                  />
+                </Pressable>
+              </View>
+              {/* <Text style={styles.slogan}>你的情绪，我能看见</Text> */}
             </View>
-            <Text style={styles.slogan}>你的情绪，我能看见</Text>
-          </View>
-          
-        </Pressable>
-      </ImageBackground>
-    </View>
+          </Pressable>        
+        </KeyboardAvoidingView>
+
+        </ImageBackground>
+
+      </View>
   );
 };
 
@@ -172,11 +187,11 @@ const styles = StyleSheet.create({
     bottom: 100,
   },
   slogan: {
-     color: 'rgb(248,246,242)',
-     fontSize: 20,
-     position: 'absolute',
-     bottom: 120,
-  }
+    color: 'rgb(248,246,242)',
+    fontSize: 20,
+    position: 'absolute',
+    bottom: 120,
+  },
 });
 
 export default Login;

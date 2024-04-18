@@ -3,6 +3,7 @@ import { Text, View, StyleSheet,FlatList, TouchableOpacity,TextInput, Button, Sc
 import { getUserInfo } from '../../../network/modules/user';
 import { Avatar } from '@rneui/base';
 import Icon from '../../../components/Icon';
+import { color } from '../../../assets/color';
 import { currentTime } from '../../../util';
 
 const ConsultingDetail = ({navigation,route})=> {
@@ -16,7 +17,7 @@ const ConsultingDetail = ({navigation,route})=> {
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
 
-  var ws = React.useRef(new WebSocket('ws://192.168.157.117:8078')).current;
+  var ws = React.useRef(new WebSocket('ws://192.168.21.117:8078')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
@@ -98,6 +99,7 @@ const ConsultingDetail = ({navigation,route})=> {
       {/* <ScrollView></ScrollView> */}
       {/* 聊天记录 */}
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={chatHistory}
         keyExtractor={(item, index) => index}
         renderItem={({ item }) => {
@@ -114,15 +116,15 @@ const ConsultingDetail = ({navigation,route})=> {
                     // }}
                   />
                   <View style={styles.innerBox}>
-                    <Text>{receiverInfo.username}</Text>
-                    <Text>{item.content}</Text>
+                    {/* <Text>{receiverInfo.username}</Text> */}
+                    <Text style={styles.leftContent}>{item.content}</Text>
                   </View>
                 </View>
               ) : (
                 <View style={styles.right}>
                   <View style={styles.innerBox}>
                     <Text>{userInfo.username}</Text>
-                    <Text>{item.content}</Text>
+                    <Text  style={styles.rightContent}>{item.content}</Text>
                   </View>
                   <Avatar rounded size={48} source={{ uri: userInfo.avatar }} />
                 </View>
@@ -131,14 +133,14 @@ const ConsultingDetail = ({navigation,route})=> {
           );
         }}></FlatList>
       {/* 连接状态 */}
-      <View
+      {/* <View
         style={{
           height: 30,
           backgroundColor: '#eeceff',
           padding: 5,
         }}>
         <Text>{serverState}</Text>
-      </View>
+      </View> */}
       {/* 回复 */}
       {/* <View
         style={{
@@ -177,7 +179,7 @@ const ConsultingDetail = ({navigation,route})=> {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    //backgroundColor: '#ecf0f1',
+    backgroundColor: 'rgb(251,250,252)',
     paddingTop: 70,
     overflow: 'hidden',
     flex: 1,
@@ -211,6 +213,23 @@ const styles = StyleSheet.create({
     right: 10,
     marginVertical: 10,
   },
+  leftContent: {
+    backgroundColor: 'rgb(244,242,250)',
+    color: '#333',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    fontSize: 14,
+    marginTop: 10, 
+  },
+  rightContent: {
+    backgroundColor: color.purple.light,
+    color: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 10, 
+  },
   innerBox: {
     marginHorizontal: 10,
   },
@@ -237,20 +256,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    backgroundColor: 'rgb(255,255,255)',
+    borderTopColor: 'rgb(251,250,252)',
   },
   input: {
     flex: 1,
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    height: 50,
+    // borderWidth: 1,
+    // borderColor: '#ccc',
+    backgroundColor:"rgb(243,242,245)",
     borderRadius: 20,
     paddingHorizontal: 15,
     marginRight: 10,
   },
   sendButton: {
-    padding: 10,
-    backgroundColor: '#4caf50',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: color.pink,
     borderRadius: 20,
   },
   sendButtonText: {

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-11 09:06:58
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 03:19:36
+ * @LastEditTime: 2024-04-16 09:30:48
  */
 
 import React from 'react';
@@ -13,6 +13,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Forum from './Forum/Forum';
 import Article from './Article/Article';
 import Icon from '../../components/Icon';
+import VoiceNavigaion from '../../components/VoiceNavigation';
+import WaveAnimation from '../../components/WaveAnimation';
+import Spinner from '../../components/Spinner';
 
 const CustomSearchBar = () => {
   return (
@@ -24,6 +27,23 @@ const CustomSearchBar = () => {
     </Pressable>
   );
 };
+
+const GlobalContainer = () => {
+  return (
+    <View
+      style={{
+        height: 20,
+        width: 100,
+        position: 'absolute',
+        bottom: 100,
+        // right: 20,
+      }}>
+      <VoiceNavigaion />
+      <WaveAnimation text={'我要发布文章'} duration={10000} />
+    </View>
+  );
+};
+
 const Community = () => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -69,6 +89,11 @@ const Community = () => {
         />
       </Tab.Navigator>
       <CustomSearchBar />
+      {/* <GlobalContainer /> */}
+      {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}> */}
+        {/* <Spinner size="large" /> */}
+        {/* 指定加载指示器的大小，可选值有：'small'、'large' */}
+      {/* </View> */}
     </View>
   );
 };

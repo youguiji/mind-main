@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-05 00:42:18
+ * @LastEditTime: 2024-04-17 19:22:33
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -167,22 +167,24 @@ const ArticleDetail = ({ route, navigation }) => {
           navigation.goBack();
         }}
       />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userBox}>
           <Pressable style={styles.userLeft}>
-            <Pressable
-              onPress={() => {
-                navigation.navigate('MEUSERPAGE', {
-                  userId: articleDetail.userId,
-                });
-                console.log(articleDetail.userId);
-              }}>
-              <Avatar
-                size={64}
-                source={{ uri: articleDetail.avatar }}
-                rounded
-              />
-            </Pressable>
+            {articleDetail.avatar && (
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('MEUSERPAGE', {
+                    userId: articleDetail.userId,
+                  });
+                  console.log(articleDetail.userId);
+                }}>
+                <Avatar
+                  size={58}
+                  source={{ uri: articleDetail.avatar }}
+                  rounded
+                />
+              </Pressable>
+            )}
             <Text style={styles.name}>{articleDetail.username}</Text>
             <View style={styles.health}>
               <Text style={styles.healthText}>心理健康师</Text>
@@ -204,13 +206,13 @@ const ArticleDetail = ({ route, navigation }) => {
 
           {/* tag组 */}
           <View style={styles.tag}>
-            {articleDetail.tags &&
-              articleDetail.tags.map(item => {
-                return <Tag key={item.id} text={item.tagName} />;
-              })}
-
-            <Tag text="1" />
-            <Tag text="1" />
+            {
+              articleDetail.tags &&
+                articleDetail.tags.map(item => {
+                  return <Tag key={item.id} text={item.tagName} />;
+                })
+              // console.log()
+            }
           </View>
           {/* 发布时间 */}
           <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
@@ -220,9 +222,9 @@ const ArticleDetail = ({ route, navigation }) => {
         <View style={styles.commentBox}>
           {commentList.map(item => {
             return (
-              <Pressable style={styles.commentList}>
+              <Pressable style={styles.commentList} key={item.id}>
                 <Avatar
-                  size={48}
+                  size={32}
                   source={{ uri: item.rootCommentVo.avatar }}
                   rounded
                 />
@@ -252,7 +254,7 @@ const ArticleDetail = ({ route, navigation }) => {
                     item.childComment.map(child => {
                       return (
                         // 子评论
-                        <Pressable style={styles.childListBox}>
+                        <Pressable style={styles.childListBox} key={item.id}>
                           <View style={styles.commentDetail}>
                             <Avatar
                               size={32}
@@ -337,9 +339,9 @@ const ArticleDetail = ({ route, navigation }) => {
             icode={'\ue8c3'}
             color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
           />
-          <Text>{articleDetail.likeCount}</Text>
-          {/* <Icon size={28} icode={'\ue74e'} />
-          <Text>{articleDetail.likeCount}</Text> */}
+          <Text style={styles.t}>{articleDetail.likeCount}</Text>
+          <Icon size={28} icode={'\ue74e'} />
+          <Text style={styles.t}>{commentList.length}</Text>
         </View>
         <Pressable
           style={styles.userRight}
@@ -418,6 +420,7 @@ const styles = StyleSheet.create({
   },
   tag: {
     flexDirection: 'row',
+    marginVertical: 10,
   },
   time1: {
     marginVertical: 10,
@@ -433,19 +436,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     bottom: 0,
     width: '100%',
-    height: 75,
-    paddingHorizontal: 20,
+    height: 70,
+    paddingHorizontal: 10,
     flexDirection: 'row',
   },
 
   input: {
-    width: '50%',
+    width: '55%',
     backgroundColor: 'rgb(244,242,250)',
-    borderRadius: 16,
-    marginVertical: 5,
+    borderRadius: 12,
+    // marginVertical: 3,
     paddingHorizontal: 5,
   },
   commentBox: {
@@ -460,7 +463,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
   },
   commentItem: {
-    width: '100%',
+    width: '95%',
   },
   commentDetail: {
     width: '85%',
@@ -470,14 +473,14 @@ const styles = StyleSheet.create({
     //
   },
   health: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: 'rgb(110,165,95)',
-    borderRadius: 14,
+    backgroundColor: 'rgb(255,236,245)',
+    borderRadius: 10,
     marginLeft: 5,
   },
   healthText: {
-    color: '#fff',
+    color: 'rgb(255,130,192)',
     fontSize: 12,
   },
   childListBox: {
@@ -506,7 +509,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 12,
     paddingLeft: 10,
-    paddingVertical: 5,
+    marginVertical: 10,
   },
   time: {
     marginLeft: 10,
@@ -521,6 +524,9 @@ const styles = StyleSheet.create({
     height: 40,
     textAlign: 'center',
     textAlignVertical: 'center',
+  },
+  t: {
+    paddingRight: 5,
   },
 });
 

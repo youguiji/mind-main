@@ -73,6 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    lintOptions {
+        warning 'deprecation'
+    }
     namespace "com.mindinsight"
     defaultConfig {
         applicationId "com.mindinsight"

@@ -41,7 +41,7 @@ const Me = ({ navigation }) => {
         '2022版“心理健康蓝皮书”《中国国民心理健康发展报告(2021~2022)》显示，参加调查的三万余名青少年中有14.8%存在不同程度的抑郁风险。',
       viewCount: 0,
       likeCount: 0,
-      updateTime: "2023-11-05T12:00:00",
+      updateTime: '2023-11-05T12:00:00',
       tags: [
         {
           id: 0,
@@ -52,7 +52,17 @@ const Me = ({ navigation }) => {
       pictures: [
         {
           id: 0,
-          url: 'string',
+          url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201911%2F04%2F20191104160224_aXyMk.thumb.700_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1715594868&t=bcecc79496326d231c9dce0eb253a607',
+          rank: 0,
+        },
+        {
+          id: 1,
+          url: 'https://img0.baidu.com/it/u=825934528,506475343&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
+          rank: 0,
+        },
+        {
+          id: 2,
+          url: 'https://img0.baidu.com/it/u=825934528,506475343&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
           rank: 0,
         },
       ],
@@ -69,7 +79,7 @@ const Me = ({ navigation }) => {
         '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
       viewCount: 0,
       likeCount: 0,
-      updateTime: "2024-01-23T12:00:00",
+      updateTime: '2024-01-23T12:00:00',
       tags: [
         {
           id: 0,
@@ -97,7 +107,7 @@ const Me = ({ navigation }) => {
         '一些人在恋爱时，会有这些令人抓狂的感受： 你不找对方，对方也不找你；',
       viewCount: 0,
       likeCount: 0,
-      updateTime: "2024-01-23T12:00:00",
+      updateTime: '2024-01-23T12:00:00',
       tags: [
         {
           id: 0,
@@ -125,7 +135,7 @@ const Me = ({ navigation }) => {
         '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
       viewCount: 0,
       likeCount: 0,
-      updateTime: "2024-01-23T12:00:00",
+      updateTime: '2024-01-23T12:00:00',
       tags: [
         {
           id: 0,
@@ -252,7 +262,12 @@ const Me = ({ navigation }) => {
             }}>
             <Text style={{ marginRight: 20 }}>随心记 </Text>
           </Pressable>
-          <Text>动态</Text>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('MECERTIFICATIONHOME');
+            }}>
+            <Text>咨询主页 </Text>
+          </Pressable>
         </View>
         {trends.map(item => {
           return (
@@ -271,27 +286,21 @@ const Me = ({ navigation }) => {
                 </Text>
               </View>
               <View style={styles.right}>
-                <Text>{item.title}</Text>
+                <Text style={{ color: '#000',fontSize: 14, }}>{item.title}</Text>
                 <Text style={styles.content} numberOfLines={2}>
                   {item.content}
                 </Text>
-                <View style={styles.imgBox}>
-                  <FlatList
-                    data={item.pictures}
-                    renderItem={({ item }) => (
-                      <View style={styles.imgBox}>
-                        <Image
-                          key={item.id}
-                          style={styles.img}
-                          source={{ uri: item.url }}
-                        />
-                      </View>
-                    )}
-                    keyExtractor={(item, index) => item.id}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    pagingEnabled={true}></FlatList>
+                {/* 三张图片 */}
+                <View style={styles.imgContainer}>
+                  {item.pictures.map(pic => (
+                    <Image
+                      key={pic.id}
+                      style={styles.img}
+                      source={{ uri: pic.url }}
+                    />
+                  ))}
                 </View>
+
                 <View style={styles.comment}>
                   <Icon
                     size={18}
@@ -356,7 +365,7 @@ const styles = StyleSheet.create({
   },
   contain: {
     flexDirection: 'row',
-    marginVertical: 15,
+    marginVertical: 10,
   },
   item: {
     backgroundColor: '#fff',
@@ -364,7 +373,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 16,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
+    // height: 200,
     alignItems: 'center',
     marginHorizontal: 15,
   },
@@ -396,37 +406,30 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   content: {
-    marginVertical: 10,
+    marginVertical: 5,
+    fontSize: 13,
   },
-  imgBox: {
-    flex: 1,
+  imgContainer: {
+    flexDirection: 'row', // 横向排列图片
+    marginTop: 10,
+    marginBottom: 10,
   },
   img: {
-    flex: 1,
-    width: null,
-    height: null,
-    borderRadius: 20,
+    width: 100, // 图片宽度
+    height: 100, // 图片高度
+    marginRight: 10, // 图片之间的间距
+    borderRadius: 10, // 图片圆角
   },
-
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10,
   },
-  image: {
-    width: 100,
-    height: 100,
-    resizeMode: 'cover',
-  },
-  img: {
-    flex: 1,
-    width: null,
-    height: null,
-    borderRadius: 24,
-  },
+
   comment: {
     flexDirection: 'row',
     alignItem: 'center',
+    justifyContent: 'flex-end',
   },
 });
 export default Me;

@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-07 19:08:30
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-30 12:02:48
+ * @LastEditTime: 2024-04-15 14:32:27
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -123,6 +123,7 @@ const Message = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={messageList}
         keyExtractor={(item, index) => index}
         ListHeaderComponent={
@@ -148,12 +149,12 @@ const Message = ({ navigation }) => {
                   navigation.navigate('MESSAGENOTICEATTENTION');
                 }}>
                 <View style={styles.box2}>
-                  <Icon size={38} icode={'\uebac'} color={'rgb(50,136,255)'} />
+                  <Icon size={38} icode={'\uebac'} color={'rgb(245,109,150)'} />
                 </View>
                 <Text>新增关注</Text>
               </Pressable>
               {/* 新增评论 */}
-              <View
+              <Pressable
                 onPress={() => {
                   navigation.navigate('MESSAGENOTICECOMMENT');
                 }}>
@@ -161,7 +162,7 @@ const Message = ({ navigation }) => {
                   <Icon size={32} icode={'\ue60c'} color={'rgb(52,218,152)'} />
                 </View>
                 <Text>新增评论</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         }
@@ -222,15 +223,15 @@ const styles = StyleSheet.create({
   // 顶部
   top: {
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
 
     color: '#000',
   },
   box1: {
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     backgroundColor: 'rgb(253,225,222)',
     borderRadius: 16,
     justifyContent: 'center',
@@ -238,17 +239,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   box2: {
-    width: 70,
-    height: 70,
-    backgroundColor: 'rgb(231,240,255)',
+    width: 55,
+    height: 55,
+    backgroundColor: 'rgb(254,225,235)',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
   box3: {
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     backgroundColor: 'rgb(227,250,239)',
     borderRadius: 16,
     justifyContent: 'center',
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
   },
   // 列表
   listBox: {
-    width: '100%',
+    width: '95%',
     height: 90,
     paddingHorizontal: 20,
     borderBottomWidth: 1,

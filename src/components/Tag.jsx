@@ -20,17 +20,19 @@ const Tag = ({ text }) => {
 
 const styles = StyleSheet.create({
   tag: {
-    backgroundColor: color.purple.light, // 背景颜色
+    backgroundColor: '#fff', // 背景颜色
     borderRadius: 10, // 圆角大小
     paddingHorizontal: 8, // 左右内边距
     paddingVertical: 3, // 上下内边距
     marginRight: 4, // 左右边距
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: color.purple.light,
     height: 30,
   },
   tagText: {
-    color: color.purple.deep, // 文字颜色
+    color: color.purple.light, // 文字颜色
     fontSize: 12, // 字体大小
   },
 });

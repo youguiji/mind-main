@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:12:55
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 09:17:38
+ * @LastEditTime: 2024-04-17 19:15:17
  */
 
 import { Avatar } from '@rneui/base';
@@ -93,8 +93,41 @@ const numColumns = 2; // 定义列数
 const Forum = ({ navigation }) => {
   const [list, setList] = useState([]);
 
+  const [LIST, setLIST] = useState([
+    {
+      avatar:
+        'https://qiniu.flywe.xyz/MindInsight/2024/02/21/d60e5cfca84fdd0e.jpg',
+      content: '收到了朋友的祝福',
+      id: '1734590948757262341',
+      likeCount: 0,
+      pictures: [
+        {
+          id: '15',
+          rank: 1,
+          url: 'https://qiniu.flywe.xyz/MindInsight/2023/12/09/514.jpg',
+        },
+        {
+          id: '16',
+          rank: 2,
+          url: 'https://qiniu.flywe.xyz/MindInsight/2023/12/09/911.jpg',
+        },
+      ],
+      sex: 1,
+      tags: [
+        { id: '4242424242', rank: 1, tagName: '新年快乐' },
+        { id: '141414141', rank: 2, tagName: '龙年大吉' },
+      ],
+      title: '小惊喜',
+      type: 2,
+      updateTime: '2023-12-14 06:22:45',
+      userId: '19263416795418624',
+      username: 'qlp',
+      viewCount: 0,
+    },
+  ]);
+
   useEffect(() => {
-    getArticle(2, 1, 2, true)
+    getArticle(2, 1, 40, true)
       .then(res => {
         console.log(res.data.list[0]);
         setList(res.data.list);
@@ -108,6 +141,7 @@ const Forum = ({ navigation }) => {
   return (
     <View style={styles.Box}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={list}
         //ListHeaderComponent={userComponent}
         numColumns={numColumns}
@@ -119,7 +153,14 @@ const Forum = ({ navigation }) => {
             }}>
             <View style={styles.item}>
               {item.pictures.length == 0 ? (
-                ''
+                <View style={styles.imgBox}>
+                  <Image
+                    style={styles.img}
+                    source={{
+                      uri: 'https://img2.baidu.com/it/u=1192870422,2468400292&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=450',
+                    }}
+                  />
+                </View>
               ) : (
                 <View style={styles.imgBox}>
                   <Image
@@ -227,7 +268,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    borderRadius: 24,
+    borderRadius: 14,
   },
   content: {
     color: '#000',

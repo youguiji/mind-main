@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-03 20:40:51
  * @LastEditors: Austral
- * @LastEditTime: 2023-10-06 18:56:21
+ * @LastEditTime: 2024-04-14 08:39:47
  */
 
 import React, { useState } from 'react';
@@ -17,18 +17,15 @@ const MeAttentionFans = ({ navigation }) => {
   const [fans, setFans] = useState([
     {
       id: 1,
-      name: 'user1',
-      avatar: 'https://w.wallhaven.cc/full/vq/wallhaven-vqe87p.jpg',
+      name: '今日不定',
+      avatar:
+        'https://img2.baidu.com/it/u=2563905782,171946313&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
     },
     {
       id: 2,
-      name: 'user2',
-      avatar: '',
-    },
-    {
-      id: 3,
-      name: 'user3',
-      avatar: '',
+      name: '乌鸦和麻雀',
+      avatar:
+        'https://img1.baidu.com/it/u=4243707043,517558408&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
     },
   ]);
 
@@ -46,10 +43,11 @@ const MeAttentionFans = ({ navigation }) => {
           return (
             <Pressable
               style={styles.listBox}
+              key={item.id}
               onPress={() => {
                 navigation.navigate('MEATTENTIONPERPAGE');
               }}>
-              <Avatar rounded source={{ uri: item.avatar }} />
+              <Avatar size={40} rounded source={{ uri: item.avatar }} />
               <Text style={styles.text}>{item.name}</Text>
             </Pressable>
           );
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   listBox: {
-    height: 50,
+    height: 70,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBlockColor: color.gray.light,

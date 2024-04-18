@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-02-23 19:59:04
  * @LastEditors: Austral
- * @LastEditTime: 2024-02-24 20:32:33
+ * @LastEditTime: 2024-04-17 16:22:17
  */
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
@@ -21,7 +21,7 @@ const ConsultantCard = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Avatar size={68} source={{ uri: avatar }} style={styles.avatar} />
+      <Avatar size={38} source={{ uri: avatar }} style={styles.avatar} />
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{username}</Text>
         <Text style={styles.info}>{line1}</Text>

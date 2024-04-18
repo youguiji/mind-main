@@ -103,10 +103,13 @@ const ConsultingRoom = ({ navigation }) => {
           </View>
         ))}
       </View>
-      <ScrollView style={{ width: '100%' }}>
+      <ScrollView style={{ width: '100%' }}        
+       showsVerticalScrollIndicator={false}
+>
         {consultant.map(item => {
           return (
             <ConsultantCard
+            key={item.id}
               avatar={item.avatar}
               username={item.username}
               line1={item.line1}
