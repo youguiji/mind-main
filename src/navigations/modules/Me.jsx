@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 22:04:23
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-18 10:55:09
+ * @LastEditTime: 2024-03-04 01:33:24
  */
 import { initStackNavigation } from '../navigation';
 import React from 'react';
@@ -17,6 +17,7 @@ import MeSettingSecrity from '../../screen/Me/MeSetting/MeSettingSecrity/MeSetti
 import MeSettingChangeBirth from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeBirth';
 import MeSettingThank from '../../screen/Me/MeSetting/MeSettingThank/MeSettingThank';
 import MeSettingChangeName from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeName';
+import MeSettingChangeLabel from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeLabel';
 import MeSettingChangeAvatar from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeAvatar';
 import MeSettingChangeSex from '../../screen/Me/MeSetting/MeSettingInfo/MeSettingChangeInfo/MeSettingChangeSex';
 
@@ -25,6 +26,12 @@ import MeAttentionFollow from '../../screen/Me/MeAttention/MeAttentionFollow';
 import MeAttentionPerPage from '../../screen/Me/MeAttention/MeAttentionPerPage';
 
 import MeDiary from '../../screen/Me/MeDiary/MeDiary';
+
+import MeUserPage from '../../screen/Me/MeUserPage/MeUserPage';
+import MeCertification from '../../screen/Me/MeCertification/MeCertification';
+import MeCertificationHome from '../../screen/Me/MeCertificationHome/MeCertificationHome';
+import MeDiaryAdd from '../../screen/Me/MeDiary/MeDiaryOperate/MeDiaryAdd';
+import MeDiaryDetail from '../../screen/Me/MeDiary/MeDiaryOperate/MeDiaryDetail';
 
 export const MeNavigation = Stack => {
   return (
@@ -37,6 +44,7 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MESETTINGCHANGEBIRTH', MeSettingChangeBirth)}
       {initStackNavigation(Stack, 'MESETTINGCHANGSEX', MeSettingChangeSex)}
       {initStackNavigation(Stack, 'MESETTINGCHANGENAME', MeSettingChangeName)}
+      {initStackNavigation(Stack, 'MESETTINGCHANGELABEL', MeSettingChangeLabel)}
       {initStackNavigation(
         Stack,
         'MESETTINGCHANGEAVATAR',
@@ -46,8 +54,13 @@ export const MeNavigation = Stack => {
       {initStackNavigation(Stack, 'MEATTENTIONFANS', MeAttentionFans)}
       {initStackNavigation(Stack, 'MEATTENTIONFOLLOW', MeAttentionFollow)}
       {initStackNavigation(Stack, 'MEATTENTIONPERPAGE', MeAttentionPerPage)}
-
+      {/* 随心记 */}
       {initStackNavigation(Stack, 'MEDIARY', MeDiary)}
+      {initStackNavigation(Stack, 'MeDiaryAdd', MeDiaryAdd)}
+      {initStackNavigation(Stack, 'MeDiaryDetail', MeDiaryDetail)}
+      {initStackNavigation(Stack, 'MEUSERPAGE', MeUserPage)}
+      {initStackNavigation(Stack, 'MECERTIFICATION', MeCertification)}
+      {initStackNavigation(Stack, 'MECERTIFICATIONHOME', MeCertificationHome)}
     </>
   );
 };

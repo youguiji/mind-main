@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-03 20:40:11
  * @LastEditors: Austral
- * @LastEditTime: 2023-10-06 19:43:18
+ * @LastEditTime: 2024-04-14 08:42:36
  */
 
 import React, { useState } from 'react';
@@ -17,18 +17,9 @@ const MeAttentionFollow = ({ route, navigation }) => {
   const [fans, setFans] = useState([
     {
       id: 1,
-      name: 'user1',
-      avatar: 'https://w.wallhaven.cc/full/vq/wallhaven-vqe87p.jpg',
-    },
-    {
-      id: 2,
-      name: 'user2',
-      avatar: '',
-    },
-    {
-      id: 3,
-      name: 'user3',
-      avatar: '',
+      name: 'austrul',
+      avatar:
+        'https://p8.itc.cn/q_70/images03/20211110/73e3c30851a44f95907026692f559fa5.jpeg',
     },
   ]);
 
@@ -48,11 +39,12 @@ const MeAttentionFollow = ({ route, navigation }) => {
         {fans.map(item => {
           return (
             <Pressable
+              key={item.id}
               style={styles.listBox}
               onPress={() => {
                 navigation.navigate('MEATTENTIONPERPAGE');
               }}>
-              <Avatar rounded source={{ uri: item.avatar }} />
+              <Avatar size={40} rounded source={{ uri: item.avatar }} />
               <Text style={styles.text}>{item.name}</Text>
             </Pressable>
           );
@@ -68,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   listBox: {
-    height: 50,
+    height: 70,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBlockColor: color.gray.light,

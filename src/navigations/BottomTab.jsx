@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-11 09:03:41
  * @LastEditors: Austral
- * @LastEditTime: 2023-10-20 17:11:19
+ * @LastEditTime: 2024-04-13 20:33:38
  */
 // navigation/BottomTabNavigator.js
 
@@ -21,34 +21,16 @@ const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator>
-      {initBottomNavigation(
-        '社区', 
-        COMMUNITY, 
-        Community, 
-        '\ue609', 
-        Tab
-      )}
+      {initBottomNavigation('社区', COMMUNITY, Community, '\ue609', Tab)}
       {initBottomNavigation(
         '解忧室',
         'RELIEVEROOM',
         RelieveRoom,
-        '\ue66b',
+        '\ue63d',
         Tab,
       )}
-      {initBottomNavigation(
-        '消息', 
-        'MESSAGE', 
-        Message, 
-        '\ue630', 
-        Tab
-      )}
-      {initBottomNavigation(
-        '我的', 
-        'ME', 
-        Me, 
-        '\ue66b', 
-        Tab
-      )}
+      {initBottomNavigation('消息', 'MESSAGE', Message, '\ue630', Tab)}
+      {initBottomNavigation('我的', 'ME', Me, '\ue66b', Tab)}
     </Tab.Navigator>
   );
 };

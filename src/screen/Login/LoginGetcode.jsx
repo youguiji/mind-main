@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 15:57:22
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-17 20:13:54
+ * @LastEditTime: 2023-12-13 21:05:30
  */
 
 // screens/HomeScreen.js
@@ -27,11 +27,18 @@ const LoginGetcode = ({ route, navigation }) => {
 
   const [code, setCode] = useState('');
   const codeRef = useRef(null);
-
   const showNotification = useNotification(); //消息提示
 
   const { phone } = route.params; //手机号
 
+  //请求验证码
+  useEffect(() => {
+    console.log('getcode');
+    console.log(typeof phone);
+    // getCode(phone, 'login').then(res => {
+    //   console.log(res);
+    // });
+  }, []);
   return (
     <Pressable
       style={styles.outContent}
@@ -72,24 +79,28 @@ const LoginGetcode = ({ route, navigation }) => {
           }}
           onPress={() => {
             if (code.length == 6) {
-              dispatch(LoginIn()); //(待删)
+              console.log(phone, code, typeof phone, typeof code);
+              //改变登录状态
+              //dispatch(LoginIn()); //(待删)
               login(phone, 'null', code)
                 .then(res => {
                   console.log(res);
-                  //dispatch(setUserToken())
-                  getUserInfo //获取用户信息
-                    .then(res => {
-                      console.log(res);
-                      dispatch(setUserInfoState(res.data));
-                      storeData('userInfo', res.data); //本地缓存useInfo
-                      getData('userInfo').then(res => console.log(res)); //获取缓存
-                    })
-                    .catch(err => {
-                      console.log('getUserInfoError:', err);
-                    });
+                  if (res.ok) {
+                    dispatch(setUserToken(res.data.tokenValue)); //
+                    getUserInfo() //获取用户信息
+                      .then(res => {
+                        console.log(res);
+                        dispatch(setUserInfoState(res.data));
+                        //storeData('userInfo', res.data); //本地缓存useInfo
+                        //getData('userInfo').then(res => console.log(res)); //获取缓存
+                      })
+                      .catch(err => {
+                        console.log('getUserInfoError:', err);
+                      });
 
-                  dispatch(LoginIn());
-                  storeData('token', res.data); //本地缓存token
+                    dispatch(LoginIn());
+                    storeData('token', res.data.tokenValue); //本地缓存token
+                  }
                 })
                 .catch(err => {
                   console.log('loginErr:' + err);

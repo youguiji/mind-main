@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-09-20 17:16:26
  * @LastEditors: Austral
- * @LastEditTime: 2023-10-21 11:13:03
+ * @LastEditTime: 2024-03-04 01:34:09
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
@@ -31,11 +31,16 @@ const MeSetting = ({ navigation }) => {
     },
     {
       id: 4,
+      title: '成为咨询师',
+      destination: 'MECERTIFICATION',
+    },
+    {
+      id: 5,
       title: '清除缓存',
       destination: '',
     },
     {
-      id: 5,
+      id: 6,
       title: '给我们打赏，支持我们',
       destination: '',
     },
@@ -51,7 +56,7 @@ const MeSetting = ({ navigation }) => {
       />
       <View style={{ marginTop: 40 }}>
         {title.map(item => {
-          console.log(item.title,item.destination);
+          console.log(item.title, item.destination);
           return (
             <ClickItem
               key={item.id}

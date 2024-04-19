@@ -24,6 +24,10 @@ const MeSettingInfo = ({ navigation }) => {
       destination: 'MESETTINGCHANGENAME',
     },
     {
+      title: '个性签名',
+      destination: 'MESETTINGCHANGELABEL',
+    },
+    {
       title: '性别',
       destination: 'MESETTINGCHANGSEX',
     },
@@ -45,6 +49,7 @@ const MeSettingInfo = ({ navigation }) => {
         {title.map(item => {
           return (
             <ClickItem
+            key={item.id}
               title={item.title}
               navigation={navigation}
               destination={item.destination}

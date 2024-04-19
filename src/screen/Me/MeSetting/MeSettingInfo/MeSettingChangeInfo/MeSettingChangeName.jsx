@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-10-17 19:12:54
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-24 11:36:31
+ * @LastEditTime: 2023-12-22 17:29:21
  */
 
 import React, { useRef, useState, useEffect } from 'react';
@@ -22,12 +22,13 @@ const MeSettingChangeName = ({ navigation }) => {
 
   useEffect(() => {
     getUserInfo().then(res => {
-      const { username, birthdate, sex } = res.data;
+      const { username, birthdate, sex, personalLabel } = res.data;
       setName(res.data.username);
       setUserInfo({
         username,
         birthdate,
         sex,
+        personalLabel
       });
     });
   }, []);
@@ -56,7 +57,13 @@ const MeSettingChangeName = ({ navigation }) => {
           }
           onBlur={() => {
             console.log(userInfo);
-            changeUserInfo(userInfo).then(res => {
+            //console.log([...userInfo]);
+            changeUserInfo(
+              userInfo.username,
+              userInfo.birthdate,
+              userInfo.sex,
+              userInfo.personalLabel,
+            ).then(res => {
               console.log(res);
             });
           }}

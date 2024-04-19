@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-13 20:57:00
  * @LastEditors: Austral
- * @LastEditTime: 2023-11-26 11:34:20
+ * @LastEditTime: 2023-12-21 18:31:42
  */
 import {
   Get,
@@ -22,7 +22,7 @@ import {
 export const getCode = (account, action) => {
   return Get({
     url: '/profile/user/code',
-    data: {
+    params: {
       account,
       action,
     }
@@ -37,11 +37,11 @@ export const getCode = (account, action) => {
  * @return {*}
  * @author: Austral
  */
-export const login = ({
+export const login = (
   account,
   password,
   code
-}) => {
+) => {
   return Post({
     url: '/profile/user/login',
     data: {
@@ -65,7 +65,7 @@ export const loginOut = () => {
 }
 
 /**
- * @description: 获取用户信息I
+ * @description: 获取本机用户信息
  * @param {string} id 用户id
  * @return {*}
  * @author: Austral
@@ -73,15 +73,25 @@ export const loginOut = () => {
 export const getUserInfo = (id) => {
   return Get({
     url: '/profile/user/info/detail',
-    // params: {
-    //   id
-    // }
+  })
+}
+
+/**
+ * @description: 获取其他用户信息
+ * @param {string} userId 用户id
+ * @return {*}
+ * @author: Austral
+ */
+export const getUsersInfo = (userId) => {
+  return Get({
+    url: `/profile/user/${userId}`,
   })
 }
 
 /**
  * @description: 修改密码
  * @param {String} account 账户
+ * @param {String} oldPass 旧密码
  * @param {String} newPass 新密码
  * @param {String} confirmPass 确认密码
  * @param {String} code 验证码
@@ -90,6 +100,7 @@ export const getUserInfo = (id) => {
  */
 export const changePassword = ({
   account,
+  oldPass,
   newPass,
   confirmPass,
   code
@@ -98,6 +109,7 @@ export const changePassword = ({
     url: '/profile/user/password',
     data: {
       account,
+      oldPass,
       newPass,
       confirmPass,
       code,
@@ -113,11 +125,11 @@ export const changePassword = ({
  * @return {*}
  * @author: Austral
  */
-export const changeUserInfo = ({
+export const changeUserInfo = (
   username,
   birthdate,
   sex
-}) => {
+) => {
   return Put({
     url: '/profile/user/info',
     data: {
@@ -130,18 +142,23 @@ export const changeUserInfo = ({
 
 /**
  * @description: 修改头像
- * @param {String} file 文件
+ * @param {object} formData 文件
  * @return {*}
  * @author: Austral
  */
-export const changeAvatar = ({
-  file
-}) => {
+export const changeAvatar = (
+  blob,
+  img
+) => {
+  const formData = new FormData();
+  formData.append('file', blob, img);
+  console.log(formData instanceof File);
   return Post({
     url: '/profile/user/avatar',
-    data: {
-      file
-    }
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formData,
   })
 }
 

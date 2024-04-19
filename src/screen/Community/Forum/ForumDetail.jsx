@@ -4,10 +4,19 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-02 15:26:20
+ * @LastEditTime: 2024-04-17 21:13:36
  */
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import Tag from '../../../components/Tag';
 import TitleHeader from '../../../components/TitleHeader';
 import { Avatar } from '@rneui/base';
 import { color } from '../../../assets/color';
@@ -16,44 +25,44 @@ import { ScrollView } from 'react-native-gesture-handler';
 import {
   getArticleDetail,
   getComment,
+  postComment,
 } from '../../../network/modules/community';
 import Swiper from '../../../components/Swiper';
+import { getUserInfo } from '../../../network/modules/user';
+import { currentTime } from '../../../util';
+import { upArticle } from '../../../network/modules/community';
 
 const ForumDetail = ({ route, navigation }) => {
+  //路径参数
   const { id } = route.params;
-
+  //评论内容
+  const [comment, setComment] = useState('');
+  const [userInfo, setUserInfo] = useState({});
+  //评论列表
+  const [commentList, setCommentList] = useState([]);
+  //图片
   const [images, setImages] = useState([]);
+  //详细内容
   const [articleDetail, setarticleDetail] = useState({});
+  const [up, setUp] = useState(false);
+  //数据加载
   useEffect(() => {
     console.log(id);
-    getArticleDetail(id).then(res => {
+    getUserInfo().then(res => {
+      setUserInfo(res.data);
       console.log(res.data);
+    });
+    getArticleDetail(id).then(res => {
+      //console.log(res.data);
       setarticleDetail(res.data);
       setImages(res.data.pictures.map(item => item.url));
-      getComment().then(res => {
+      getComment(id, 1, 20, false).then(res => {
         console.log(res);
+        setCommentList(res.data.list);
+        //console.log(commentList.rootCommentVo);
       });
     });
   }, []);
-  const [comment, setComment] = useState('');
-  const [commentList, setCommentList] = useState([
-    {
-      id: 1,
-      name: '杏仁',
-      avatar: 'https://w.wallhaven.cc/full/85/wallhaven-85jlxy.png',
-      comment: '呜呜呜，你说的好对',
-    },
-    {
-      id: 2,
-      avatar: 'https://w.wallhaven.cc/full/vq/wallhaven-vqekwp.jpg',
-      comment: '呜呜呜，你说的好对',
-    },
-    {
-      id: 3,
-      name: '杏仁',
-      comment: '呜呜呜，你说的好对',
-    },
-  ]);
 
   return (
     <View style={styles.container}>
@@ -63,41 +72,91 @@ const ForumDetail = ({ route, navigation }) => {
           navigation.goBack();
         }}
       />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.userBox}>
           <Pressable style={styles.userLeft}>
-            <Avatar source={{ uri: articleDetail.avatar }} rounded />
+            {articleDetail.avatar && (
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('MEUSERPAGE', {
+                    userId: articleDetail.userId,
+                  });
+                }}>
+                <Avatar
+                  size={64}
+                  source={{ uri: articleDetail.avatar }}
+                  rounded
+                />
+              </Pressable>
+            )}
             <Text style={styles.name}>{articleDetail.username}</Text>
           </Pressable>
+
           <Pressable style={styles.userRight}>
             <Text style={styles.btn}>关注</Text>
           </Pressable>
         </View>
         {/* 轮播图 */}
         <View style={styles.swiper}>
-          <Swiper images={images} />
+          {/* <Swiper images={images} /> */}
+          {images[0] && (
+            <Image source={{ uri: images[0] }} style={styles.topImage} />
+          )}
         </View>
 
         {/* 内容 */}
         <View style={styles.contentBox}>
           <Text style={styles.title}>{articleDetail.title}</Text>
           <Text style={styles.content}>{articleDetail.content}</Text>
+          {/* tag组 */}
+          <View style={styles.tag}>
+            {
+              articleDetail.tags &&
+                articleDetail.tags.map(item => {
+                  return <Tag key={item.id} text={item.tagName} />;
+                })
+              // console.log()
+            }
+          </View>
           {/* 发布时间 */}
-          <Text>发布于{articleDetail.updateTime}</Text>
+          <Text style={styles.time1}>发布于{articleDetail.updateTime}</Text>
         </View>
 
         {/* 评论区 */}
         <View style={styles.commentBox}>
-          {commentList.map(item => {
+          {commentList.map((item, index) => {
             return (
-              <View style={styles.commentList}>
-                <Avatar source={{ uri: item.avatar }} rounded />
+              <View style={styles.commentList} key={index}>
+                <Avatar
+                  size={32}
+                  source={{ uri: item.rootCommentVo.avatar }}
+                  rounded
+                />
                 <View style={styles.commentDetail}>
-                  <Text>{item.comment}</Text>
+                  <View>
+                    <Text style={styles.commentName}>
+                      {item.rootCommentVo.username}
+                    </Text>
+                    <Text style={styles.commentContent}>
+                      {item.rootCommentVo.content}
+                    </Text>
+                    <Text style={styles.time}>
+                      {item.rootCommentVo.createTime}
+                    </Text>
+                  </View>
+                  <View style={styles.sun}>
+                    <Text style={{ fontFamily: 'iconfont', fontSize: 18 }}>
+                      {'\ue64a'}
+                    </Text>
+                    <Text>{item.rootCommentVo.likeCount}</Text>
+                  </View>
                 </View>
               </View>
             );
           })}
+          <View>
+            <Text style={styles.end}>THE-END</Text>
+          </View>
         </View>
       </ScrollView>
       <Pressable style={styles.bottom}>
@@ -108,12 +167,57 @@ const ForumDetail = ({ route, navigation }) => {
           onChangeText={setComment}
         />
         <View style={styles.iconBox}>
-          <Icon size={32} icode={'\ue64a'} />
+          <Icon
+            iconPress={() => {
+              if (up) {
+                upArticle(id, 1, 2).then(res => {
+                  console.log(res);
+                  setarticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
+                });
+              } else {
+                upArticle(id, 1, 1).then(res => {
+                  console.log(res);
+                  setarticleDetail(prevState => ({
+                    ...prevState,
+                    likeCount: res.data,
+                  }));
+                });
+              }
+              setUp(!up);
+              console.log(up);
+            }}
+            size={28}
+            icode={'\ue8c3'}
+            color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
+          />
           <Text>{articleDetail.likeCount}</Text>
           <Icon size={32} icode={'\ue74e'} />
-          <Text>{articleDetail.likeCount}</Text>
+          <Text>{commentList.length}</Text>
         </View>
-        <Pressable style={styles.userRight}>
+        <Pressable
+          style={styles.userRight}
+          onPress={() => {
+            //更新评论数组
+            commentList.unshift({
+              rootCommentVo: {
+                id: 1,
+                content: comment,
+                likeCount: 0,
+                avatar: userInfo.avatar,
+                parentCommentId: -1,
+                username: userInfo.username,
+                createTime: currentTime(),
+              },
+            });
+            //清空
+            postComment(articleDetail.id, comment, -1).then(res => {
+              console.log(res);
+            });
+            setComment('');
+          }}>
           <Text style={styles.btn}>发送</Text>
         </Pressable>
       </Pressable>
@@ -145,11 +249,19 @@ const styles = StyleSheet.create({
   },
   name: {
     paddingHorizontal: 15,
-    // color: "#000",
+    fontSize: 16,
+    color: '#000',
   },
   swiper: {
     paddingVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
+  },
+  topImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 14,
+    // margin: 10, // 添加外边距
+    // marginTop: 5,
   },
   btn: {
     color: '#fff',
@@ -157,14 +269,23 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginBottom: 10,
+    color: '#000',
   },
+
   contentBox: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderBottomColor: '#ccc',
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderStyle: 'solid',
+    borderBottomColor: color.gray.line,
+    borderBottomWidth: 1,
   },
-  content: {
-    marginBottom: 10,
+  tag: {
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  time1: {
+    marginVertical: 10,
+    fontSize: 12,
   },
   iconBox: {
     flexDirection: 'row',
@@ -183,8 +304,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
   },
+
   input: {
-    width: '50%',
+    width: '55%',
     backgroundColor: 'rgb(244,242,250)',
     borderRadius: 16,
     marginVertical: 5,
@@ -195,13 +317,38 @@ const styles = StyleSheet.create({
   },
   commentList: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    marginTop: 20,
-    alignItems: 'center',
-    marginBottom: 0,
+    marginHorizontal: 20,
+    marginVertical: 10,
+    // borderStyle: 'solid',
+    // borderBottomColor: color.gray.line,
+    // borderBottomWidth: 1,
   },
   commentDetail: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginLeft: 10,
+  },
+  commentName: {
+    fontSize: 15,
+  },
+  commentContent: {
+    color: '#000',
+    fontSize: 15,
+    marginVertical: 10,
+  },
+  time: {
+    fontSize: 10,
+  },
+  sun: {
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  end: {
+    marginVertical: 15,
+    height: 40,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });
 

@@ -6,7 +6,8 @@ export const color = {
   },
   pink: 'rgb(255,168,203)',
   gray: {
-    deep: 'rbg(243,242,245)',
-    light:'rgb(251,250,252)'
+    line: 'rgb(246,246,246)',
+    deep: 'rgb(243,242,245)',
+    light: 'rgb(251,250,252)'
   }
 }
