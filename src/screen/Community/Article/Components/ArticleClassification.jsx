@@ -1,21 +1,19 @@
 /*
- * @Description:
+ * @Description:精选分类
  * @Version:
  * @Autor: Austral
- * @Date: 2024-02-23 19:59:04
+ * @Date: 2024-05-03 14:27:10
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-22 09:08:36
+ * @LastEditTime: 2024-05-03 14:28:44
  */
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Avatar } from '@rneui/base';
-import { color } from '../../../assets/color';
+import { View, Text, StyleSheet } from 'react-native';
 
-const ConsultantCard = ({
+const ArticleClassification = ({
   avatar,
   username,
-  line1,
-  boldText,
+  content,
+  title,
   tagText,
   onPressChat,
 }) => {
@@ -23,8 +21,8 @@ const ConsultantCard = ({
     <View style={styles.container}>
       <Avatar size={28} source={{ uri: avatar }} style={styles.avatar} />
       <View style={styles.infoContainer}>
-        <Text style={styles.name}>{username}</Text>
-        <Text style={styles.info}>{line1}</Text>
+        <Text style={styles.name}>{title}</Text>
+        <Text style={styles.info}>{content}</Text>
         {/* <View style={styles.boldContainer}>
           <Text style={styles.boldText}>{boldText}</Text>
         </View> */}
@@ -34,9 +32,9 @@ const ConsultantCard = ({
           </View>
         </View> */}
       </View>
-      <TouchableOpacity style={styles.chatButton} onPress={onPressChat}>
+      {/* <TouchableOpacity style={styles.chatButton} onPress={onPressChat}>
         <Text style={styles.chatButtonText}>私聊</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -108,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConsultantCard;
+export default ArticleClassification;

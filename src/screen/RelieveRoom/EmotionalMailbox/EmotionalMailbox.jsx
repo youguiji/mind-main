@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-02-23 11:09:21
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-09 20:09:02
+ * @LastEditTime: 2024-04-27 12:55:24
  */
 import React from 'react';
 import {
@@ -114,21 +114,21 @@ const styles = StyleSheet.create({
     flex: 0.73, // 将 tabContainer 的高度设置为屏幕高度的一半
   },
   go: {
-    backgroundColor: color.purple.light,
-    borderRadius: 10,
-    width: 70,
-    height: 40,
+    backgroundColor: 'rgb(255,137,101)',
+    borderRadius: 14,
+    width: 50,
+    height: 25,
     paddingHorizontal: 2, // 左右内边距
     paddingVertical: 3, // 上下内边距
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
-    top: -190,
-    right: -400,
+    position: 'absolute',
+    top: 5,
+    right: 10,
   },
   goto: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 12,
   },
 });
 

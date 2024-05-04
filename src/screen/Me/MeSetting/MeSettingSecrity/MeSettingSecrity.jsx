@@ -23,7 +23,6 @@ import { useSelector } from 'react-redux';
 const MeSettingSecrity = ({ navigation }) => {
   const userInfo = useSelector(selectUserInfo);
   const showNotification = useNotification();
-
   const phoneRef = useRef(null);
   const oldPassRef = useRef(null);
   const newPasswordRef = useRef(null);

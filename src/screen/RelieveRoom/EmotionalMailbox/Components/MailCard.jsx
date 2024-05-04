@@ -4,10 +4,11 @@
  * @Autor: Austral
  * @Date: 2024-03-31 07:56:39
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 22:18:35
+ * @LastEditTime: 2024-04-27 13:01:16
  */
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
+import Icon from '../../../../components/Icon';
 
 const MailCard = ({ title, content, onPress }) => {
   return (
@@ -31,6 +32,10 @@ const MailCard = ({ title, content, onPress }) => {
         }}>
         {content}
       </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ fontSize: 10 }}>去回复他</Text>
+        <Icon icode={'\ueb03'} />
+      </View>
     </Pressable>
   );
 };
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     borderRadius: 25,
-    backgroundColor: 'rgb(255,237,233)',
+    backgroundColor: 'rgb(255,240,232)',
   },
 });
 

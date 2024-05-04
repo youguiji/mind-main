@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 21:25:54
+ * @LastEditTime: 2024-04-27 14:15:26
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
@@ -64,9 +64,13 @@ const ArticleSingle = ({
       </View>
       <View style={styles.commentBox}>
         <Icon icode={'\ue64a'} size={18}></Icon>
-        <Text style={styles.iconMargin}>{sun}</Text>
+        {/* <Text style={styles.iconMargin}>{sun}11k</Text> */}
+
+        <Text style={styles.iconMargin}>202</Text>
         <Icon icode={'\ue634'} size={16}></Icon>
-        <Text style={styles.iconMargin}>{viewCount}</Text>
+        {/* <Text style={styles.iconMargin}>{viewCount}11k</Text> */}
+
+        <Text style={styles.iconMargin}>2k</Text>
         <Text
           style={{
             fontFamily: 'iconfont',
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderColor: 'rgb(243,243,243)',
     backgroundColor: '#fff',
-    elevation: 5,
+    elevation: 2,
     shadowColor: '#000', // 阴影颜色
     shadowOpacity: 0.3, // 阴影透明度
     shadowRadius: 5, // 阴影模糊半径

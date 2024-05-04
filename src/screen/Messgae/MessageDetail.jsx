@@ -291,19 +291,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   username :{
+    
     fontSize: 12,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    // paddingVertical: 5,
     borderTopWidth: 1,
     backgroundColor: 'rgb(255,255,255)',
     borderTopColor: 'rgb(251,250,252)',
   },
   input: {
     flex: 1,
-    height: 50,
+    // width: '80%',
+    height: 35,
+    padding: 0,
     // borderWidth: 1,
     // borderColor: '#ccc',
     backgroundColor:"rgb(243,242,245)",
@@ -312,9 +316,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   sendButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: color.purple.light,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    backgroundColor: color.pink,
     borderRadius: 20,
   },
   sendButtonText: {

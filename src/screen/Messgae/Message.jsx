@@ -174,7 +174,7 @@ const Message = ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate('MESSAGEDETAIL', {
                     receiverId: item.toUserId,
-                    lastTime: item.lastTime,
+                    lastTime: '',
                   });
                 }}>
                 {item.data.avatar && (

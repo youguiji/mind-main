@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-04-17 10:33:33
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 22:06:52
+ * @LastEditTime: 2024-04-27 14:38:33
  */
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
@@ -94,32 +94,37 @@ const MeCertificationHome = ({ navigation }) => {
         <View style={styles.serviceBox}>
           <View style={styles.iconBox}>
             <Icon size={24} icode={'\ue604'} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>我的咨询</Text>
+            <Text style={styles.title}>我的咨询</Text>
           </View>
           <View style={styles.iconBox}>
             <Icon icode={'\ue607'} size={24} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>我的倾诉</Text>
+            <Text style={styles.title}>我的倾诉</Text>
           </View>
           <View style={styles.iconBox}>
             <Icon icode={'\ue659'} size={24} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>我的测评</Text>
+            <Text style={styles.title}>我的测评</Text>
           </View>
           <View style={styles.iconBox}>
             <Icon icode={'\ue605'} size={24} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>我的订单</Text>
+            <Text style={styles.title}>我的订单</Text>
           </View>
+          
         </View>
       </View>
       <View style={styles.contain}>
         <Text style={styles.text}>我的足迹</Text>
-        <View style={styles.serviceBox}>
-          <View style={styles.iconBox}>
-            <Icon size={24} icode={'\ue604'} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>我的点赞</Text>
+        <View style={[styles.serviceBox, { justifyContent: 'flex-start' }]}>
+          <View style={[styles.iconBox, { marginLeft: 15 }]}>
+            <Icon size={24} icode={'\ue64a'} color={color.purple.light}  />
+            <Text style={styles.title}>我的点赞</Text>
           </View>
-          <View style={styles.iconBox}>
-            <Icon icode={'\ue607'} size={24} color={color.pink} />
-            <Text style={{ marginVertical: 10 }}>浏览历史</Text>
+          <View style={[styles.iconBox, { marginLeft: 30 }]}>
+            <Icon icode={'\ue8bd'} size={24} color={color.purple.light} />
+            <Text style={styles.title}>浏览历史</Text>
+          </View>
+          <View style={[styles.iconBox, { marginLeft: 30 }]}>
+            <Icon icode={'\ue67e'} size={24} color={color.purple.light} />
+            <Text style={styles.title}>我的音乐</Text>
           </View>
         </View>
       </View>
@@ -165,13 +170,13 @@ const styles = StyleSheet.create({
   serviceBox: {
     flexDirection: 'row',
     marginVertical: 5,
-    // justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   iconBox: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    marginLeft: 18,
+    // marginLeft: 18,
   },
   box: {
     padding: 10,
@@ -182,6 +187,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
+    elevation: 1,
+  },
+  title: {
+    marginVertical: 10,
+    fontSize: 12,
   },
 });
 

@@ -24,14 +24,17 @@ const Music = () => {
     {
       title: 'Windy Hill',
       url: 'https://img3.tukuppt.com/newpreview_music/09/01/89/5c8a1cc9e7c3786323.mp3',
-      cover:
-        'https://p3fx.kgimg.com/stdmusic/240/20240325/20240325110302667414.jpg',
+      time: 160,
     },
     {
-      title: '小美满',
-      url: 'https://webfs.hw.kugou.com/202403280930/1f38f028a486ef0b27fb32a52125739f/KGTX/CLTX001/04a21db1ab3c8e0d1d8f51f11bdb03a1.mp3',
-      cover:
-        'https://imgessl.kugou.com/stdmusic/20240205/20240205142001926246.jpg',
+      title: '卡农',
+      url: 'https://m801.music.126.net/20240429145601/dea91d50033a245af4879393f2ee4fd9/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/17608047630/e685/5f6c/98d7/91dafbab5c87994b08227753b647b739.mp3',
+      time: 300,
+    },
+    {
+      title: '贝加尔湖畔',
+      url: 'https://m701.music.126.net/20240429145826/703a579bdc115d6f806c04ba056367b3/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/33824597240/7bb9/1d8e/11b1/f2b4a60b480d9c4c754379bc102e7bff.mp3',
+      time: 142,
     },
     // 其他歌曲信息...
   ];
@@ -76,7 +79,6 @@ const Music = () => {
   const togglePlayPause = () => {
     // 确保音频对象存在
     if (soundObject.current) {
-      
       if (isPlaying) {
         console.log('true');
         soundObject.current.pause();
@@ -88,6 +90,7 @@ const Music = () => {
   };
   // 播放上一首歌曲
   const prevTrack = () => {
+    console.log('pre');
     const newIndex =
       (currentTrackIndex - 1 + playlist.length) % playlist.length;
     setCurrentTrackIndex(newIndex);
@@ -114,6 +117,7 @@ const Music = () => {
 
   // 播放下一首歌曲
   const nextTrack = () => {
+    console.log('next');
     const nextIndex = (currentTrackIndex + 1) % playlist.length;
     setCurrentTrackIndex(nextIndex);
     if (isPlaying) {
@@ -184,8 +188,14 @@ const Music = () => {
         source={{ uri: playlist[currentTrackIndex].cover }}
         style={styles.cover}
       /> */}
+      <View style={{ position: 'absolute', top: 45, right: 25 }}>
+        <Icon icode={'\ue608'} size={20} />
+      </View>
       {/* 音频标题 */}
-      <Text style={styles.title}>{playlist[currentTrackIndex].title}</Text>
+      <View style={styles.titleBox}>
+        <Text style={styles.title}>{playlist[currentTrackIndex].title}</Text>
+        <Icon icode={'\ue8c3'} size={25} color={'rgb(1,0,36)'} />
+      </View>
       {/* 播放进度条 */}
       <View style={styles.progressBarContainer}>
         <View style={[styles.progressBar, { width: `${progress}%` }]} />
@@ -193,13 +203,16 @@ const Music = () => {
       {/* 播放时长 */}
       <View style={styles.timeContainer}>
         <Text style={styles.timeText}>
-          {formatTime((progress * duration) / 100)}
+          {formatTime((progress * playlist[currentTrackIndex].time) / 100)}
         </Text>
-        <Text style={styles.timeText}>{formatTime(duration)}</Text>
+        <Text style={styles.timeText}>
+          {formatTime(playlist[currentTrackIndex].time)}
+        </Text>
       </View>
       {/* 播放控制按钮 */}
       <View style={styles.controls}>
-        <Pressable onPress={prevTrack}>
+        {/* 上一首 */}
+        <Pressable onPress={prevTrack} style={styles.controlBox}>
           <Icon size={40} icode={'\ue63c'} color={'rgb(1,0,39)'} />
           {/* <Text style={styles.controlText}>上一首</Text> */}
         </Pressable>
@@ -214,11 +227,14 @@ const Music = () => {
             )}
           </Text>
         </Pressable>
-        <TouchableOpacity onPress={nextTrack}>
+        {/* 下一首 */}
+        <Pressable
+          onPress={nextTrack}
+          style={styles.controlBox}>
           <Icon size={40} icode={'\ue63e'} color={'rgb(1,0,39)'} />
 
           {/* <Text style={styles.controlText}>下一首</Text> */}
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </ImageBackground>
   );
@@ -230,17 +246,23 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 60,
+    paddingBottom: 35,
   },
   cover: {
     width: 200,
     height: 200,
   },
+  titleBox: {
+    position: 'absolute',
+    bottom: 200,
+    left: 45,
+    width: '75%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   title: {
     fontSize: 24,
-    position: 'absolute',
-    bottom: 240,
-    left: 45,
     fontWeight: 'bold',
     marginVertical: 10,
     color: 'rgb(1,0,39)',
@@ -248,12 +270,12 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     width: '80%',
     height: 2,
-    backgroundColor: color.purple.light,
+    backgroundColor: 'rgb(193,185,181)',
     marginBottom: 10,
     borderRadius: 20,
   },
   progressBar: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgb(26,26,26)',
     height: '100%',
   },
   timeContainer: {
@@ -271,7 +293,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
-  play:{
+  controlBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#ccc',
+    width: 50,
+    height: 50,
+  },
+  play: {
     marginLeft: 30,
     marginRight: 20,
     justifyContent: 'center',

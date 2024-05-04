@@ -17,7 +17,7 @@ const ConsultingDetail = ({navigation,route})=> {
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
 
-  var ws = React.useRef(new WebSocket('ws://192.168.21.117:8078')).current;
+  var ws = React.useRef(new WebSocket('ws://192.168.64.117:8078')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
@@ -123,7 +123,7 @@ const ConsultingDetail = ({navigation,route})=> {
               ) : (
                 <View style={styles.right}>
                   <View style={styles.innerBox}>
-                    <Text>{userInfo.username}</Text>
+                    {/* <Text>{userInfo.username}</Text> */}
                     <Text  style={styles.rightContent}>{item.content}</Text>
                   </View>
                   <Avatar rounded size={48} source={{ uri: userInfo.avatar }} />
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.purple.light,
     color: '#fff',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     borderRadius: 10,
     marginTop: 10, 
   },
@@ -255,13 +255,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    // paddingVertical: 5,
     borderTopWidth: 1,
     backgroundColor: 'rgb(255,255,255)',
     borderTopColor: 'rgb(251,250,252)',
   },
   input: {
     flex: 1,
-    height: 50,
+    // width: '80%',
+    height: 35,
+    padding: 0,
     // borderWidth: 1,
     // borderColor: '#ccc',
     backgroundColor:"rgb(243,242,245)",
@@ -270,8 +273,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   sendButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     backgroundColor: color.pink,
     borderRadius: 20,
   },

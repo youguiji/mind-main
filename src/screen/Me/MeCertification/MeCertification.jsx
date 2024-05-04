@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-02-26 22:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 08:56:09
+ * @LastEditTime: 2024-04-29 18:08:41
  */
 import React, { useState } from 'react';
 import { View, Button, StyleSheet, Text, Pressable } from 'react-native';

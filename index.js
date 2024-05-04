@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-09 15:34:24
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-15 20:10:51
+ * @LastEditTime: 2024-04-29 18:27:48
  */
 /**
  * @format
@@ -79,7 +79,8 @@ const App= ()=> {
           <StatusBar 
             animated={true}
             translucent={false}
-            showHideTransition={true}
+            // hidden={true}
+            // showHideTransition={'slide'}
             backgroundColor="rgba(255, 255, 255, 0)"
             barStyle="dark-content" />
                 {isLogin ? <Navigation /> : <LoginNavigation />}

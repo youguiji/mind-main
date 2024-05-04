@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Pressable,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import { color } from '../../assets/color';
 import { getCode, login } from '../../network/modules/user';
@@ -23,14 +23,12 @@ const Login = ({ navigation }) => {
   const phoneRef = useRef(null);
 
   return (
-      <View style={styles.container}>
-
-        <ImageBackground
-          source={require('../../assets/systemImage/F0FA48FB26FB6DE0F8358ED6BC34C5D3.jpg')}
-          resizeMode="cover"
-          style={styles.backgroundImage}>
-                        <KeyboardAvoidingView style={{ flex: 1 }} >
-
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/systemImage/F0FA48FB26FB6DE0F8358ED6BC34C5D3.jpg')}
+        resizeMode="cover"
+        style={styles.backgroundImage}>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
           <Pressable
             style={styles.outContent}
             onPress={event => {
@@ -55,23 +53,24 @@ const Login = ({ navigation }) => {
                 type="text"
                 placeholder="请输入登录邮箱或者手机号"
                 style={StyleSheet.flatten([
-                  { width: '100%' },
-                  styles.inputBoxItem,
+                  // { width: '140%' },
+                  styles.inputBoxItem1,
                 ])}
                 keyboardType="numeric"
                 value={[phone, setPhone]}
                 ref={phoneRef}
               />
+              <View style={{ width: '100%', flexDirection: 'row',justifyContent: 'space-around' ,}}>
               <Button
                 title="获取验证码"
                 style={[
                   styles.inputBoxItem,
                   {
-                    height: 60,
+                    height: 40,
                   },
                 ]}
                 textStyle={{
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: '500',
                 }}
                 onPress={async () => {
@@ -99,19 +98,21 @@ const Login = ({ navigation }) => {
                 style={[
                   styles.inputBoxItem,
                   {
-                    height: 60,
+                    height: 40,
                   },
                 ]}
                 textStyle={{
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: '500',
                 }}
                 onPress={() => {
                   navigation.navigate('LOGINREGISTER');
                 }}></Button>
+                </View>
               <Text
                 style={{
                   color: '#000',
+                  marginTop: 10,
                 }}>
                 其他方式登录
               </Text>
@@ -135,12 +136,10 @@ const Login = ({ navigation }) => {
               </View>
               {/* <Text style={styles.slogan}>你的情绪，我能看见</Text> */}
             </View>
-          </Pressable>        
+          </Pressable>
         </KeyboardAvoidingView>
-
-        </ImageBackground>
-
-      </View>
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -154,8 +153,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   outContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
+
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   contains: {
     width: '100%',
@@ -167,10 +167,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     color: '#fff',
     alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  inputBoxItem1: {
+    marginVertical: 10,
+    marginLeft: 15,
   },
   inputBoxItem: {
     marginVertical: 10,
-    width: '80%',
+    // marginLeft: 20,
+    padding: 0,
+    width: '40%',
   },
   btn: {
     width: '80%',

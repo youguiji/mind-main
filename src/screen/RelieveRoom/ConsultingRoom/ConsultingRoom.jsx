@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-02-23 11:09:06
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-04 06:20:57
+ * @LastEditTime: 2024-05-03 14:14:38
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
@@ -79,7 +79,7 @@ const ConsultingRoom = ({ navigation }) => {
       tagText: '压抑心理',
     },
   ]);
-  const sections = ['排序∨', '性别年龄∨', '擅长方向∨', '筛选∨'];
+  const sections = ['全部 ∨', '排序 ∨', '性别 ∨', '擅长 ∨', '筛选 ∨'];
 
   return (
     <View style={{ backgroundColor: '#fff' }}>
@@ -103,13 +103,13 @@ const ConsultingRoom = ({ navigation }) => {
           </View>
         ))}
       </View>
-      <ScrollView style={{ width: '100%' }}        
-       showsVerticalScrollIndicator={false}
->
+      <ScrollView
+        style={{ width: '100%', backgroundColor: 'rgb(252,254,251)' }}
+        showsVerticalScrollIndicator={false}>
         {consultant.map(item => {
           return (
             <ConsultantCard
-            key={item.id}
+              key={item.id}
               avatar={item.avatar}
               username={item.username}
               line1={item.line1}
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: 'rgb(245,245,245)',
+    // backgroundColor: 'rgb(252,254,251)'
   },
   section: {
     flex: 1,

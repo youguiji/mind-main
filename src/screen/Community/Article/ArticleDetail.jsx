@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-21 19:21:27
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 19:22:33
+ * @LastEditTime: 2024-04-28 09:31:47
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -335,12 +335,14 @@ const ArticleDetail = ({ route, navigation }) => {
               setUp(!up);
               console.log(up);
             }}
-            size={28}
+            size={18}
             icode={'\ue8c3'}
             color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
           />
-          <Text style={styles.t}>{articleDetail.likeCount}</Text>
-          <Icon size={28} icode={'\ue74e'} />
+          <Text style={styles.t}>202</Text>
+
+          {/* <Text style={styles.t}>{articleDetail.likeCount}</Text> */}
+          <Icon size={22} icode={'\ue74e'} />
           <Text style={styles.t}>{commentList.length}</Text>
         </View>
         <Pressable
@@ -447,8 +449,10 @@ const styles = StyleSheet.create({
   input: {
     width: '55%',
     backgroundColor: 'rgb(244,242,250)',
-    borderRadius: 12,
+    borderRadius: 14,
     // marginVertical: 3,
+    padding: 0,
+    paddingVertical: 5,
     paddingHorizontal: 5,
   },
   commentBox: {

@@ -16,6 +16,7 @@ import ArticleDetail from '../../screen/Community/Article/ArticleDetail';
 import ForumDetail from '../../screen/Community/Forum/ForumDetail';
 import ForumAdd from '../../screen/Community/Forum/ForumAdd';
 import ArticleAdd from '../../screen/Community/Article/ArticleAdd';
+import ArticleSelected from '../../screen/Community/Article/ArticleSelected';
 
 export const CommunityNavigation = Stack => {
   return (
@@ -24,7 +25,8 @@ export const CommunityNavigation = Stack => {
       {initStackNavigation(Stack, 'ARTICLEDETAIL', ArticleDetail)}
       {initStackNavigation(Stack, 'FORUMDETAIL', ForumDetail)}
       {initStackNavigation(Stack, 'FORUMADD', ForumAdd)}
-      {initStackNavigation(Stack,'ARTICLEADD',ArticleAdd)}
+      {initStackNavigation(Stack,'ARTICLESELECT',ArticleSelected)}
+      {initStackNavigation(Stack, 'ARTICLEADD', ArticleAdd)}
     </>
   );
 };

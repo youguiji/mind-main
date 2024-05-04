@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-15 08:11:31
  * @LastEditors: Austral
- * @LastEditTime: 2024-03-29 23:16:48
+ * @LastEditTime: 2024-04-28 09:06:54
  */
 import React from 'react';
 import {
@@ -19,7 +19,7 @@ import {
 const RelieveRoom = ({ navigation }) => {
   return (
     <ImageBackground
-      source={require('../../assets/systemImage/1CC8072AD9D530FD58959C8F75C44A6C.jpg')}
+      source={require('../../assets/systemImage/4603667E85834CC9975088B3A06C17D9.png')}
       resizeMode="cover"
       style={styles.backgroundImage}>
       <View style={styles.container}>
@@ -79,44 +79,49 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // 音乐
   ItemBox1: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     position: 'absolute',
-    top: 70,
-    right: -170,
+    top: 200,
+    right: -60,
     // backgroundColor: '#fff',
   },
+  // 智慧
   ItemBox2: {
     width: 150,
     height: 150,
     position: 'absolute',
-    top: 380,
+    top: 330,
     left: -190,
     // backgroundColor: '#fff',
   },
+  // 咨询师
   ItemBox3: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     position: 'absolute',
-    top: 280,
-    left: 0,
+    top: 350,
+    left: 50,
     // backgroundColor: '#fff',
   },
+  // 信箱
   ItemBox4: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     position: 'absolute',
-    top: 480,
-    left: 20,
+    top: 80,
+    left: -120,
     // backgroundColor: '#fff',
   },
+  // 测评
   ItemBox5: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     position: 'absolute',
-    top: 140,
-    right: 40,
+    bottom: 100,
+    left: -50,
     // backgroundColor: '#fff',
   },
 });

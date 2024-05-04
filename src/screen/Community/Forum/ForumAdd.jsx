@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-11-15 08:11:31
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 15:11:03
+ * @LastEditTime: 2024-04-28 17:04:11
  */
 import React, { useState, useRef } from 'react';
 import {
@@ -28,8 +28,10 @@ import { addArticle } from '../../../network/modules/community';
 import Tag from '../../../components/Tag';
 import { store } from '../../../store/configureStore';
 import Spinner from '../../../components/Spinner';
+import { useNotification } from '../../../components/Notification';
 
 const ForumAdd = ({ navigation }) => {
+  const showNotification = useNotification();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [nextId, setNextId] = useState(1);
@@ -41,14 +43,19 @@ const ForumAdd = ({ navigation }) => {
   const [newTag, setNewTag] = useState('');
   const [isAddingTag, setIsAddingTag] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isShow, setIsShow] = useState(false);
   const [recordText, setRecordText] = useState('');
   const [recordIndex, setRecordIndex] = useState(0);
-  const recordStrings = ['今天天气很好', '让人的心情也好起来了'];
+  const recordStrings = [
+    '阳光明媚的清晨',
+    '清晨的阳光透过窗户洒进房间，温暖而明媚。这样的天气让人心旷神怡，仿佛一切都变得清新起来。闭上眼睛，感受着轻风拂过脸庞的触感，心情也跟着变得宁静而愉悦。愿这美好的一天带给你无尽的喜悦和美好的回忆。',
+  ];
   const recordTimerRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
 
+  // 生成文字
   const startRecord = () => {
-    setIsVisible(true);
+    setIsShow(true);
     setRecordIndex(0);
     setTitle('');
     setContent('');
@@ -71,13 +78,24 @@ const ForumAdd = ({ navigation }) => {
         index++;
       } else {
         clearInterval(intervalId);
-        setIsVisible(false);
+        setIsShow(false); // 设置为false，隐藏UI
+        // stopRecord(); // 调用停止记录函数
       }
-    }, 300);
+    }, 100);
   };
-
+  // 停止生成文字
   const stopRecord = () => {
+    setIsShow(false);
+  };
+  // 开始说话
+  const startTalk = () => {
+    setIsVisible(true);
+    showNotification('使用AI语音记录您的灵感\nAI语音智能编写标题和内容');
+  };
+  // 停止说话
+  const stopTalk = () => {
     setIsVisible(false);
+    startRecord();
   };
 
   const openImagePicker = async () => {
@@ -271,15 +289,30 @@ const ForumAdd = ({ navigation }) => {
           <Spinner />
         </View>
       )}
+      {isShow && (
+        <View
+          style={{
+            width: '50%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            position: 'absolute',
+            alignItems: 'center',
+            bottom: 100,
+            left: '25%',
+          }}>
+          <Text>AI大模型正在完善中</Text>
+          <Spinner style={{ color: 'red', size: 50 }} />
+        </View>
+      )}
       <View style={styles.bottomBox}>
         <Pressable onPress={openImagePicker}>
           <Icon icode={'\ue60b'} size={26} iconPress={openImagePicker} />
         </Pressable>
         <Pressable
           style={styles.recordContainer}
-          onPressIn={startRecord}
-          onPressOut={stopRecord}>
-          <Text>按住说话</Text>
+          onPressIn={startTalk}
+          onPressOut={stopTalk}>
+          <Text>AI语音</Text>
           {/* <Text>{recordText}</Text> */}
         </Pressable>
         <Pressable style={styles.btn} onPress={() => publish(navigation)}>
@@ -331,6 +364,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 10,
+    // height: '50%',
     //color: color.gray.deep,
   },
   tags: {

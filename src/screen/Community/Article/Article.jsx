@@ -4,12 +4,12 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:16:06
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 21:40:13
+ * @LastEditTime: 2024-04-27 14:05:17
  */
 
 import { Avatar } from '@rneui/base';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import ArticleSingle from './Components/ArticleSingle';
 import { FlatList } from 'react-native-gesture-handler';
 import Swiper from '../../../components/Swiper';
@@ -59,90 +59,139 @@ const Article = ({ navigation }) => {
             <Swiper images={images} />
             <View
               style={{
-                padding: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                padding: 5,
+                // flexDirection: 'row',
+                // justifyContent: 'space-between',
               }}>
               {/* left */}
-              <View style={styles.container}>
-                <View style={{ flexDirection: 'row', borderRadius: 14 }}>
-                  <Icon icode={'\ue60c'} size={24} color={'rgb(148,117,255)'} />
-                  <Text style={styles.text}>心理咨询</Text>
-                </View>
-                <Text
-                  style={{
-                    fontSize: 24,
-                    marginLeft: 5,
-                    color: color.purple.deep,
-                    marginTop: 10,
-                  }}>
-                  45320人
-                </Text>
-                <Text style={styles.choice}>选择了这里</Text>
-                <Text
-                  style={{
-                    marginTop: 25,
-                    fontSize: 10,
-                    color: color.purple.deep,
-                  }}>
-                  你不是一个人战斗
-                </Text>
-              </View>
-              {/* right */}
-              <View style={{ width: '50%' }}>
-                {/* 右上 */}
-                <View style={styles.contain}>
-                  <View style={{ flexDirection: 'row', borderRadius: 14 }}>
-                    <Icon icode={'\ue60c'} size={24} color={color.pink} />
-                    <Text style={[styles.text]}>心理论坛</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-around',
+                }}>
+                <View
+                  style={[
+                    styles.contain,
+                    { backgroundColor: 'rgb(244,241,255)' },
+                  ]}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      borderRadius: 14,
+
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        marginLeft: 5,
+                        color: color.purple.deep,
+                        // marginTop: ,
+                      }}>
+                      45320人
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: '#fff',
+                        padding: 5,
+                        borderRadius: 50,
+                      }}>
+                      <Icon
+                        icode={'\ue637'}
+                        size={18}
+                        color={'rgb(147,116,255)'}
+                      />
+                    </View>
                   </View>
-                  <Text style={[styles.choice, { color: color.pink }]}>
+                  <Text style={styles.choice}>选择了这里</Text>
+                </View>
+                <View
+                  style={[
+                    styles.contain,
+                    { backgroundColor: 'rgb(255,241,248)' },
+                  ]}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      borderRadius: 14,
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      {/* <Icon
+                        icode={'\ue60c'}
+                        size={18}
+                        color={'rgb(134,110,224)'}
+                      /> */}
+                    </View>
+                    <Text style={[styles.text2]}>心理论坛</Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.choice,
+                      { color: 'rgb(255,155,206)', paddingTop: 5 },
+                    ]}>
                     心灵交流平台
                   </Text>
                 </View>
-                {/* 右下 */}
-                <View style={styles.contain}>
-                  <View style={{ flexDirection: 'row', borderRadius: 14 }}>
-                    <Icon icode={'\ue60c'} size={24} color={color.pink} />
-                    <Text style={[styles.text]}>即时倾诉</Text>
-                  </View>
-                  <Text style={[styles.choice, { color: color.pink }]}>
-                    倾诉解忧
-                  </Text>
-                </View>
               </View>
+              {/* <View
+                style={[
+                  styles.container,
+                  { backgroundColor: 'rgb(255,202,60)' },
+                ]}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    borderRadius: 14,
+                    alignItems: 'center',
+                  }}>
+                  <Icon icode={'\ue60c'} size={18} color={color.pink} />
+                  <Text style={[styles.text, { color: '#000' }]}>即时倾诉</Text>
+                </View>
+                {/* <Text style={[styles.choice, { color: '#000' }]}>
+                    倾诉解忧
+                  </Text> 
+              </View> */}
             </View>
+
+            {/* 分类导航 */}
             <View style={styles.naviBox}>
-              <View style={styles.itemBox}>
+              <Pressable
+                style={styles.itemBox}
+                onPress={() => {
+                  navigation.navigate('ARTICLESELECT');
+                }}>
                 <View style={styles.itemBox1}>
-                  <Icon icode={'\ue60d'} color={'#fff'} size={26} />
+                  <Icon icode={'\ue60d'} color={'rgb(167,213,238)'} size={20} />
                 </View>
 
-                <Text>精选</Text>
-              </View>
+                <Text style={{ fontSize: 12, color: '#000' }}>精选</Text>
+              </Pressable>
               <View style={styles.itemBox}>
                 <View style={styles.itemBox2}>
-                  <Icon color={'#fff'} icode={'\ue636'} size={26} />
+                  <Icon color={'rgb(248,214,133)'} icode={'\ue636'} size={20} />
                 </View>
-                <Text>婚恋情感</Text>
+                <Text style={{ fontSize: 12, color: '#000' }}>婚恋情感</Text>
               </View>
               <View style={styles.itemBox}>
                 <View style={styles.itemBox3}>
-                  <Icon icode={'\ue606'} color={'#fff'} size={26} />
+                  <Icon icode={'\ue606'} color={'rgb(189,162,237)'} size={20} />
                 </View>
-                <Text>心理科普</Text>
+                <Text style={{ fontSize: 12, color: '#000' }}>心理科普</Text>
               </View>
               <View style={styles.itemBox}>
                 <View style={styles.itemBox4}>
-                  <Icon color={'#fff'} icode={'\ue707'} size={26} />
+                  <Icon color={'rgb(139,217,162)'} icode={'\ue707'} size={20} />
                 </View>
-                <Text>人际社交</Text>
+                <Text style={{ fontSize: 12, color: '#000' }}>人际社交</Text>
               </View>
               <View style={styles.itemBox}>
                 <View style={styles.itemBox5}>
-                  <Icon color={'#fff'} icode={'\ue679'} size={26} />
+                  <Icon color={'rgb(255,180,209)'} icode={'\ue679'} size={20} />
                 </View>
-                <Text>亲子教育</Text>
+                <Text style={{ fontSize: 12, color: '#000' }}>亲子教育</Text>
               </View>
             </View>
           </View>
@@ -154,8 +203,8 @@ const Article = ({ navigation }) => {
               content={item.content}
               title={item.title}
               username={item.username}
-              viewCount={item.viewCount}
-              sun={item.likeCount}
+              // viewCount={item.viewCount}
+              // sun={item.likeCount}
               // url={imageUrl}
               onPress={() => {
                 console.log('navigate');
@@ -170,27 +219,29 @@ const Article = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '45%',
-    height: 140,
-    padding: 10,
+    width: '100%',
+    height: 65,
+    padding: 20,
     backgroundColor: 'rgb(244,241,255)',
     borderRadius: 14,
   },
-  text: {
-    fontSize: 15,
-    color: '#000',
+  text2: {
+    fontSize: 13,
+    color: 'rgb(255,155,206)',
     marginLeft: 4,
   },
   choice: {
     fontSize: 10,
-    // color: '#fff',
+    color: 'rgb(153,123,255)',
     // color: 'rgb(116,128,144)',
-    color: color.purple.deep,
+    // color: color.purple.deep,
+    paddingLeft: 4,
   },
   contain: {
-    backgroundColor: 'rgb(255,241,248)',
-    width: '100%',
+    backgroundColor: 'rgb(134,110,224)',
+    width: '48%',
     height: 65,
+
     borderRadius: 14,
     padding: 10,
     marginBottom: 10,
@@ -204,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 20,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     marginHorizontal: 20,
     // position: 'relative',
     // top: -25,
@@ -215,31 +266,31 @@ const styles = StyleSheet.create({
   },
 
   itemBox1: {
-    backgroundColor: 'rgb(255,204,128)',
+    backgroundColor: 'rgb(224,250,253)',
     borderRadius: 50,
     padding: 10,
     marginBottom: 5,
   },
   itemBox2: {
-    backgroundColor: 'rgb(255,162,128)',
+    backgroundColor: 'rgb(255,242,208)',
     borderRadius: 50,
     padding: 10,
     marginBottom: 5,
   },
   itemBox3: {
-    backgroundColor: 'rgb(110,221,129)',
+    backgroundColor: 'rgb(235,231,254)',
     borderRadius: 50,
     padding: 10,
     marginBottom: 5,
   },
   itemBox4: {
-    backgroundColor: 'rgb(140,149,255)',
+    backgroundColor: 'rgb(243,254,223)',
     borderRadius: 50,
     padding: 10,
     marginBottom: 5,
   },
   itemBox5: {
-    backgroundColor: 'rgb(128,206,255)',
+    backgroundColor: 'rgb(255,240,236)',
     borderRadius: 50,
     padding: 10,
     marginBottom: 5,

@@ -11,8 +11,9 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Button from '../../components/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoginOut } from '../../store/modules/login';
 import { Avatar } from '@rneui/base';
 import Icon from '../../components/Icon';
@@ -23,11 +24,14 @@ import { transforTime } from '../../util';
 import { color } from '../../assets/color';
 import ModalComponent from '../../components/Model';
 import { deleteArticle } from '../../network/modules/community';
+import { setIsVisite ,selectIsVisite,clearIsVisite  } from '../../store/modules/user';
+import { store } from '../../store/configureStore';
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 2; // 定义列数
 
 const Me = ({ navigation }) => {
+  const [visitedPage, setVisitedPage] = useState(false);
   const [trends, setTrends] = useState([
     {
       id: '1734590948757262339',
@@ -123,34 +127,6 @@ const Me = ({ navigation }) => {
         },
       ],
     },
-    {
-      id: '1734590948757262390',
-      userId: '19263416795418624',
-      username: 'string',
-      sex: 0,
-      avatar: 'string',
-      type: 1,
-      title: '你为什么明明身怀潜能，却总在“画地为牢”？',
-      content:
-        '多年以前，网约车还没流行起来，我正在外地，那座城市的一位出租车司机跟我说起，他想做一名房地产经纪人，他说，因为他很喜欢带人到处看房子。',
-      viewCount: 0,
-      likeCount: 0,
-      updateTime: '2024-01-23T12:00:00',
-      tags: [
-        {
-          id: 0,
-          tagName: 'string',
-          rank: 0,
-        },
-      ],
-      pictures: [
-        {
-          id: 0,
-          url: 'string',
-          rank: 0,
-        },
-      ],
-    },
   ]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deleteId, setDeleteId] = useState('');
@@ -187,6 +163,7 @@ const Me = ({ navigation }) => {
   });
   useEffect(() => {
     // dispatch(LoginOut());
+    
     //获取用户信息
     getUserInfo().then(res => {
       console.log(res);
@@ -201,6 +178,60 @@ const Me = ({ navigation }) => {
           console.log('获取用户动态' + err);
         });
     });
+    const checkVisitedPage = async () => {
+      try {
+        const value = store.getState().user.isVisite;
+        console.log("value:"+value);
+        // console.log(typeof(value));
+        if (value==1) {
+          // dispatch(setIsVisite(2));
+          dispatch(clearIsVisite())
+          setTrends([
+            {
+              id: '17345909487572623393',
+              userId: '19263416795418624',
+              username: 'string',
+              sex: 0,
+              avatar: 'string',
+              type: 1,
+              title: '阳光明媚的清晨',
+              content:
+                '清晨的阳光透过窗户洒进房间，温暖而明媚。这样的天气让人心旷神怡，仿佛一切都变得清新起来。闭上眼睛，感受着轻风拂过脸庞的触感，心情也跟着变得宁静而愉悦。愿这美好的一天带给你无尽的喜悦和美好的回忆。',
+              viewCount: 0,
+              likeCount: 0,
+              updateTime: '2024-04-28T12:00:00',
+              tags: [
+                {
+                  id: 0,
+                  tagName: 'string',
+                  rank: 0,
+                },
+              ],
+              pictures: [
+                {
+                  id: 0,
+                  url: 'string',
+                  rank: 0,
+                },
+              ],
+            },
+            ...trends
+          ]);
+          // setVisitedPage(true);
+        } else {
+          console.log(value);
+          dispatch(setIsVisite(1));
+        }
+      } catch (error) {
+        console.error('Error reading or setting AsyncStorage:', error);
+      }
+    };
+
+    // useFocusEffect(
+    //   React.useCallback(() => {
+        checkVisitedPage();
+      // }, [])
+    // );
     //获取用户
   }, []);
 
@@ -286,7 +317,9 @@ const Me = ({ navigation }) => {
                 </Text>
               </View>
               <View style={styles.right}>
-                <Text style={{ color: '#000',fontSize: 14, }}>{item.title}</Text>
+                <Text style={{ color: '#000', fontSize: 14 }}>
+                  {item.title}
+                </Text>
                 <Text style={styles.content} numberOfLines={2}>
                   {item.content}
                 </Text>

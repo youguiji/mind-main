@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet,FlatList, TouchableOpacity,TextInput, Button, ScrollView, Pressable } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Keyboard,
+  TouchableOpacity,
+  TextInput,
+  Button,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import { getUserInfo } from '../../../network/modules/user';
 import { Avatar } from '@rneui/base';
 import Icon from '../../../components/Icon';
 import { currentTime } from '../../../util';
 import { color } from '../../../assets/color';
 
-const AIDialogue = ({navigation,route})=> {
+const AIDialogue = ({ navigation, route }) => {
+  const FlatListRef = useRef(null);
+  const TextRef = useRef(null);
   const [serverState, setServerState] = useState('Loading...');
   const [messageText, setMessageText] = useState('');
   const [disableButton, setDisableButton] = useState(true);
@@ -14,32 +27,35 @@ const AIDialogue = ({navigation,route})=> {
   const [serverMessages, setServerMessages] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
-  const [receiverInfo,setReceiverInfo] = useState({
+  const [receiverInfo, setReceiverInfo] = useState({
     username: '小晴天',
     receiverId: 1,
-    avatar: 'https://qiniu.flywe.xyz/MindInsight/2024/03/30/7c7153f08b6b419c.jpg',
-
-  })
-  var ws = React.useRef(new WebSocket('ws://192.168.21.117:8079')).current;
+    avatar:
+      'https://qiniu.flywe.xyz/MindInsight/2024/03/30/7c7153f08b6b419c.jpg',
+  });
+  var ws = React.useRef(new WebSocket('ws://192.168.51.117:8079')).current;
 
   useEffect(() => {
     const serverMessagesList = [];
+    if (FlatListRef.current && chatHistory.length > 0) {
+      FlatListRef.current.scrollToEnd({ animated: false });
+    }
     //获取用户的基本信息
     getUserInfo().then(res => {
       setUserInfo(res.data);
     });
     ws.onopen = () => {
-      setServerState('Connected to the server')
+      setServerState('Connected to the server');
       setDisableButton(false);
     };
-    ws.onclose = (e) => {
-      setServerState('Disconnected. Check internet or server.')
+    ws.onclose = e => {
+      setServerState('Disconnected. Check internet or server.');
       setDisableButton(true);
     };
-    ws.onerror = (e) => {
+    ws.onerror = e => {
       setServerState(e.message);
     };
-    ws.onmessage = (e) => {
+    ws.onmessage = e => {
       const receivedMessage = JSON.parse(e.data);
       console.log(receivedMessage);
       setChatHistory(prevChatHistory => [
@@ -51,15 +67,20 @@ const AIDialogue = ({navigation,route})=> {
         },
       ]);
       serverMessagesList.push(e.data);
-      setServerMessages([...serverMessagesList])
+      setServerMessages([...serverMessagesList]);
+      setTimeout(() => {  
+        if (FlatListRef.current) {  
+          FlatListRef.current.scrollToEnd({ animated: false });  
+        }  
+      }, 0);
     };
-  }, [])
+  }, []);
   const submitMessage = () => {
     if (messageText.trim() === '') {
       return;
     }
 
-    // 在你的代码中的后续部分，在使用 push 之前
+    // 在代码中的后续部分，在使用 push 之前
     chatHistory.push({
       content: messageText,
       sendId: userInfo.userId,
@@ -75,11 +96,20 @@ const AIDialogue = ({navigation,route})=> {
     ws.send(
       JSON.stringify({
         type: 'send',
-        data: { toUserId: receiverInfo.receiverId, content: messageText,sendTime:currentTime(), },
+        data: {
+          toUserId: receiverInfo.receiverId,
+          content: messageText,
+          sendTime: currentTime(),
+        },
       }),
     );
     setMessageText('');
+
     setInputFieldEmpty(true);
+    Keyboard.dismiss();
+    if (FlatListRef.current) {
+      FlatListRef.current.scrollToEnd({ animated: false });
+    }
   };
 
   return (
@@ -103,6 +133,7 @@ const AIDialogue = ({navigation,route})=> {
       {/* 聊天记录 */}
       <FlatList
         data={chatHistory}
+        ref={FlatListRef}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index}
         renderItem={({ item }) => {
@@ -160,16 +191,26 @@ const AIDialogue = ({navigation,route})=> {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
+          ref={TextRef}
           placeholder={'发消息...'}
+          onFocus={()=>{
+            // FlatListRef.current?.scrollToEnd({ animated: false });
+            if (FlatListRef.current) {
+              FlatListRef.current.scrollToEnd({ animated: true });
+            }
+          }}
           onChangeText={text => {
             setMessageText(text);
+            if (FlatListRef.current) {
+                          FlatListRef.current.scrollToEnd({ animated: true });
+                        }
             setInputFieldEmpty(text.length > 0 ? false : true);
           }}
           value={messageText}
         />
-        <TouchableOpacity style={styles.sendButton} onPress={submitMessage}>
+        <Pressable style={styles.sendButton} onPress={submitMessage}>
           <Text style={styles.sendButtonText}>发送</Text>
-        </TouchableOpacity>
+        </Pressable>
         {/* <Button
           onPress={submitMessage}
           title={'Submit'}
@@ -178,14 +219,15 @@ const AIDialogue = ({navigation,route})=> {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    // width: '100%',
     backgroundColor: 'rgb(251,250,252)',
     paddingTop: 70,
     overflow: 'hidden',
     flex: 1,
+    paddingBottom: 60,
   },
   // top
   Header: {
@@ -216,7 +258,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     fontSize: 14,
-    marginTop: 10, 
+    marginTop: 10,
   },
   right: {
     flexDirection: 'row',
@@ -231,7 +273,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    marginTop: 10, 
+    marginTop: 10,
   },
   innerBox: {
     marginHorizontal: 10,
@@ -258,23 +300,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    // paddingVertical: 5,
     borderTopWidth: 1,
     backgroundColor: 'rgb(255,255,255)',
     borderTopColor: 'rgb(251,250,252)',
   },
   input: {
     flex: 1,
-    height: 50,
+    // width: '80%',
+    height: 35,
+    padding: 0,
     // borderWidth: 1,
     // borderColor: '#ccc',
-    backgroundColor:"rgb(243,242,245)",
+    backgroundColor: 'rgb(243,242,245)',
     borderRadius: 20,
     paddingHorizontal: 15,
     marginRight: 10,
   },
   sendButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     backgroundColor: color.pink,
     borderRadius: 20,
   },

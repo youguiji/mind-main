@@ -70,11 +70,11 @@ const LoginGetcode = ({ route, navigation }) => {
           style={[
             styles.inputBoxItem,
             {
-              height: 60,
+              height: 50,
             },
           ]}
           textStyle={{
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: '500',
           }}
           onPress={() => {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   inputBoxItem: {
     marginVertical: 10,
-    width: '80%',
+    width: '100%',
   },
   btn: {
     width: '80%',

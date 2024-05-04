@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-17 21:13:36
+ * @LastEditTime: 2024-04-28 09:29:26
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -189,12 +189,13 @@ const ForumDetail = ({ route, navigation }) => {
               setUp(!up);
               console.log(up);
             }}
-            size={28}
+            size={18}
             icode={'\ue8c3'}
             color={up ? 'rgb(253,94,91)' : 'rgb(117,117,117)'}
           />
-          <Text>{articleDetail.likeCount}</Text>
-          <Icon size={32} icode={'\ue74e'} />
+          <Text style={{ fontSize: 12, marginRight: 5 }}>900</Text>
+          {/* <Text>{articleDetail.likeCount}</Text> */}
+          <Icon size={22} icode={'\ue74e'} />
           <Text>{commentList.length}</Text>
         </View>
         <Pressable
@@ -301,15 +302,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 70,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     flexDirection: 'row',
   },
 
   input: {
     width: '55%',
     backgroundColor: 'rgb(244,242,250)',
-    borderRadius: 16,
-    marginVertical: 5,
+    borderRadius: 14,
+    // marginVertical: 3,
+    padding: 0,
+    paddingVertical: 5,
     paddingHorizontal: 5,
   },
   commentBox: {
