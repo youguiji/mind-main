@@ -4,7 +4,11 @@
  * @Autor: Austral
  * @Date: 2024-02-23 19:59:04
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-22 09:08:36
+<<<<<<< HEAD
+ * @LastEditTime: 2024-06-18 14:57:32
+=======
+ * @LastEditTime: 2024-04-17 16:22:17
+>>>>>>> 74dea70191ee3deea0c793a4b8d0e3047d453a66
  */
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';

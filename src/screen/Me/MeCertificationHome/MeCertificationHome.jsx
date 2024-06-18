@@ -4,7 +4,11 @@
  * @Autor: Austral
  * @Date: 2024-04-17 10:33:33
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-27 14:38:33
+<<<<<<< HEAD
+ * @LastEditTime: 2024-06-18 11:32:14
+=======
+ * @LastEditTime: 2024-04-17 22:06:52
+>>>>>>> 74dea70191ee3deea0c793a4b8d0e3047d453a66
  */
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';

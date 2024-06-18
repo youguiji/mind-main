@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-03-31 07:56:39
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-27 13:01:16
+ * @LastEditTime: 2024-06-18 15:32:59
  */
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';

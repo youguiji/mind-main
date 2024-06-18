@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2024-04-19 14:58:41
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-22 08:28:14
+ * @LastEditTime: 2024-06-18 14:57:09
  */
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';

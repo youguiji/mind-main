@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-17 10:40:01
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-27 14:15:26
+ * @LastEditTime: 2024-06-18 11:29:33
  */
 import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react';
