@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-11 08:53:31
  * @LastEditors: Austral
- * @LastEditTime: 2024-04-15 20:41:24
+ * @LastEditTime: 2024-06-18 15:42:49
  */
 // In App.js in a new project
 
@@ -55,7 +55,6 @@ const Navigation = () => {
           headerShown: false,
         }}
       />
-
       {CommunityNavigation(stack)}
       {MeNavigation(stack)}
       {MessageNavigation(stack)}

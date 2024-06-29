@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-24 15:12:06
  * @LastEditors: Austral
- * @LastEditTime: 2023-12-14 00:29:43
+ * @LastEditTime: 2024-06-28 11:04:48
  */
 
 import {
@@ -54,7 +54,7 @@ export const addArticle = (content, title, tags = [], selectedImages = [], id = 
 
   // 添加图片文件到 FormData
   selectedImages.forEach((image, index) => {
-    // 使用 index 作为文件名，你可以根据实际情况设置文件名
+    // 使用 index 作为文件名，根据实际情况设置文件名
     formData.append(`pictures[${index}]`, {
       uri: image.uri,
       type: image.type, // 设置文件类型

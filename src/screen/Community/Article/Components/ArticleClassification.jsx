@@ -8,6 +8,7 @@
  */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { color } from '../../../../assets/color';
 
 const ArticleClassification = ({
   avatar,

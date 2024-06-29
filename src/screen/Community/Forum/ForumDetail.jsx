@@ -4,7 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-09-14 21:11:38
  * @LastEditors: Austral
- * @LastEditTime: 2024-06-18 11:30:43
+ * @LastEditTime: 2024-06-28 10:30:12
  */
 import React, { useState, useEffect } from 'react';
 import {
@@ -178,6 +178,7 @@ const ForumDetail = ({ route, navigation }) => {
                   }));
                 });
               } else {
+                //点赞
                 upArticle(id, 1, 1).then(res => {
                   console.log(res);
                   setarticleDetail(prevState => ({
@@ -213,7 +214,7 @@ const ForumDetail = ({ route, navigation }) => {
                 createTime: currentTime(),
               },
             });
-            //清空
+            //发送请求
             postComment(articleDetail.id, comment, -1).then(res => {
               console.log(res);
             });

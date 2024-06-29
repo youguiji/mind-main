@@ -4,11 +4,7 @@
  * @Autor: Austral
  * @Date: 2023-07-12 22:16:06
  * @LastEditors: Austral
-<<<<<<< HEAD
- * @LastEditTime: 2024-06-18 15:33:35
-=======
- * @LastEditTime: 2024-04-17 21:40:13
->>>>>>> 74dea70191ee3deea0c793a4b8d0e3047d453a66
+ * @LastEditTime: 2024-06-28 11:00:56
  */
 
 import { Avatar } from '@rneui/base';
